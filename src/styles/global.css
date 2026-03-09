@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+    --color-growth-teal: #1A7A6E;
+    --color-tradewise-navy: #1E3A5F;
+    --color-momentum-amber: #D4820A;
+    --color-forge-black: #141C24;
+    --color-concrete: #F4F1EC;
+
+    --font-heading: Georgia, serif;
+    --font-body: Outfit, sans-serif;
+}

@@ -1,0 +1,500 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const questions = [
+    {
+        driver: 'Recurring Revenue',
+        question: 'How much of your revenue is recurring, retainer-based, or comes from repeat customers?',
+        options: [
+            { label: 'Not Started', hint: 'Almost all revenue is one-off or project-based.' },
+            { label: 'In Progress', hint: 'Some recurring work, but nothing formal or contractual.' },
+            { label: 'Fully Systematised', hint: 'Majority of revenue is contracted, retainer, or highly predictable.' },
+        ],
+    },
+    {
+        driver: 'Systems & Processes',
+        question: 'How well are your day-to-day operations documented and systematised?',
+        options: [
+            { label: 'Not Started', hint: 'Everything lives in my head — the business depends on me.' },
+            { label: 'In Progress', hint: 'Some processes are written down, but not consistently followed.' },
+            { label: 'Fully Systematised', hint: 'SOPs exist for all key functions and staff follow them independently.' },
+        ],
+    },
+    {
+        driver: 'Team & Management',
+        question: 'How capable and independent is your team without your direct involvement?',
+        options: [
+            { label: 'Not Started', hint: 'I\'m involved in every decision — nothing happens without me.' },
+            { label: 'In Progress', hint: 'I have some trusted staff, but key decisions still come back to me.' },
+            { label: 'Fully Systematised', hint: 'I have a management layer that runs operations day-to-day.' },
+        ],
+    },
+    {
+        driver: 'Financial Clarity',
+        question: 'How clear and up-to-date is your financial reporting and profit visibility?',
+        options: [
+            { label: 'Not Started', hint: 'I find out how profitable I am when the accountant does tax time.' },
+            { label: 'In Progress', hint: 'I check numbers occasionally but don\'t have a regular reporting rhythm.' },
+            { label: 'Fully Systematised', hint: 'I have monthly P&L, cash flow forecasts, and job-level profitability tracked.' },
+        ],
+    },
+    {
+        driver: 'Customer Concentration',
+        question: 'How spread is your revenue across your customer base?',
+        options: [
+            { label: 'Not Started', hint: 'One or two clients make up the majority of my revenue.' },
+            { label: 'In Progress', hint: 'I have a handful of good clients but still rely heavily on a few.' },
+            { label: 'Fully Systematised', hint: 'No single client represents more than 15–20% of total revenue.' },
+        ],
+    },
+    {
+        driver: 'Growth & Scalability',
+        question: 'How well-positioned is your business to grow without you personally doing more work?',
+        options: [
+            { label: 'Not Started', hint: 'Growth means I personally work more hours — I\'m the bottleneck.' },
+            { label: 'In Progress', hint: 'I could grow, but I\'d need to hire and train before I could step back.' },
+            { label: 'Fully Systematised', hint: 'The business model can scale — systems and team are ready for growth.' },
+        ],
+    },
+];
+---
+
+<MainLayout
+    title="Exit Readiness Scorecard | Tradewise Group"
+    description="Discover how exit-ready your trade business is and get a free estimated valuation range in under 3 minutes."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                Free Tool
+            </p>
+            <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                Exit Readiness Scorecard
+            </h1>
+            <p class="text-white/70 text-lg leading-relaxed">
+                Answer 6 quick questions about your business. We'll score your exit readiness across
+                the key value drivers that buyers and investors care about — and give you a free
+                estimated valuation range.
+            </p>
+        </div>
+    </section>
+
+    <!-- Scorecard Form -->
+    <section class="bg-concrete py-16 md:py-24">
+        <div class="max-w-2xl mx-auto px-6">
+
+            <!-- Progress Bar -->
+            <div id="progress-container" class="mb-10">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm text-forge-black/50 font-medium">Question <span id="current-step">1</span> of 6</span>
+                    <span class="text-sm text-forge-black/50 font-medium"><span id="progress-pct">0</span>% complete</span>
+                </div>
+                <div class="w-full bg-forge-black/10 rounded-full h-1.5">
+                    <div id="progress-bar" class="bg-momentum-amber h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Questions -->
+            <form id="scorecard-form">
+                {questions.map((q, i) => (
+                    <div
+                        class="question-step"
+                        data-step={i}
+                        style={i === 0 ? '' : 'display:none'}
+                    >
+                        <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
+                            <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">
+                                Value Driver {i + 1} — {q.driver}
+                            </p>
+                            <h2 class="font-heading text-xl font-bold text-forge-black mb-6">
+                                {q.question}
+                            </h2>
+                            <div class="flex flex-col gap-3">
+                                {q.options.map((opt, j) => {
+                                    const scores = [1, 5, 10];
+                                    return (
+                                        <label class="option-label flex items-start gap-4 border border-forge-black/10 rounded-lg p-4 cursor-pointer hover:border-momentum-amber/50 transition-colors duration-150 has-[:checked]:border-momentum-amber has-[:checked]:bg-momentum-amber/5">
+                                            <input
+                                                type="radio"
+                                                name={`q${i}`}
+                                                value={scores[j]}
+                                                data-label={opt.label}
+                                                class="mt-1 accent-momentum-amber shrink-0"
+                                            />
+                                            <div>
+                                                <p class="font-semibold text-forge-black text-sm">{opt.label}</p>
+                                                <p class="text-forge-black/50 text-sm mt-0.5">{opt.hint}</p>
+                                            </div>
+                                        </label>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between">
+                            {i > 0 ? (
+                                <button
+                                    type="button"
+                                    class="prev-btn text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
+                                    data-step={i}
+                                >
+                                    ← Back
+                                </button>
+                            ) : <span></span>}
+                            {i < questions.length - 1 ? (
+                                <button
+                                    type="button"
+                                    class="next-btn bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                                    data-step={i}
+                                >
+                                    Next →
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    id="show-revenue-btn"
+                                    class="bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                                    data-step={i}
+                                >
+                                    Calculate My Score →
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                ))}
+
+                <!-- Revenue Step -->
+                <div id="revenue-step" style="display:none">
+                    <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">
+                            Almost There
+                        </p>
+                        <h2 class="font-heading text-xl font-bold text-forge-black mb-2">
+                            What is your approximate annual revenue?
+                        </h2>
+                        <p class="text-forge-black/50 text-sm mb-6">
+                            This is used only to calculate your estimated valuation range. It will not be stored or shared.
+                        </p>
+                        <div class="flex flex-col gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-forge-black mb-2">
+                                    Annual Revenue
+                                </label>
+                                <div class="flex gap-3">
+                                    <select
+                                        id="currency"
+                                        class="border border-forge-black/20 rounded px-3 py-3 text-sm text-forge-black bg-white focus:outline-none focus:border-momentum-amber"
+                                    >
+                                        <option value="AUD">AUD $</option>
+                                        <option value="NZD">NZD $</option>
+                                        <option value="USD">USD $</option>
+                                        <option value="GBP">GBP £</option>
+                                    </select>
+                                    <input
+                                        type="number"
+                                        id="revenue-input"
+                                        placeholder="e.g. 1500000"
+                                        min="0"
+                                        class="flex-1 border border-forge-black/20 rounded px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-momentum-amber"
+                                    />
+                                </div>
+                                <p id="revenue-error" class="text-red-500 text-xs mt-2 hidden">
+                                    Please enter a valid revenue figure.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button
+                            type="button"
+                            id="back-to-questions-btn"
+                            class="text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
+                        >
+                            ← Back
+                        </button>
+                        <button
+                            type="submit"
+                            class="bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                        >
+                            Show My Results →
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Results Panel -->
+            <div id="results-panel" style="display:none">
+
+                <!-- Score Summary -->
+                <div class="bg-tradewise-navy text-white rounded-xl p-8 mb-6 text-center">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">
+                        Your Exit Readiness Score
+                    </p>
+                    <div class="flex items-end justify-center gap-2 mb-2">
+                        <span id="result-score" class="font-heading text-7xl font-bold"></span>
+                        <span class="text-white/40 text-2xl mb-3 font-heading">/ 60</span>
+                    </div>
+                    <p id="result-label" class="text-white/70 text-lg mb-8"></p>
+
+                    <!-- Score Bar -->
+                    <div class="w-full bg-white/10 rounded-full h-2 mb-8">
+                        <div id="result-bar" class="bg-momentum-amber h-2 rounded-full transition-all duration-700" style="width:0%"></div>
+                    </div>
+
+                    <!-- Valuation Range -->
+                    <div class="border-t border-white/10 pt-8">
+                        <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-4">
+                            Estimated Valuation Range
+                        </p>
+                        <div class="flex justify-center items-center gap-4 flex-wrap">
+                            <div>
+                                <p class="text-white/50 text-xs uppercase tracking-wide mb-1">Low Estimate</p>
+                                <p id="val-low" class="font-heading text-3xl font-bold text-white"></p>
+                            </div>
+                            <div class="text-white/30 text-2xl font-heading">—</div>
+                            <div>
+                                <p class="text-white/50 text-xs uppercase tracking-wide mb-1">High Estimate</p>
+                                <p id="val-high" class="font-heading text-3xl font-bold text-momentum-amber"></p>
+                            </div>
+                        </div>
+                        <p class="text-white/30 text-xs mt-4">
+                            Based on your score and revenue. These are indicative figures only.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Areas to Improve -->
+                <div class="bg-white rounded-xl p-8 mb-6 shadow-sm">
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-2">Your Priority Areas to Improve</h3>
+                    <p class="text-forge-black/50 text-sm mb-6">
+                        Improving these areas will have the greatest impact on your business valuation.
+                    </p>
+                    <ul id="improvements-list" class="flex flex-col gap-3"></ul>
+                </div>
+
+                <!-- CTA -->
+                <div class="bg-momentum-amber/10 border border-momentum-amber/30 rounded-xl p-8 text-center">
+                    <h3 class="font-heading text-2xl font-bold text-forge-black mb-3">
+                        Ready to validate these numbers?
+                    </h3>
+                    <p class="text-forge-black/60 text-sm leading-relaxed mb-6 max-w-md mx-auto">
+                        Your scorecard gives you a strong starting point — but a Tradewise advisor can
+                        give you a real, qualified valuation based on your actual financials and market
+                        conditions. No cost. No obligation.
+                    </p>
+                    <a
+                        href="/valuation"
+                        class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200 mb-4"
+                    >
+                        Book a Free Valuation Session to Validate These Numbers
+                    </a>
+                    <p class="text-forge-black/40 text-xs">
+                        Free 45-minute session · No sales pressure · Real insights
+                    </p>
+                </div>
+
+                <!-- Retake -->
+                <div class="text-center mt-6">
+                    <button
+                        id="retake-btn"
+                        class="text-sm text-forge-black/40 hover:text-forge-black underline transition-colors duration-150"
+                    >
+                        Retake the scorecard
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</MainLayout>
+
+<script>
+    const SCORES: Record<string, number> = { '1': 1, '5': 5, '10': 10 };
+    const DRIVERS = [
+        'Recurring Revenue',
+        'Systems & Processes',
+        'Team & Management',
+        'Financial Clarity',
+        'Customer Concentration',
+        'Growth & Scalability',
+    ];
+
+    const steps = document.querySelectorAll<HTMLElement>('.question-step');
+    const progressBar = document.getElementById('progress-bar')!;
+    const currentStepEl = document.getElementById('current-step')!;
+    const progressPctEl = document.getElementById('progress-pct')!;
+    const progressContainer = document.getElementById('progress-container')!;
+    const revenueStep = document.getElementById('revenue-step')!;
+    const resultsPanel = document.getElementById('results-panel')!;
+    const form = document.getElementById('scorecard-form')!;
+
+    let currentStep = 0;
+
+    function updateProgress(step: number, total: number) {
+        const pct = Math.round((step / total) * 100);
+        progressBar.style.width = `${pct}%`;
+        currentStepEl.textContent = String(Math.min(step + 1, total));
+        progressPctEl.textContent = String(pct);
+    }
+
+    function showStep(index: number) {
+        steps.forEach((s, i) => {
+            s.style.display = i === index ? 'block' : 'none';
+        });
+        revenueStep.style.display = 'none';
+        currentStep = index;
+        updateProgress(index, steps.length);
+    }
+
+    function showRevenueStep() {
+        steps.forEach(s => s.style.display = 'none');
+        revenueStep.style.display = 'block';
+        updateProgress(steps.length, steps.length);
+        currentStepEl.textContent = String(steps.length);
+        progressPctEl.textContent = '100';
+        progressBar.style.width = '100%';
+    }
+
+    // Next buttons
+    document.querySelectorAll<HTMLButtonElement>('.next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const step = parseInt(btn.dataset.step ?? '0');
+            const selected = document.querySelector<HTMLInputElement>(`input[name="q${step}"]:checked`);
+            if (!selected) {
+                const questionBlock = steps[step].querySelector('.bg-white');
+                questionBlock?.classList.add('ring-2', 'ring-red-400');
+                setTimeout(() => questionBlock?.classList.remove('ring-2', 'ring-red-400'), 1500);
+                return;
+            }
+            showStep(step + 1);
+        });
+    });
+
+    // Show revenue step
+    document.getElementById('show-revenue-btn')?.addEventListener('click', () => {
+        const lastStep = steps.length - 1;
+        const selected = document.querySelector<HTMLInputElement>(`input[name="q${lastStep}"]:checked`);
+        if (!selected) {
+            const questionBlock = steps[lastStep].querySelector('.bg-white');
+            questionBlock?.classList.add('ring-2', 'ring-red-400');
+            setTimeout(() => questionBlock?.classList.remove('ring-2', 'ring-red-400'), 1500);
+            return;
+        }
+        showRevenueStep();
+    });
+
+    // Back buttons
+    document.querySelectorAll<HTMLButtonElement>('.prev-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const step = parseInt(btn.dataset.step ?? '1');
+            showStep(step - 1);
+        });
+    });
+
+    document.getElementById('back-to-questions-btn')?.addEventListener('click', () => {
+        showStep(steps.length - 1);
+    });
+
+    // Format currency
+    function formatCurrency(amount: number, currency: string): string {
+        return new Intl.NumberFormat('en-AU', {
+            style: 'currency',
+            currency,
+            maximumFractionDigits: 0,
+        }).format(amount);
+    }
+
+    // Score label
+    function scoreLabel(score: number): string {
+        if (score <= 20) return 'Early Stage — significant work to do before exit.';
+        if (score <= 35) return 'Developing — good foundations, but key gaps remain.';
+        if (score <= 50) return 'Progressing — above average, with clear upside available.';
+        return 'Exit-Ready — your business is well-positioned for a strong sale.';
+    }
+
+    // Submit
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const revenueInput = document.getElementById('revenue-input') as HTMLInputElement;
+        const revenueError = document.getElementById('revenue-error')!;
+        const currency = (document.getElementById('currency') as HTMLSelectElement).value;
+        const revenue = parseFloat(revenueInput.value);
+
+        if (!revenue || revenue <= 0) {
+            revenueError.classList.remove('hidden');
+            revenueInput.focus();
+            return;
+        }
+        revenueError.classList.add('hidden');
+
+        // Collect scores and labels
+        const results: { driver: string; score: number; label: string }[] = [];
+        let total = 0;
+
+        steps.forEach((_, i) => {
+            const selected = document.querySelector<HTMLInputElement>(`input[name="q${i}"]:checked`);
+            const score = selected ? SCORES[selected.value] ?? 1 : 1;
+            const label = selected?.dataset.label ?? 'Not Started';
+            total += score;
+            results.push({ driver: DRIVERS[i], score, label });
+        });
+
+        // Valuation
+        const ratio = total / 60;
+        const valLow = revenue * ratio * 2.5;
+        const valHigh = revenue * ratio * 4.0;
+
+        // Worst 3 areas
+        const sorted = [...results].sort((a, b) => a.score - b.score);
+        const weakest = sorted.slice(0, 3);
+
+        // Show results
+        form.style.display = 'none';
+        progressContainer.style.display = 'none';
+        resultsPanel.style.display = 'block';
+
+        document.getElementById('result-score')!.textContent = String(total);
+        document.getElementById('result-label')!.textContent = scoreLabel(total);
+        document.getElementById('val-low')!.textContent = formatCurrency(valLow, currency);
+        document.getElementById('val-high')!.textContent = formatCurrency(valHigh, currency);
+
+        setTimeout(() => {
+            const bar = document.getElementById('result-bar')!;
+            bar.style.width = `${(total / 60) * 100}%`;
+        }, 100);
+
+        const list = document.getElementById('improvements-list')!;
+        list.innerHTML = '';
+        weakest.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start gap-3 p-4 bg-concrete rounded-lg';
+            li.innerHTML = `
+                <div class="w-2 h-2 rounded-full bg-momentum-amber mt-1.5 shrink-0"></div>
+                <div>
+                    <p class="font-semibold text-forge-black text-sm">${item.driver}</p>
+                    <p class="text-forge-black/50 text-sm">Currently: <span class="text-momentum-amber font-medium">${item.label}</span> — improving this to Fully Systematised adds the most value.</p>
+                </div>`;
+            list.appendChild(li);
+        });
+    });
+
+    // Retake
+    document.getElementById('retake-btn')?.addEventListener('click', () => {
+        // Reset all radios
+        document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(r => r.checked = false);
+        (document.getElementById('revenue-input') as HTMLInputElement).value = '';
+
+        resultsPanel.style.display = 'none';
+        progressContainer.style.display = 'block';
+        form.style.display = 'block';
+        document.getElementById('result-bar')!.style.width = '0%';
+        showStep(0);
+    });
+
+    // Init
+    showStep(0);
+</script>

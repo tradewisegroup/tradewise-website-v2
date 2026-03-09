@@ -1,17 +1,296 @@
 ---
-
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout
+    title="Tradewise Group | We Run the Business Side. So You Can Run Your Trade."
+    description="Tradewise Group is the dedicated business management partner for trade business owners who want to grow, systemise, and exit on their terms."
+>
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+    <section class="bg-tradewise-navy text-white min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    For Trade Business Owners
+                </p>
+                <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8">
+                    We run the business side. So you can run your trade.
+                </h1>
+                <p class="text-white/70 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+                    Tradewise Group is the dedicated business management partner for trade business owners
+                    who want to grow, systemise, and eventually exit on their terms — without drowning in
+                    admin, guesswork, or burnout.
+                </p>
+                <a
+                    href="/valuation"
+                    class="inline-block bg-momentum-amber text-white font-semibold text-base px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+                >
+                    Book Your Free Valuation Session
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         PAIN POINTS
+    ========================================================= -->
+    <section class="bg-concrete">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-2xl mb-14">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-forge-black mb-4">
+                    The Reality for Most Trade Business Owners
+                </h2>
+                <p class="text-forge-black/60 text-lg">
+                    You built something real. But somewhere along the way, the business started running you.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- No Time -->
+                <div class="bg-white border-t-4 border-momentum-amber rounded p-8 shadow-sm">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">01</p>
+                    <h3 class="font-heading text-2xl font-bold text-forge-black mb-4">No Time</h3>
+                    <p class="text-forge-black/70 leading-relaxed">
+                        You're on the tools all day, then buried in admin all night. Quoting, invoicing,
+                        chasing payments, managing staff drama — there's never enough hours to actually
+                        work <em>on</em> the business instead of just <em>in</em> it.
+                    </p>
+                </div>
+
+                <!-- No Visibility -->
+                <div class="bg-white border-t-4 border-momentum-amber rounded p-8 shadow-sm">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">02</p>
+                    <h3 class="font-heading text-2xl font-bold text-forge-black mb-4">No Visibility</h3>
+                    <p class="text-forge-black/70 leading-relaxed">
+                        You don't know if you're actually profitable until the accountant tells you —
+                        months later. Cash flow is unpredictable, the numbers don't make sense, and
+                        you're making big decisions based on gut feel and hope.
+                    </p>
+                </div>
+
+                <!-- No Plan -->
+                <div class="bg-white border-t-4 border-momentum-amber rounded p-8 shadow-sm">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">03</p>
+                    <h3 class="font-heading text-2xl font-bold text-forge-black mb-4">No Plan</h3>
+                    <p class="text-forge-black/70 leading-relaxed">
+                        You know you can't do this forever. But there's no exit strategy, no succession
+                        plan, and no clear path to the life you actually want. The business is valuable —
+                        you just don't know how to unlock that value.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         SOLUTION
+    ========================================================= -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-3xl mb-16">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    The Tradewise Solution
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold mb-6">
+                    One team. Every function. Maximum results.
+                </h2>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Tradewise embeds a dedicated team of business specialists directly into your trade
+                    business. We handle all the functions that slow you down, drain your energy, and
+                    hold your business back — so you can focus on what you do best, and build a business
+                    that runs without you.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-8">
+                    What We Handle For You
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <div class="border border-white/10 rounded p-6 hover:border-momentum-amber/50 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-momentum-amber/10 rounded flex items-center justify-center mb-4">
+                            <span class="text-momentum-amber font-heading font-bold text-lg">HR</span>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">People & HR</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Recruitment, onboarding, performance management, payroll, and workplace compliance.
+                        </p>
+                    </div>
+
+                    <div class="border border-white/10 rounded p-6 hover:border-momentum-amber/50 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-momentum-amber/10 rounded flex items-center justify-center mb-4">
+                            <span class="text-momentum-amber font-heading font-bold text-lg">$</span>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Finance</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Bookkeeping, cash flow management, financial reporting, and profit optimisation.
+                        </p>
+                    </div>
+
+                    <div class="border border-white/10 rounded p-6 hover:border-momentum-amber/50 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-momentum-amber/10 rounded flex items-center justify-center mb-4">
+                            <span class="text-momentum-amber font-heading font-bold text-lg">⚙</span>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Systems</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            SOPs, job management software, operational workflows, and business process design.
+                        </p>
+                    </div>
+
+                    <div class="border border-white/10 rounded p-6 hover:border-momentum-amber/50 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-momentum-amber/10 rounded flex items-center justify-center mb-4">
+                            <span class="text-momentum-amber font-heading font-bold text-lg">↗</span>
+                        </div>
+                        <h3 class="font-semibold text-white mb-2">Marketing</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">
+                            Lead generation, brand positioning, digital presence, and customer acquisition strategy.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         HOW IT WORKS
+    ========================================================= -->
+    <section class="bg-concrete">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-2xl mb-16">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    How It Works
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-forge-black">
+                    Your Tradewise Journey
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4">
+
+                {[
+                    { num: '1', title: 'Discovery Call', body: 'A no-obligation conversation to understand where you are and where you want to go.', amber: false },
+                    { num: '2', title: 'Business Audit', body: 'We deep-dive into your numbers, operations, and team to identify the gaps and the opportunities.', amber: false },
+                    { num: '3', title: 'Strategy Session', body: 'Together we map your 90-day plan — clear priorities, measurable goals, and a roadmap to results.', amber: false },
+                    { num: '4', title: 'Embed & Execute', body: 'Our team integrates with yours and gets to work — handling the business functions so you don\'t have to.', amber: false },
+                    { num: '5', title: 'Review & Scale', body: 'Monthly performance reviews to track progress, refine strategy, and accelerate growth toward your goals.', amber: true },
+                ].map(step => (
+                    <div class="flex flex-col items-start md:items-center text-left md:text-center">
+                        <div class={`w-12 h-12 rounded-full flex items-center justify-center mb-5 font-heading font-bold text-lg text-white ${step.amber ? 'bg-momentum-amber' : 'bg-tradewise-navy'}`}>
+                            {step.num}
+                        </div>
+                        <h3 class="font-heading font-bold text-forge-black text-lg mb-2">{step.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{step.body}</p>
+                    </div>
+                ))}
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         WHO WE HELP
+    ========================================================= -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    Who We Help
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-forge-black">
+                    Built for trade business owners at every stage.
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <div class="bg-concrete rounded p-8">
+                    <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-6">
+                        <span class="text-white font-heading font-bold text-sm">HO</span>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-3">The Hands-On Owner</h3>
+                    <p class="text-forge-black/60 text-sm leading-relaxed mb-4">
+                        Still on the tools every day, running a good business — but stuck. You want to step
+                        back from the day-to-day without everything falling apart.
+                    </p>
+                    <p class="text-growth-teal text-sm font-semibold">
+                        We build the systems so the business runs without you.
+                    </p>
+                </div>
+
+                <div class="bg-concrete rounded p-8">
+                    <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-6">
+                        <span class="text-white font-heading font-bold text-sm">GB</span>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-3">The Growth-Ready Boss</h3>
+                    <p class="text-forge-black/60 text-sm leading-relaxed mb-4">
+                        You've got momentum and ambition — but scaling feels messy. You need the right
+                        people, processes, and financial visibility to grow with confidence.
+                    </p>
+                    <p class="text-growth-teal text-sm font-semibold">
+                        We give you the infrastructure to scale sustainably.
+                    </p>
+                </div>
+
+                <div class="bg-concrete rounded p-8">
+                    <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-6">
+                        <span class="text-white font-heading font-bold text-sm">EP</span>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-3">The Exit Planner</h3>
+                    <p class="text-forge-black/60 text-sm leading-relaxed mb-4">
+                        You're thinking about selling in the next 2–5 years and want to maximise what your
+                        business is worth. You need a clear plan to increase value before you go to market.
+                    </p>
+                    <p class="text-growth-teal text-sm font-semibold">
+                        We prepare your business to sell for what it's truly worth.
+                    </p>
+                </div>
+
+                <div class="bg-concrete rounded p-8">
+                    <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-6">
+                        <span class="text-white font-heading font-bold text-sm">BT</span>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-3">The Burned-Out Tradie</h3>
+                    <p class="text-forge-black/60 text-sm leading-relaxed mb-4">
+                        You're exhausted, overwhelmed, and running on empty. The business you built to
+                        give you freedom has become a trap. You need relief — and a way forward.
+                    </p>
+                    <p class="text-growth-teal text-sm font-semibold">
+                        We take the load off your plate, starting immediately.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         FINAL CTA
+    ========================================================= -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28 text-center">
+            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                Take the First Step
+            </p>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold mb-6 max-w-3xl mx-auto leading-tight">
+                Let's find out what your business is worth.
+            </h2>
+            <p class="text-white/60 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+                A free, no-obligation valuation session with a Tradewise advisor. No pressure. Just clarity.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold text-base px-10 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

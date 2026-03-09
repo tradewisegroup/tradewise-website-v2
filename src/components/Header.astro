@@ -1,0 +1,88 @@
+---
+const navLinks = [
+    { label: 'Services', href: '/services' },
+    { label: 'Who We Help', href: '/who-we-help' },
+    { label: 'How It Works', href: '/how-it-works' },
+    { label: 'Resources', href: '/resources' },
+    { label: 'About', href: '/about' },
+];
+---
+
+<header class="bg-tradewise-navy text-white">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <!-- Wordmark -->
+        <a href="/" class="font-heading text-xl tracking-widest font-bold text-white shrink-0">
+            TRADEWISE GROUP
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-8">
+            {navLinks.map(link => (
+                <a
+                    href={link.href}
+                    class="text-sm text-white/80 hover:text-white transition-colors duration-200"
+                >
+                    {link.label}
+                </a>
+            ))}
+        </nav>
+
+        <!-- CTA + Mobile Menu Button -->
+        <div class="flex items-center gap-4">
+            <a
+                href="/valuation"
+                class="hidden sm:inline-block bg-momentum-amber text-white text-sm font-semibold px-5 py-2.5 rounded hover:brightness-110 transition-all duration-200 shrink-0"
+            >
+                Book a Free Valuation
+            </a>
+
+            <!-- Hamburger (mobile) -->
+            <button
+                id="menu-toggle"
+                class="lg:hidden flex flex-col gap-1.5 p-1"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+            >
+                <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+                <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+                <span class="block w-6 h-0.5 bg-white transition-all duration-200"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <nav id="mobile-menu" class="hidden lg:hidden border-t border-white/10">
+        <ul class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4">
+            {navLinks.map(link => (
+                <li>
+                    <a
+                        href={link.href}
+                        class="block text-sm text-white/80 hover:text-white transition-colors duration-200"
+                    >
+                        {link.label}
+                    </a>
+                </li>
+            ))}
+            <li>
+                <a
+                    href="/valuation"
+                    class="inline-block bg-momentum-amber text-white text-sm font-semibold px-5 py-2.5 rounded hover:brightness-110 transition-all duration-200"
+                >
+                    Book a Free Valuation
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+
+    toggle?.addEventListener('click', () => {
+        const isOpen = !menu?.classList.contains('hidden');
+        menu?.classList.toggle('hidden', isOpen);
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+</script>

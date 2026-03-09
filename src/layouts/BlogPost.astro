@@ -1,0 +1,86 @@
+---
+import MainLayout from './MainLayout.astro';
+
+interface Props {
+    title: string;
+    description: string;
+    pubDate: string;
+    author?: string;
+    category?: string;
+}
+
+const { title, description, pubDate, author = 'Tradewise Group', category = 'Resources' } = Astro.props;
+
+const formattedDate = new Date(pubDate).toLocaleDateString('en-AU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+});
+---
+
+<MainLayout title={`${title} | Tradewise Group`} description={description}>
+
+    <!-- Article Header -->
+    <section class="bg-tradewise-navy text-white py-16 md:py-24">
+        <div class="max-w-3xl mx-auto px-6">
+            <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-5">
+                {category}
+            </p>
+            <h1 class="font-heading text-3xl md:text-5xl font-bold leading-tight mb-6">
+                {title}
+            </h1>
+            <p class="text-white/60 text-lg leading-relaxed mb-8">
+                {description}
+            </p>
+            <div class="flex items-center gap-3 text-white/40 text-sm">
+                <span>{author}</span>
+                <span>·</span>
+                <time datetime={pubDate}>{formattedDate}</time>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Body -->
+    <section class="bg-concrete py-16 md:py-20">
+        <div class="max-w-3xl mx-auto px-6">
+
+            <!-- Prose content -->
+            <div class="prose prose-lg max-w-none
+                prose-headings:font-heading prose-headings:text-forge-black
+                prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-12 prose-h2:mb-4
+                prose-h3:text-xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-3
+                prose-p:text-forge-black/70 prose-p:leading-relaxed prose-p:mb-5
+                prose-strong:text-forge-black prose-strong:font-semibold
+                prose-ul:text-forge-black/70 prose-ul:leading-relaxed
+                prose-ol:text-forge-black/70 prose-ol:leading-relaxed
+                prose-li:mb-2
+                prose-blockquote:border-l-4 prose-blockquote:border-momentum-amber prose-blockquote:pl-5 prose-blockquote:italic prose-blockquote:text-forge-black/60
+                prose-a:text-growth-teal prose-a:no-underline hover:prose-a:underline
+            ">
+                <slot />
+            </div>
+
+            <!-- End-of-article CTA -->
+            <div class="mt-16 bg-tradewise-navy rounded-xl p-8 md:p-10 text-white text-center">
+                <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">
+                    Ready to Take Action?
+                </p>
+                <h2 class="font-heading text-2xl md:text-3xl font-bold mb-3">
+                    Want us to implement this for you?
+                </h2>
+                <p class="text-white/60 text-[15px] leading-relaxed mb-7 max-w-md mx-auto">
+                    Reading about it is one thing. Having a dedicated Tradewise team actually do it inside
+                    your business is another. Book a free call and let's talk about what's possible.
+                </p>
+                <a
+                    href="/valuation"
+                    class="inline-block bg-momentum-amber text-white font-semibold px-7 py-3.5 rounded hover:brightness-110 transition-all duration-200"
+                >
+                    Book a Free Call
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+</MainLayout>

@@ -1,0 +1,177 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const avatars = [
+    {
+        name: 'Steve',
+        trade: 'Electrical Contractor',
+        tag: 'The Hands-On Owner',
+        revenue: '$2.1M revenue · 8 staff · 14 years in business',
+        image: null,
+        situation: `Steve runs a successful residential and commercial electrical business he built from scratch. On paper, things look fine. In reality, Steve is the business — he quotes every job, handles every supplier dispute, signs every invoice, and gets called when anything goes wrong on site.
+
+He's tried to hire a site supervisor before. It didn't stick. He ended up doing the job himself anyway. His wife says he hasn't had a proper holiday in six years. He knows she's right.`,
+        problem: 'Steve isn\'t struggling — he\'s trapped. The business works, but it only works because of him. And he\'s starting to feel the weight of that.',
+        goals: [
+            'Step back from day-to-day operations without the wheels falling off',
+            'Build a management layer he can actually trust',
+            'Have time to work on growth instead of firefighting',
+            'Eventually sell the business for what it\'s worth',
+        ],
+        how: 'For Steve, Tradewise starts with Systems & Operations — documenting every process so the business can function without him as the linchpin. We then recruit and onboard the right site supervisor, and put an HR framework in place so the team performs without Steve managing every individual.',
+        result: 'Within 12 months, Steve is working in the business two days a week. Within 24, he\'s planning his exit.',
+    },
+    {
+        name: 'Dave',
+        trade: 'Plumbing & Gas Services',
+        tag: 'The Growth-Ready Boss',
+        revenue: '$4.8M revenue · 22 staff · 3 depots',
+        image: null,
+        situation: `Dave has momentum. His business has more than doubled in three years and he's just opened his third depot. The problem is that the growth feels fragile. Different depots run differently. Some jobs are profitable, some aren't — and he's not always sure which. Staff turnover at the newer depots is high.
+
+Dave is ambitious but knows he's operating above the systems he has. He's making decisions on gut feel that should be backed by data. He's hiring people into roles that aren't properly defined. And he's too busy to fix any of it.`,
+        problem: 'Dave is growing faster than his infrastructure. Without the right foundations, the next phase of growth could create more problems than it solves.',
+        goals: [
+            'Standardise operations across all three depots',
+            'Get real-time visibility into job profitability',
+            'Reduce staff turnover and build a culture that scales',
+            'Position the business for a potential private equity deal or trade sale in 4 years',
+        ],
+        how: 'For Dave, Tradewise focuses first on Finance — implementing job-level reporting so he knows exactly which work and which depots are actually profitable. We then systematise operations across all sites with consistent SOPs, and build an HR framework that supports a team of 22 growing to 40+.',
+        result: 'Dave has the clarity to make better decisions, the systems to scale confidently, and a business that looks attractive to serious buyers.',
+    },
+    {
+        name: 'Brian',
+        trade: 'Concreting & Civil',
+        tag: 'The Burned-Out Tradie',
+        revenue: '$1.4M revenue · 5 staff · 11 years in business',
+        image: null,
+        situation: `Brian built his business from a one-man band into a five-person operation. But somewhere in the last couple of years, the joy went out of it. He's tired all the time. He snaps at his crew. He's missed his kids' sport three weekends in a row because of a job that ran over.
+
+He's thought about selling. He's also thought about just shutting the doors. His accountant told him the business isn't in a great position to sell right now — the numbers aren't clean enough, too much depends on him personally, and there are no real systems in place.`,
+        problem: 'Brian is at the edge of burnout. The business isn\'t unsalvageable — but without intervention, the path of least resistance is walking away from real value.',
+        goals: [
+            'Get immediate relief from the day-to-day admin load',
+            'Understand what the business is actually worth',
+            'Clean up the finances and systemise operations',
+            'Create a realistic exit plan within 18–24 months',
+        ],
+        how: 'For Brian, we start with Finance and Administration — taking the weight off his plate immediately so he can breathe again. We clean up the books, get the reporting in order, and document the key processes. Then we build a clear, 18-month exit roadmap with specific milestones to maximise the sale price.',
+        result: 'Brian sells 22 months later for 3.4x revenue — significantly above what he thought was possible. More importantly, he\'s not burned out when he gets to the finish line.',
+    },
+];
+---
+
+<MainLayout
+    title="Who We Help | Tradewise Group"
+    description="Tradewise works with trade business owners at every stage — from the hands-on operator to the growth-minded boss to the owner ready to exit."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    Who We Help
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                    We've seen your situation before.
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Every trade business owner's circumstances are different — but the underlying challenges
+                    are surprisingly consistent. Here are three business owners we work with regularly. See
+                    if any of them sound familiar.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avatar Cards -->
+    {avatars.map((avatar, i) => (
+        <section class={i % 2 === 0 ? 'bg-concrete' : 'bg-white'}>
+            <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+
+                <!-- Avatar Header -->
+                <div class="flex flex-col sm:flex-row sm:items-end gap-6 mb-12 pb-10 border-b border-forge-black/10">
+                    <div class="w-20 h-20 rounded-full bg-tradewise-navy flex items-center justify-center shrink-0">
+                        <span class="text-white font-heading font-bold text-2xl">{avatar.name[0]}</span>
+                    </div>
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-1">
+                            {avatar.tag}
+                        </p>
+                        <h2 class="font-heading text-3xl font-bold text-forge-black">{avatar.name}</h2>
+                        <p class="text-forge-black/50 text-sm mt-1">{avatar.trade} · {avatar.revenue}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+                    <!-- Left col -->
+                    <div class="flex flex-col gap-8">
+                        <div>
+                            <h3 class="font-semibold text-forge-black text-xs tracking-widest uppercase mb-3 text-forge-black/40">The Situation</h3>
+                            {avatar.situation.split('\n\n').map(para => (
+                                <p class="text-forge-black/70 leading-relaxed mb-3 text-[15px]">{para}</p>
+                            ))}
+                        </div>
+
+                        <div class="border-l-4 border-momentum-amber pl-5">
+                            <p class="text-forge-black font-medium leading-relaxed text-[15px] italic">
+                                "{avatar.problem}"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right col -->
+                    <div class="flex flex-col gap-8">
+
+                        <div>
+                            <h3 class="font-semibold text-forge-black text-xs tracking-widest uppercase mb-4 text-forge-black/40">What {avatar.name} Wants</h3>
+                            <ul class="flex flex-col gap-3">
+                                {avatar.goals.map(goal => (
+                                    <li class="flex items-start gap-3 text-[15px] text-forge-black/70">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-growth-teal mt-2 shrink-0"></span>
+                                        {goal}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div class="bg-tradewise-navy/5 rounded-lg p-6">
+                            <h3 class="font-semibold text-forge-black text-xs tracking-widest uppercase mb-3 text-forge-black/40">How Tradewise Helps</h3>
+                            <p class="text-forge-black/70 text-[15px] leading-relaxed">{avatar.how}</p>
+                        </div>
+
+                        <div class="bg-growth-teal/10 border border-growth-teal/20 rounded-lg p-5">
+                            <p class="text-xs font-semibold tracking-widest uppercase text-growth-teal mb-2">The Outcome</p>
+                            <p class="text-forge-black/70 text-[15px] leading-relaxed">{avatar.result}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    ))}
+
+    <!-- CTA -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+                Which one sounds like you?
+            </h2>
+            <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+                Book a free session and we'll tell you exactly where your business stands — and what it
+                would take to get it where you want it to go.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Valuation Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

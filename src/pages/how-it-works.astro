@@ -1,0 +1,217 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const steps = [
+    {
+        number: '01',
+        title: 'Discovery Call',
+        duration: '45 minutes',
+        description: 'Every engagement starts with a genuine conversation — not a sales pitch. A Tradewise advisor will spend 45 minutes understanding your business: where it is now, where you want it to go, and what\'s standing in the way.',
+        whatHappens: [
+            'We listen to your current challenges and frustrations',
+            'You tell us about your revenue, team size, and business stage',
+            'We explore your goals — growth, exit, lifestyle, or all three',
+            'You ask us anything you want about how Tradewise works',
+        ],
+        whatYouGet: 'A clear sense of whether Tradewise is the right fit — and we\'ll tell you honestly if we don\'t think we are.',
+        amber: false,
+    },
+    {
+        number: '02',
+        title: 'Business Audit',
+        duration: '1–2 weeks',
+        description: 'Before we prescribe anything, we diagnose properly. Our audit goes deep into the four core areas of your business — HR, Finance, Systems, and Marketing — to identify exactly where the value is being left on the table.',
+        whatHappens: [
+            'Review of your financial statements, cash flow, and job profitability',
+            'Assessment of your current team structure, roles, and HR practices',
+            'Mapping of your operational processes and systems',
+            'Evaluation of your marketing, pipeline, and customer concentration',
+        ],
+        whatYouGet: 'A written Business Health Report that benchmarks your business against exit-ready standards — and identifies the highest-impact areas to address.',
+        amber: false,
+    },
+    {
+        number: '03',
+        title: 'Strategy Session',
+        duration: 'Half day',
+        description: 'Armed with the audit findings, we sit down together and build your roadmap. This is where the numbers, the gaps, and your personal goals come together into a clear, sequenced 90-day action plan.',
+        whatHappens: [
+            'Review of the Business Health Report findings',
+            'Agreement on your 12-month and 3-year goals',
+            'Prioritisation of the highest-impact initiatives',
+            'Definition of the Tradewise team that will be embedded into your business',
+        ],
+        whatYouGet: 'A 90-day Strategic Action Plan with clear milestones, assigned owners, and measurable outcomes — so there\'s never any ambiguity about what we\'re doing or why.',
+        amber: false,
+    },
+    {
+        number: '04',
+        title: 'Embed & Execute',
+        duration: 'Ongoing',
+        description: 'This is where the work gets done. Your Tradewise team integrates directly with your business — attending your team meetings, working in your systems, and handling the functions you\'ve been carrying alone. You don\'t get a consultant who visits and leaves. You get a team that\'s genuinely in it with you.',
+        whatHappens: [
+            'Your dedicated Tradewise specialists begin working in your business',
+            'Weekly check-ins and task updates to keep you across progress',
+            'SOPs documented, HR frameworks implemented, books cleaned up',
+            'Marketing engine built and pipeline reporting established',
+        ],
+        whatYouGet: 'Real, measurable progress across each of the four service areas — handled by people who know what they\'re doing and are accountable to outcomes.',
+        amber: false,
+    },
+    {
+        number: '05',
+        title: 'Review & Scale',
+        duration: 'Monthly, ongoing',
+        description: 'Every month, we step back from execution and ask the bigger question: is the business moving in the right direction? Monthly reviews aren\'t just status updates — they\'re strategic conversations about what\'s working, what to adjust, and what the next phase of growth looks like.',
+        whatHappens: [
+            'Monthly performance review against your 90-day milestones',
+            'Financial dashboard review — revenue, margins, cash flow',
+            'Team and HR update — capacity, performance, and any issues',
+            'Forward planning for the next quarter',
+        ],
+        whatYouGet: 'A business that continuously improves — with a committed partner who is as invested in your outcomes as you are.',
+        amber: true,
+    },
+];
+
+const faqs = [
+    {
+        q: 'How long does it take before we see results?',
+        a: 'Most clients feel meaningful relief within the first 30–60 days as we take administrative and operational load off their plate. Measurable financial and operational improvements typically show up within 90 days.',
+    },
+    {
+        q: 'Do I have to commit to a long-term contract?',
+        a: 'We work on rolling monthly engagements after an initial 3-month setup period. We\'d rather earn your ongoing business by delivering results than lock you into a contract.',
+    },
+    {
+        q: 'What if my business isn\'t ready or big enough?',
+        a: 'We work with trade businesses from $800K to $10M+ in revenue. If we don\'t think we can add meaningful value at your stage, we\'ll tell you — and point you toward what will help.',
+    },
+    {
+        q: 'How does your team integrate with mine?',
+        a: 'We work directly in your systems — your job management software, your accounting platform, your communication channels. We\'re not a distant outsourcer. We\'re embedded in your business.',
+    },
+    {
+        q: 'What does it cost?',
+        a: 'Pricing is scoped based on the size of your business and the services you need. We\'ll give you a clear, transparent fee in writing after the audit — before you commit to anything.',
+    },
+];
+---
+
+<MainLayout
+    title="How It Works | Tradewise Group"
+    description="A transparent look at the Tradewise process — from discovery call to embedded execution and monthly strategic reviews."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    The Process
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                    Your Tradewise Journey
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    We don't believe in vague retainers or mystery deliverables. Here's exactly what
+                    working with Tradewise looks like — from the first conversation to a business that
+                    runs on its own.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="bg-concrete">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="flex flex-col gap-0">
+                {steps.map((step, i) => (
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 pb-16 mb-16 border-b border-forge-black/10 last:border-0 last:pb-0 last:mb-0">
+
+                        <!-- Step number + connector -->
+                        <div class="lg:col-span-2 flex lg:flex-col items-center lg:items-start gap-4">
+                            <div class={`w-16 h-16 rounded-full flex items-center justify-center shrink-0 font-heading font-bold text-xl text-white ${step.amber ? 'bg-momentum-amber' : 'bg-tradewise-navy'}`}>
+                                {step.number}
+                            </div>
+                            <div>
+                                <p class="text-forge-black/40 text-xs font-semibold tracking-widest uppercase">
+                                    {step.duration}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="lg:col-span-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+                            <div>
+                                <h2 class="font-heading text-2xl md:text-3xl font-bold text-forge-black mb-4">
+                                    {step.title}
+                                </h2>
+                                <p class="text-forge-black/65 leading-relaxed text-[15px]">
+                                    {step.description}
+                                </p>
+                            </div>
+
+                            <div class="flex flex-col gap-6">
+                                <div>
+                                    <p class="text-forge-black/40 text-xs font-semibold tracking-widest uppercase mb-3">What Happens</p>
+                                    <ul class="flex flex-col gap-2">
+                                        {step.whatHappens.map(item => (
+                                            <li class="flex items-start gap-3 text-forge-black/65 text-[15px]">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-momentum-amber mt-2 shrink-0"></span>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div class="border-l-4 border-growth-teal pl-4">
+                                    <p class="text-forge-black/40 text-xs font-semibold tracking-widest uppercase mb-1">What You Get</p>
+                                    <p class="text-forge-black/70 text-[15px] leading-relaxed">{step.whatYouGet}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="bg-white">
+        <div class="max-w-3xl mx-auto px-6 py-20 md:py-28">
+            <h2 class="font-heading text-3xl font-bold text-forge-black mb-12 text-center">
+                Common Questions
+            </h2>
+            <div class="flex flex-col gap-8">
+                {faqs.map(faq => (
+                    <div class="border-b border-forge-black/10 pb-8 last:border-0">
+                        <h3 class="font-heading font-bold text-forge-black text-lg mb-3">{faq.q}</h3>
+                        <p class="text-forge-black/60 leading-relaxed text-[15px]">{faq.a}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+                Ready to start the journey?
+            </h2>
+            <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+                The Discovery Call is free. There's no obligation. And you'll leave with a clearer
+                picture of your business than you had when you arrived.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Valuation Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

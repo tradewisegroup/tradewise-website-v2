@@ -1,0 +1,162 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const services = [
+    {
+        id: 'hr',
+        label: 'HR & People',
+        headline: 'Build a team that works without you.',
+        intro: 'Your people are your biggest asset — and your biggest source of stress. Tradewise takes the complexity out of managing a workforce, so you can focus on running the business instead of running interference.',
+        features: [
+            { title: 'Recruitment & Onboarding', body: 'We find, screen, and onboard the right people for every role — from apprentices to site supervisors — using a process that sets them up to perform from day one.' },
+            { title: 'Performance Management', body: 'Regular check-ins, clear KPIs, and documented performance frameworks that hold people accountable without you having to be the bad guy.' },
+            { title: 'Payroll & Compliance', body: 'We handle payroll processing, award interpretation, superannuation, and Fair Work compliance — so you\'re never caught out on a technicality.' },
+            { title: 'Culture & Retention', body: 'We help you build a workplace people actually want to stay in — reducing costly staff turnover and the constant cycle of rehiring.' },
+        ],
+        outcome: 'The result: a team that shows up, performs, and grows — with or without you on site.',
+    },
+    {
+        id: 'finance',
+        label: 'Finance & Reporting',
+        headline: 'Know your numbers. Own your decisions.',
+        intro: 'Most trade business owners find out how profitable they were twelve months ago, at tax time. Tradewise gives you real-time financial visibility so you can make confident decisions today — not in hindsight.',
+        features: [
+            { title: 'Bookkeeping & Accounts', body: 'Clean, current books kept to a professional standard. Invoicing, accounts payable, bank reconciliations — all handled so nothing falls through the cracks.' },
+            { title: 'Monthly Financial Reporting', body: 'A clear P&L, balance sheet, and cash flow statement every month. In plain English, with context — not just a spreadsheet from your accountant.' },
+            { title: 'Cash Flow Management', body: 'We forecast your cash position weeks ahead, flag issues before they become crises, and help you build a cash buffer that keeps the business stable.' },
+            { title: 'Job & Project Profitability', body: 'Know which jobs are actually making money and which are quietly losing it. We track margins at the job level so you can price better and bid smarter.' },
+        ],
+        outcome: 'The result: you stop guessing and start leading — with the financial clarity every decision deserves.',
+    },
+    {
+        id: 'systems',
+        label: 'Systems & Operations',
+        headline: 'Build a business that runs without you in it.',
+        intro: 'A business that depends entirely on the owner isn\'t a business — it\'s a job. Tradewise builds the operational backbone that lets your business function, grow, and eventually sell, whether you\'re present or not.',
+        features: [
+            { title: 'Standard Operating Procedures', body: 'We document every key process in your business — from job kickoff to invoicing — in clear, simple SOPs your team can actually follow.' },
+            { title: 'Job Management & Software', body: 'We implement and optimise the right trade job management platform for your business, and train your team to use it properly.' },
+            { title: 'Operational Workflows', body: 'End-to-end process mapping across scheduling, materials, quoting, and delivery — so nothing gets dropped and every job runs to a standard.' },
+            { title: 'Business Process Design', body: 'As your business grows, your processes need to evolve. We audit, redesign, and optimise workflows at every stage of your growth journey.' },
+        ],
+        outcome: 'The result: a systemised operation that a buyer will pay a premium for — and that gives you your life back in the meantime.',
+    },
+    {
+        id: 'marketing',
+        label: 'Marketing & Growth',
+        headline: 'Attract better clients. Win better work.',
+        intro: 'Most trade businesses grow on referrals alone — which means unpredictable pipelines and no control over who walks through the door. Tradewise builds a marketing engine that brings the right clients to you, consistently.',
+        features: [
+            { title: 'Brand Positioning', body: 'We help you articulate what makes your business different — and build a brand that commands respect and justifies premium pricing.' },
+            { title: 'Digital Presence', body: 'Website, Google Business Profile, SEO, and social — all aligned to your brand and optimised to convert visitors into leads.' },
+            { title: 'Lead Generation', body: 'Paid and organic strategies that put your business in front of the right customers at the right time — not just anyone with a search bar.' },
+            { title: 'Customer Acquisition & Retention', body: 'We build the systems to follow up quotes, re-engage past customers, and turn one-off jobs into long-term relationships.' },
+        ],
+        outcome: 'The result: a consistent pipeline of quality work — so you can afford to say no to the jobs that aren\'t worth your time.',
+    },
+];
+---
+
+<MainLayout
+    title="Our Services | Tradewise Group"
+    description="Tradewise embeds HR, Finance, Systems, and Marketing specialists into your trade business — handling every function that slows you down."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    What We Do
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                    One team. Every function.
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Tradewise provides four core service areas that cover every part of your business that
+                    isn't the trade itself. We embed our team into yours and handle the functions that
+                    drain your time, cloud your decisions, and hold your business back from its real value.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Nav -->
+    <div class="bg-forge-black sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6">
+            <nav class="flex overflow-x-auto gap-0">
+                {services.map(s => (
+                    <a
+                        href={`#${s.id}`}
+                        class="shrink-0 text-white/50 hover:text-white text-sm font-semibold px-6 py-4 border-b-2 border-transparent hover:border-momentum-amber transition-all duration-150"
+                    >
+                        {s.label}
+                    </a>
+                ))}
+            </nav>
+        </div>
+    </div>
+
+    <!-- Services -->
+    {services.map((service, i) => (
+        <section
+            id={service.id}
+            class={i % 2 === 0 ? 'bg-concrete' : 'bg-white'}
+        >
+            <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+                    <!-- Left: Intro -->
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">
+                            {service.label}
+                        </p>
+                        <h2 class="font-heading text-3xl md:text-4xl font-bold text-forge-black mb-6">
+                            {service.headline}
+                        </h2>
+                        <p class="text-forge-black/60 text-lg leading-relaxed mb-8">
+                            {service.intro}
+                        </p>
+                        <div class="border-l-4 border-momentum-amber pl-5">
+                            <p class="text-forge-black/70 text-sm italic leading-relaxed">
+                                {service.outcome}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Features -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {service.features.map(f => (
+                            <div class="bg-tradewise-navy/5 rounded-lg p-6">
+                                <h3 class="font-semibold text-forge-black mb-2 text-sm">{f.title}</h3>
+                                <p class="text-forge-black/55 text-sm leading-relaxed">{f.body}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    ))}
+
+    <!-- CTA -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+                Ready to hand over the parts you hate?
+            </h2>
+            <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+                Start with a free valuation session. We'll show you exactly where the gaps are
+                and what it would take to close them.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Valuation Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

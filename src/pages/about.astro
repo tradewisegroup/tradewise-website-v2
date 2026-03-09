@@ -1,0 +1,199 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const values = [
+    {
+        title: 'Tradies First',
+        body: 'We exist to serve trade business owners — not corporates, not consultants, not investors. Every decision we make is filtered through one question: does this help our clients build better businesses?',
+    },
+    {
+        title: 'Outcomes Over Activity',
+        body: 'We\'re not interested in busy work. We measure ourselves on results — revenue growth, margin improvement, time returned to owners, and businesses successfully sold. Activity without outcome is just noise.',
+    },
+    {
+        title: 'Honesty, Always',
+        body: 'We\'ll tell you if we can\'t help. We\'ll tell you if you\'re not ready. We\'ll tell you if something isn\'t working. We\'d rather have a hard conversation early than a bad outcome later.',
+    },
+    {
+        title: 'Embedded, Not Distant',
+        body: 'We don\'t believe in consulting from a distance. Our team works in your business, in your systems, alongside your people. That\'s what makes the difference between advice and actual change.',
+    },
+];
+
+const team = [
+    {
+        name: 'Team Member Name',
+        role: 'Founder & CEO',
+        bio: 'Bio coming soon. This placeholder will be replaced with the founder\'s story, background, and what drove them to build Tradewise Group.',
+    },
+    {
+        name: 'Team Member Name',
+        role: 'Head of Finance',
+        bio: 'Bio coming soon. Background in trade business finance, management accounting, and helping owners understand their numbers for the first time.',
+    },
+    {
+        name: 'Team Member Name',
+        role: 'Head of People & HR',
+        bio: 'Bio coming soon. Specialist in trade workforce management, award interpretation, and building high-performance teams in blue-collar environments.',
+    },
+    {
+        name: 'Team Member Name',
+        role: 'Head of Systems & Operations',
+        bio: 'Bio coming soon. Expert in operational process design, job management platforms, and building businesses that run without the owner as the bottleneck.',
+    },
+];
+---
+
+<MainLayout
+    title="About Tradewise Group | Our Story and Team"
+    description="Tradewise Group was built by people who understand trade businesses — from the inside. Learn about our story, our values, and the team behind the work."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    Our Story
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                    Built for tradies, by people who know the game.
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Tradewise Group was founded on a straightforward observation: trade business owners
+                    are exceptional at their trade — and chronically underserved when it comes to the
+                    business side of running a business. We set out to fix that.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <section class="bg-concrete">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+                <div>
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">The Problem We Saw</p>
+                    <h2 class="font-heading text-3xl font-bold text-forge-black mb-6">
+                        Great tradespeople. Struggling businesses.
+                    </h2>
+                    <div class="flex flex-col gap-4 text-forge-black/65 leading-relaxed text-[15px]">
+                        <p>
+                            Australia's trade sector is the backbone of the built environment. Plumbers,
+                            electricians, builders, concreters — these are the people who keep homes running,
+                            hospitals functioning, and cities growing. And yet the owners of these businesses
+                            are consistently undervalued, undersupported, and overworked.
+                        </p>
+                        <p>
+                            Most trade business owners start as skilled tradespeople. They're exceptional at
+                            what they do on the tools. But running a business requires a completely different
+                            skill set — one that nobody teaches you and that doesn't come with the trade
+                            licence.
+                        </p>
+                        <p>
+                            The result is a generation of business owners who are asset-rich and time-poor,
+                            building significant value in their businesses while having no clear path to
+                            realising it.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">Why We Exist</p>
+                    <h2 class="font-heading text-3xl font-bold text-forge-black mb-6">
+                        The business support layer that was always missing.
+                    </h2>
+                    <div class="flex flex-col gap-4 text-forge-black/65 leading-relaxed text-[15px]">
+                        <p>
+                            Tradewise Group was founded to be the business management partner that trade
+                            owners have always needed but never had access to. Not a consultant who visits
+                            once a quarter. Not a bookkeeper who files the BAS. A dedicated, embedded team
+                            that handles every business function — so the owner can do what they're actually
+                            good at.
+                        </p>
+                        <p>
+                            We work with trade business owners across HR, Finance, Systems, and Marketing —
+                            the four pillars that determine whether a business can grow, scale, and
+                            eventually be sold for what it's truly worth.
+                        </p>
+                        <p>
+                            Our goal is simple: to return time, clarity, and value to the people who built
+                            something real — and to help them exit on their terms when the time comes.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">How We Work</p>
+                <h2 class="font-heading text-3xl font-bold">Our Values</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {values.map(v => (
+                    <div class="border border-white/10 rounded-lg p-8 hover:border-momentum-amber/40 transition-colors duration-200">
+                        <h3 class="font-heading text-xl font-bold text-white mb-3">{v.title}</h3>
+                        <p class="text-white/55 leading-relaxed text-[15px]">{v.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">The Team</p>
+                <h2 class="font-heading text-3xl font-bold text-forge-black">
+                    The people behind the work.
+                </h2>
+                <p class="text-forge-black/50 mt-3 text-[15px]">
+                    Team bios and photos coming soon.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {team.map(member => (
+                    <div class="flex flex-col">
+                        <!-- Avatar placeholder -->
+                        <div class="w-full aspect-square bg-concrete rounded-lg mb-5 flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full bg-tradewise-navy/20 flex items-center justify-center">
+                                <span class="font-heading font-bold text-tradewise-navy/40 text-xl">?</span>
+                            </div>
+                        </div>
+                        <h3 class="font-heading font-bold text-forge-black">{member.name}</h3>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mt-1 mb-3">{member.role}</p>
+                        <p class="text-forge-black/50 text-sm leading-relaxed">{member.bio}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+                Come and meet us.
+            </h2>
+            <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+                The best way to understand what Tradewise can do for your business is a real conversation.
+                Book a free session and meet the team.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Valuation Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

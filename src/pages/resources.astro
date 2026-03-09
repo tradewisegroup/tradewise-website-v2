@@ -1,0 +1,165 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const posts = [
+    {
+        title: 'Profit First for Tradies: How to Stop Going Broke on a Full Order Book',
+        description: 'The Profit First methodology flips the traditional accounting formula on its head — and it\'s one of the most powerful things a trade business owner can implement today.',
+        category: 'Finance',
+        date: '2026-03-01',
+        href: '/blog/profit-first-for-tradies',
+        ready: true,
+    },
+    {
+        title: 'The 5 Systems Every Trade Business Needs Before You Can Sell It',
+        description: 'Buyers don\'t pay a premium for potential. They pay for proof. Here are the five operational systems that determine whether your business is sellable — and at what price.',
+        category: 'Systems',
+        date: 'Coming soon',
+        href: null,
+        ready: false,
+    },
+    {
+        title: 'What Your Accountant Isn\'t Telling You About Your Business Valuation',
+        description: 'Most trade business owners have no idea what their business is actually worth — or why. This article breaks down the real drivers of valuation in plain English.',
+        category: 'Valuation',
+        date: 'Coming soon',
+        href: null,
+        ready: false,
+    },
+    {
+        title: 'How to Hire a Site Supervisor Who Actually Runs the Job',
+        description: 'Bad hires in leadership roles cost more than money. Here\'s the process we use to hire, onboard, and retain site supervisors who genuinely take the load off the owner.',
+        category: 'HR & People',
+        date: 'Coming soon',
+        href: null,
+        ready: false,
+    },
+    {
+        title: 'The Trade Business Owner\'s Guide to Cash Flow Forecasting',
+        description: 'Cash flow surprises kill good businesses. Learn how to forecast 8–12 weeks ahead so you\'re never caught short — and always know what decisions you can afford to make.',
+        category: 'Finance',
+        date: 'Coming soon',
+        href: null,
+        ready: false,
+    },
+    {
+        title: 'Why Your Referral-Only Marketing Strategy Will Eventually Break Your Business',
+        description: 'Referrals are great — until they\'re not. Building a predictable lead pipeline is what separates businesses that scale from businesses that stall.',
+        category: 'Marketing',
+        date: 'Coming soon',
+        href: null,
+        ready: false,
+    },
+];
+
+const categoryColours: Record<string, string> = {
+    'Finance': 'bg-growth-teal/10 text-growth-teal',
+    'Systems': 'bg-tradewise-navy/10 text-tradewise-navy',
+    'Valuation': 'bg-momentum-amber/10 text-momentum-amber',
+    'HR & People': 'bg-growth-teal/10 text-growth-teal',
+    'Marketing': 'bg-tradewise-navy/10 text-tradewise-navy',
+};
+---
+
+<MainLayout
+    title="Free Resources & Tools | Tradewise Group"
+    description="Practical guides, frameworks, and tools to help trade business owners grow, systemise, and exit on their terms."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    Knowledge Base
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
+                    Free Resources & Tools
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Practical guides and frameworks written for trade business owners — not accountants,
+                    not consultants. Take what's useful. Implement it yourself. Or let us do it for you.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Posts Grid -->
+    <section class="bg-concrete py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Free tool callout -->
+            <div class="bg-white border border-momentum-amber/30 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-14">
+                <div>
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Free Tool</p>
+                    <h2 class="font-heading text-xl font-bold text-forge-black mb-1">Exit Readiness Scorecard</h2>
+                    <p class="text-forge-black/55 text-sm">Answer 6 questions and get an estimated valuation range for your business in under 3 minutes.</p>
+                </div>
+                <a
+                    href="/scorecard"
+                    class="shrink-0 bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                >
+                    Take the Scorecard →
+                </a>
+            </div>
+
+            <!-- Articles -->
+            <h2 class="font-heading text-2xl font-bold text-forge-black mb-8">Articles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {posts.map(post => (
+                    <article class={`bg-white rounded-xl overflow-hidden shadow-sm flex flex-col ${!post.ready ? 'opacity-60' : ''}`}>
+                        <!-- Category bar -->
+                        <div class="h-1 bg-momentum-amber"></div>
+
+                        <div class="p-7 flex flex-col flex-1">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class={`text-xs font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full ${categoryColours[post.category] ?? 'bg-forge-black/5 text-forge-black/50'}`}>
+                                    {post.category}
+                                </span>
+                                <span class="text-forge-black/30 text-xs">{post.date}</span>
+                            </div>
+
+                            <h3 class="font-heading font-bold text-forge-black text-lg leading-snug mb-3">
+                                {post.title}
+                            </h3>
+                            <p class="text-forge-black/55 text-sm leading-relaxed flex-1 mb-6">
+                                {post.description}
+                            </p>
+
+                            {post.ready && post.href ? (
+                                <a
+                                    href={post.href}
+                                    class="text-sm font-semibold text-growth-teal hover:text-tradewise-navy transition-colors duration-150"
+                                >
+                                    Read article →
+                                </a>
+                            ) : (
+                                <span class="text-xs text-forge-black/30 font-medium tracking-wide uppercase">Coming soon</span>
+                            )}
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-tradewise-navy text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-heading text-3xl md:text-4xl font-bold mb-4">
+                Rather have us do it for you?
+            </h2>
+            <p class="text-white/60 text-lg mb-8 max-w-xl mx-auto">
+                Every article on this page is something we implement inside our clients' businesses.
+                Book a free session to find out what would have the biggest impact on yours.
+            </p>
+            <a
+                href="/valuation"
+                class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book Your Free Valuation Session
+            </a>
+        </div>
+    </section>
+
+</MainLayout>

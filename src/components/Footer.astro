@@ -1,0 +1,97 @@
+---
+const sitemapLinks = [
+    {
+        heading: 'Services',
+        links: [
+            { label: 'Business Sales', href: '/services/business-sales' },
+            { label: 'Business Valuations', href: '/services/valuations' },
+            { label: 'Buyer Representation', href: '/services/buyer-representation' },
+            { label: 'Exit Planning', href: '/services/exit-planning' },
+        ],
+    },
+    {
+        heading: 'Company',
+        links: [
+            { label: 'Who We Help', href: '/who-we-help' },
+            { label: 'How It Works', href: '/how-it-works' },
+            { label: 'About', href: '/about' },
+            { label: 'Resources', href: '/resources' },
+        ],
+    },
+    {
+        heading: 'Legal',
+        links: [
+            { label: 'Privacy Policy', href: '/privacy-policy' },
+            { label: 'Terms of Use', href: '/terms-of-use' },
+            { label: 'Disclaimer', href: '/disclaimer' },
+        ],
+    },
+];
+---
+
+<footer class="bg-tradewise-navy text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+
+        <!-- Top section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-12 border-b border-white/10">
+
+            <!-- Brand + Contact -->
+            <div class="lg:col-span-2">
+                <a href="/" class="font-heading text-xl tracking-widest font-bold text-white">
+                    TRADEWISE GROUP
+                </a>
+                <p class="mt-4 text-sm text-white/60 leading-relaxed max-w-xs">
+                    Helping Australian business owners achieve the best possible outcome when buying or selling a business.
+                </p>
+                <div class="mt-6 flex flex-col gap-2">
+                    <a
+                        href="tel:1300872334"
+                        class="text-sm text-white/80 hover:text-white transition-colors duration-200"
+                    >
+                        1300 TRADEWISE
+                    </a>
+                    <a
+                        href="mailto:hello@tradewisegroup.com.au"
+                        class="text-sm text-white/80 hover:text-white transition-colors duration-200"
+                    >
+                        hello@tradewisegroup.com.au
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sitemap -->
+            {sitemapLinks.map(section => (
+                <div>
+                    <h3 class="text-xs font-semibold tracking-widest uppercase text-white/40 mb-4">
+                        {section.heading}
+                    </h3>
+                    <ul class="flex flex-col gap-3">
+                        {section.links.map(link => (
+                            <li>
+                                <a
+                                    href={link.href}
+                                    class="text-sm text-white/70 hover:text-white transition-colors duration-200"
+                                >
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-white/40">
+                &copy; 2026 Tradewise Group Pty Ltd. All rights reserved.
+            </p>
+            <a
+                href="/valuation"
+                class="bg-momentum-amber text-white text-sm font-semibold px-5 py-2.5 rounded hover:brightness-110 transition-all duration-200"
+            >
+                Book a Free Valuation
+            </a>
+        </div>
+    </div>
+</footer>
