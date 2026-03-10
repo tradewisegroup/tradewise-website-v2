@@ -218,6 +218,10 @@ const situationOptions = [
                     </div>
                 </div>
 
+                <p class="text-forge-black/35 text-xs italic leading-relaxed mb-6">
+                    <strong class="not-italic font-semibold">Disclaimer:</strong> This tool provides an indicative estimate only and does not constitute a formal business valuation, financial advice, legal advice, or investment advice. Results are based solely on the information you provide and do not account for market conditions, due diligence findings, buyer appetite, or other factors that influence actual sale outcomes. TradeWise Group Pty Ltd makes no representation or warranty as to the accuracy of these estimates. You should seek independent advice from a qualified business valuer, accountant, and/or legal adviser before making any decisions relating to the sale or transfer of your business.
+                </p>
+
                 <div class="flex justify-end">
                     <button
                         id="btn-step1-next"
@@ -469,6 +473,10 @@ const situationOptions = [
 
                         <p id="err-hubspot" class="text-red-500 text-sm hidden">
                             Something went wrong submitting your details — please try again.
+                        </p>
+
+                        <p class="text-forge-black/30 text-xs italic leading-relaxed border-t border-forge-black/8 pt-4">
+                            <strong class="not-italic font-semibold">Disclaimer:</strong> This tool provides an indicative estimate only and does not constitute a formal business valuation, financial advice, legal advice, or investment advice. Results are based solely on the information you provide and do not account for market conditions, due diligence findings, buyer appetite, or other factors that influence actual sale outcomes. TradeWise Group Pty Ltd makes no representation or warranty as to the accuracy of these estimates. You should seek independent advice from a qualified business valuer, accountant, and/or legal adviser before making any decisions relating to the sale or transfer of your business.
                         </p>
 
                         <div class="flex justify-between items-center pt-2">
@@ -1093,7 +1101,7 @@ document.getElementById('btn-pdf').addEventListener('click', async function() {
     doc.setTextColor(180, 180, 180);
     doc.setFontSize(6.5);
     doc.setFont('helvetica', 'italic');
-    var disclaimer = 'This report is indicative only and should not be relied upon as a formal business valuation. Actual valuations depend on verified financials, market conditions, and other factors. TradeWise Group recommends seeking professional advice before making any decisions based on this estimate.';
+    var disclaimer = 'Disclaimer: This report provides an indicative estimate only and does not constitute a formal business valuation, financial advice, legal advice, or investment advice. Results are based solely on the information provided and do not account for market conditions, due diligence findings, buyer appetite, or other factors that influence actual sale outcomes. TradeWise Group Pty Ltd makes no representation or warranty as to the accuracy of these estimates. You should seek independent advice from a qualified business valuer, accountant, and/or legal adviser before making any decisions relating to the sale or transfer of your business.';
     var lines = doc.splitTextToSize(disclaimer, W - pad * 2);
     doc.text(lines, pad, y);
 
