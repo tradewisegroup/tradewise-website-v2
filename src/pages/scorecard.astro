@@ -3,498 +3,1147 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 const questions = [
     {
-        driver: 'Recurring Revenue',
-        question: 'How much of your revenue is recurring, retainer-based, or comes from repeat customers?',
+        driver: 'Owner Reliance',
+        question: 'How dependent is the day-to-day running of your business on you personally?',
+        service: 'Our Systems & Processes service is designed to reduce owner dependency and build a self-managing business.',
         options: [
-            { label: 'Not Started', hint: 'Almost all revenue is one-off or project-based.' },
-            { label: 'In Progress', hint: 'Some recurring work, but nothing formal or contractual.' },
-            { label: 'Fully Systematised', hint: 'Majority of revenue is contracted, retainer, or highly predictable.' },
+            "I'm involved in everything — if I'm not there, things stop.",
+            "I have staff who handle tasks, but key decisions still come back to me.",
+            "I have a management layer that runs operations independently — I work on the business, not in it.",
+        ],
+    },
+    {
+        driver: 'Recurring Revenue',
+        question: 'How predictable and recurring is your revenue?',
+        service: 'Our Revenue Strategy service helps you build contracted, predictable income streams that buyers pay a premium for.',
+        options: [
+            "Almost all work is one-off or reactive — we win it job by job.",
+            "We have some repeat customers and service agreements, but nothing formally contracted.",
+            "The majority of our revenue comes from contracts, retainers, or highly predictable repeat customers.",
         ],
     },
     {
         driver: 'Systems & Processes',
-        question: 'How well are your day-to-day operations documented and systematised?',
+        question: 'How well documented and systematised are your day-to-day operations?',
+        service: 'Our Operational Systems service will document and systematise your key workflows so the business runs without you.',
         options: [
-            { label: 'Not Started', hint: 'Everything lives in my head — the business depends on me.' },
-            { label: 'In Progress', hint: 'Some processes are written down, but not consistently followed.' },
-            { label: 'Fully Systematised', hint: 'SOPs exist for all key functions and staff follow them independently.' },
+            "Most things live in my head — there are no formal procedures.",
+            "Some processes are written down but aren't consistently followed.",
+            "We have SOPs for all key functions and staff follow them independently.",
         ],
     },
     {
-        driver: 'Team & Management',
-        question: 'How capable and independent is your team without your direct involvement?',
+        driver: 'Team & Leadership',
+        question: 'How capable and independent is your leadership team?',
+        service: 'Our Team & Leadership service helps you build a management structure that operates confidently without you.',
         options: [
-            { label: 'Not Started', hint: 'I\'m involved in every decision — nothing happens without me.' },
-            { label: 'In Progress', hint: 'I have some trusted staff, but key decisions still come back to me.' },
-            { label: 'Fully Systematised', hint: 'I have a management layer that runs operations day-to-day.' },
+            "It's just me, or my staff need constant guidance to get things done.",
+            "I have some trusted senior staff, but no formal management structure.",
+            "I have a capable management team that handles hiring, performance, and operations.",
         ],
     },
     {
         driver: 'Financial Clarity',
-        question: 'How clear and up-to-date is your financial reporting and profit visibility?',
+        question: 'How clear and up-to-date is your financial visibility?',
+        service: 'Our Financial Clarity service delivers real-time P&L, cash flow forecasts, and job-level profitability tracking.',
         options: [
-            { label: 'Not Started', hint: 'I find out how profitable I am when the accountant does tax time.' },
-            { label: 'In Progress', hint: 'I check numbers occasionally but don\'t have a regular reporting rhythm.' },
-            { label: 'Fully Systematised', hint: 'I have monthly P&L, cash flow forecasts, and job-level profitability tracked.' },
+            "I find out how profitable I am at tax time — cash flow is reactive.",
+            "I check the numbers occasionally but don't have a regular reporting rhythm.",
+            "I have monthly P&L, cash flow forecasts, and job-level profitability tracked in real time.",
         ],
     },
     {
         driver: 'Customer Concentration',
         question: 'How spread is your revenue across your customer base?',
+        service: 'Our Growth & Marketing service diversifies your client base and reduces the concentration risk that scares buyers.',
         options: [
-            { label: 'Not Started', hint: 'One or two clients make up the majority of my revenue.' },
-            { label: 'In Progress', hint: 'I have a handful of good clients but still rely heavily on a few.' },
-            { label: 'Fully Systematised', hint: 'No single client represents more than 15–20% of total revenue.' },
+            "One or two clients make up more than 50% of our revenue.",
+            "I have a handful of good clients but still rely heavily on a few.",
+            "No single client represents more than 15–20% of total revenue.",
         ],
     },
     {
         driver: 'Growth & Scalability',
         question: 'How well-positioned is your business to grow without you personally doing more work?',
+        service: 'Our Scale & Exit service prepares your business model for sustainable, owner-independent growth.',
         options: [
-            { label: 'Not Started', hint: 'Growth means I personally work more hours — I\'m the bottleneck.' },
-            { label: 'In Progress', hint: 'I could grow, but I\'d need to hire and train before I could step back.' },
-            { label: 'Fully Systematised', hint: 'The business model can scale — systems and team are ready for growth.' },
+            "Growth means I personally work more hours — I'm the bottleneck.",
+            "I could grow, but I'd need to hire and train significantly before stepping back.",
+            "Our systems, team, and model are ready to scale — we could take on more work today.",
         ],
     },
+    {
+        driver: 'Brand & Market Position',
+        question: "How strong is your business's reputation and brand in your market?",
+        service: 'Our Brand & Marketing service strengthens your market position and builds a consistent inbound lead pipeline.',
+        options: [
+            "Most work comes through word of mouth from my personal network.",
+            "We have a decent reputation, but our brand and marketing are inconsistent.",
+            "We have a strong brand, consistent marketing, and are seen as the go-to provider in our area.",
+        ],
+    },
+];
+
+const situationOptions = [
+    "I'm doing everything myself and just want things to run smoother.",
+    "I've got a good team and demand, but the back end is holding us back.",
+    "I'm thinking about selling in the next few years and want to maximise what I walk away with.",
+    "I love the trade but the business side is burning me out.",
 ];
 ---
 
 <MainLayout
-    title="Exit Readiness Scorecard | Tradewise Group"
-    description="Discover how exit-ready your trade business is and get a free estimated valuation range in under 3 minutes."
+    title="Business Valuation Scorecard | Tradewise Group"
+    description="Find out what your trade business is really worth. Get a free estimated valuation range in under 5 minutes using the same methodology used by trade business brokers and buyers."
 >
 
-    <!-- Header -->
+    <!-- ===================== HERO ===================== -->
     <section class="bg-tradewise-navy text-white py-20 md:py-28">
         <div class="max-w-3xl mx-auto px-6 text-center">
             <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
-                Free Tool
+                Free Valuation Tool
             </p>
-            <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6">
-                Exit Readiness Scorecard
+            <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                Find Out What Your Trade Business is
+                <span style="color:#D4820A;font-style:italic"> Really</span> Worth.
             </h1>
-            <p class="text-white/70 text-lg leading-relaxed">
-                Answer 6 quick questions about your business. We'll score your exit readiness across
-                the key value drivers that buyers and investors care about — and give you a free
-                estimated valuation range.
+            <p class="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
+                Answer a few questions about your finances and operations. We'll calculate your
+                estimated valuation range using the same methodology used by trade business
+                brokers and buyers — in under 5 minutes.
             </p>
         </div>
     </section>
 
-    <!-- Scorecard Form -->
-    <section class="bg-concrete py-16 md:py-24">
+    <!-- ===================== FORM AREA ===================== -->
+    <section class="bg-concrete py-16 md:py-24 min-h-screen">
         <div class="max-w-2xl mx-auto px-6">
 
-            <!-- Progress Bar -->
-            <div id="progress-container" class="mb-10">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm text-forge-black/50 font-medium">Question <span id="current-step">1</span> of 6</span>
-                    <span class="text-sm text-forge-black/50 font-medium"><span id="progress-pct">0</span>% complete</span>
-                </div>
-                <div class="w-full bg-forge-black/10 rounded-full h-1.5">
-                    <div id="progress-bar" class="bg-momentum-amber h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            <!-- Step Indicator -->
+            <div class="mb-10" id="step-indicator">
+                <div class="flex items-center">
+                    {['Financial Details', 'Assessment', 'Your Details', 'Results'].map((label, i) => (
+                        <div class={`flex items-center ${i < 3 ? 'flex-1' : ''}`}>
+                            <div class="flex flex-col items-center">
+                                <div
+                                    id={`step-dot-${i + 1}`}
+                                    class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300"
+                                    style={i === 0 ? 'background:#1E3A5F;color:white' : 'background:#E5E0D8;color:#9CA3AF'}
+                                >
+                                    {i + 1}
+                                </div>
+                                <span
+                                    id={`step-label-${i + 1}`}
+                                    class="text-xs font-medium mt-1.5 hidden sm:block whitespace-nowrap"
+                                    style={i === 0 ? 'color:#1E3A5F' : 'color:#9CA3AF'}
+                                >
+                                    {label}
+                                </span>
+                            </div>
+                            {i < 3 && (
+                                <div
+                                    id={`step-line-${i + 1}`}
+                                    class="flex-1 h-px mx-3 -mt-5 sm:-mt-5 transition-all duration-300"
+                                    style="background:#E5E0D8"
+                                ></div>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
 
-            <!-- Questions -->
-            <form id="scorecard-form">
-                {questions.map((q, i) => (
-                    <div
-                        class="question-step"
-                        data-step={i}
-                        style={i === 0 ? '' : 'display:none'}
+            <!-- =========== STEP 1: Financial Input =========== -->
+            <div id="step-1">
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">Step 1 of 4</p>
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Financial Overview</h2>
+                    <p class="text-forge-black/50 text-sm mb-8 leading-relaxed">
+                        Use your most recent full financial year. These three numbers form the
+                        foundation of your valuation. Your data is never stored or shared.
+                    </p>
+
+                    <div class="flex flex-col gap-7">
+                        <!-- Revenue -->
+                        <div>
+                            <label for="f-revenue" class="block text-sm font-semibold text-forge-black mb-1">
+                                Annual Revenue <span class="text-red-400">*</span>
+                            </label>
+                            <p class="text-forge-black/40 text-xs mb-2">Total business income before any expenses.</p>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 text-sm font-semibold select-none">$</span>
+                                <input
+                                    type="number" id="f-revenue" min="0" placeholder="e.g. 2500000"
+                                    class="w-full border border-forge-black/20 rounded-lg pl-8 pr-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                            </div>
+                            <p id="err-revenue" class="text-red-500 text-xs mt-1.5 hidden">Please enter your annual revenue.</p>
+                        </div>
+
+                        <!-- Net Profit -->
+                        <div>
+                            <label for="f-profit" class="block text-sm font-semibold text-forge-black mb-1">
+                                Annual Net Profit <span class="text-forge-black/40 font-normal">(before tax & your wage)</span>
+                                <span class="text-red-400">*</span>
+                            </label>
+                            <p class="text-forge-black/40 text-xs mb-2">
+                                Your business profit before paying yourself or paying tax. Often called EBIT or adjusted NPBT.
+                            </p>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 text-sm font-semibold select-none">$</span>
+                                <input
+                                    type="number" id="f-profit" min="0" placeholder="e.g. 450000"
+                                    class="w-full border border-forge-black/20 rounded-lg pl-8 pr-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                            </div>
+                            <p id="err-profit" class="text-red-500 text-xs mt-1.5 hidden">Please enter your net profit.</p>
+                        </div>
+
+                        <!-- Salary -->
+                        <div>
+                            <label for="f-salary" class="block text-sm font-semibold text-forge-black mb-1">
+                                Your Annual Salary & Perks <span class="text-red-400">*</span>
+                            </label>
+                            <p class="text-forge-black/40 text-xs mb-2">
+                                What you pay yourself — wages, drawings, super, vehicle, and any personal expenses run through the business.
+                            </p>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 text-sm font-semibold select-none">$</span>
+                                <input
+                                    type="number" id="f-salary" min="0" placeholder="e.g. 120000"
+                                    class="w-full border border-forge-black/20 rounded-lg pl-8 pr-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                            </div>
+                            <p id="err-salary" class="text-red-500 text-xs mt-1.5 hidden">Please enter your salary & perks.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button
+                        id="btn-step1-next"
+                        class="bg-tradewise-navy text-white font-semibold text-sm px-8 py-3 rounded-lg hover:brightness-110 transition-all duration-200"
                     >
+                        Next: The Assessment →
+                    </button>
+                </div>
+            </div>
+
+            <!-- =========== STEP 2: 8 Questions =========== -->
+            <div id="step-2" style="display:none">
+
+                <!-- Question sub-progress -->
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm text-forge-black/50 font-medium">
+                        Question <span id="q-num">1</span> of 8
+                    </span>
+                    <span class="text-sm text-forge-black/50 font-medium">
+                        <span id="q-pct">0</span>% complete
+                    </span>
+                </div>
+                <div class="w-full bg-forge-black/10 rounded-full h-1 mb-8">
+                    <div id="q-bar" class="bg-momentum-amber h-1 rounded-full transition-all duration-500" style="width:0%"></div>
+                </div>
+
+                {questions.map((q, i) => (
+                    <div class="q-card" data-qi={i} style={i === 0 ? '' : 'display:none'}>
                         <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
                             <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">
-                                Value Driver {i + 1} — {q.driver}
+                                Value Driver {i + 1} of 8 — {q.driver}
                             </p>
                             <h2 class="font-heading text-xl font-bold text-forge-black mb-6">
                                 {q.question}
                             </h2>
                             <div class="flex flex-col gap-3">
                                 {q.options.map((opt, j) => {
-                                    const scores = [1, 5, 10];
+                                    const vals = [2, 6, 12.5];
                                     return (
-                                        <label class="option-label flex items-start gap-4 border border-forge-black/10 rounded-lg p-4 cursor-pointer hover:border-momentum-amber/50 transition-colors duration-150 has-[:checked]:border-momentum-amber has-[:checked]:bg-momentum-amber/5">
+                                        <label class="flex items-start gap-4 border border-forge-black/10 rounded-lg p-4 cursor-pointer hover:border-tradewise-navy/30 transition-colors duration-150 has-[:checked]:border-tradewise-navy has-[:checked]:bg-tradewise-navy/5">
                                             <input
                                                 type="radio"
                                                 name={`q${i}`}
-                                                value={scores[j]}
-                                                data-label={opt.label}
-                                                class="mt-1 accent-momentum-amber shrink-0"
+                                                value={String(vals[j])}
+                                                class="mt-0.5 shrink-0 accent-tradewise-navy"
                                             />
-                                            <div>
-                                                <p class="font-semibold text-forge-black text-sm">{opt.label}</p>
-                                                <p class="text-forge-black/50 text-sm mt-0.5">{opt.hint}</p>
-                                            </div>
+                                            <p class="text-forge-black text-sm font-medium leading-relaxed">{opt}</p>
                                         </label>
                                     );
                                 })}
                             </div>
                         </div>
 
-                        <div class="flex justify-between">
-                            {i > 0 ? (
-                                <button
-                                    type="button"
-                                    class="prev-btn text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
-                                    data-step={i}
-                                >
-                                    ← Back
-                                </button>
-                            ) : <span></span>}
+                        <div class="flex justify-between items-center">
+                            <button
+                                class="q-prev-btn text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
+                                data-qi={i}
+                            >
+                                ← Back
+                            </button>
                             {i < questions.length - 1 ? (
                                 <button
-                                    type="button"
-                                    class="next-btn bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
-                                    data-step={i}
+                                    class="q-next-btn bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded-lg hover:brightness-110 transition-all duration-200"
+                                    data-qi={i}
                                 >
                                     Next →
                                 </button>
                             ) : (
                                 <button
-                                    type="button"
-                                    id="show-revenue-btn"
-                                    class="bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
-                                    data-step={i}
+                                    id="btn-step2-done"
+                                    class="bg-tradewise-navy text-white font-semibold text-sm px-6 py-3 rounded-lg hover:brightness-110 transition-all duration-200"
+                                    data-qi={i}
                                 >
-                                    Calculate My Score →
+                                    Next: Your Details →
                                 </button>
                             )}
                         </div>
                     </div>
                 ))}
+            </div>
 
-                <!-- Revenue Step -->
-                <div id="revenue-step" style="display:none">
-                    <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
-                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">
-                            Almost There
-                        </p>
-                        <h2 class="font-heading text-xl font-bold text-forge-black mb-2">
-                            What is your approximate annual revenue?
-                        </h2>
-                        <p class="text-forge-black/50 text-sm mb-6">
-                            This is used only to calculate your estimated valuation range. It will not be stored or shared.
-                        </p>
-                        <div class="flex flex-col gap-4">
+            <!-- =========== STEP 3: Lead Capture =========== -->
+            <div id="step-3" style="display:none">
+                <div class="bg-white rounded-xl p-8 shadow-sm mb-6">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">Step 3 of 4</p>
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">
+                        Almost there — enter your details to unlock your valuation.
+                    </h2>
+                    <p class="text-forge-black/50 text-sm mb-8">
+                        Your results are calculated and ready. Enter your details below and we'll display your
+                        personalised valuation report immediately.
+                    </p>
+
+                    <form id="lead-form" novalidate class="flex flex-col gap-5">
+
+                        <!-- First / Last Name -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-semibold text-forge-black mb-2">
-                                    Annual Revenue
+                                <label for="lf-first" class="block text-sm font-semibold text-forge-black mb-1">
+                                    First Name <span class="text-red-400">*</span>
                                 </label>
-                                <div class="flex gap-3">
+                                <input
+                                    type="text" id="lf-first" name="firstname" autocomplete="given-name"
+                                    class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
+                            </div>
+                            <div>
+                                <label for="lf-last" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Last Name <span class="text-red-400">*</span>
+                                </label>
+                                <input
+                                    type="text" id="lf-last" name="lastname" autocomplete="family-name"
+                                    class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
+                            </div>
+                        </div>
+
+                        <!-- Email / Phone -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="lf-email" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Email <span class="text-red-400">*</span>
+                                </label>
+                                <input
+                                    type="email" id="lf-email" name="email" autocomplete="email"
+                                    class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Please enter a valid email</p>
+                            </div>
+                            <div>
+                                <label for="lf-phone" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Phone Number <span class="text-red-400">*</span>
+                                </label>
+                                <input
+                                    type="tel" id="lf-phone" name="phone" autocomplete="tel"
+                                    class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
+                            </div>
+                        </div>
+
+                        <!-- Company / Trade Type -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="lf-company" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Company Name <span class="text-red-400">*</span>
+                                </label>
+                                <input
+                                    type="text" id="lf-company" name="company" autocomplete="organization"
+                                    class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-tradewise-navy transition-colors duration-150"
+                                />
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
+                            </div>
+                            <div>
+                                <label for="lf-trade" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Trade Type <span class="text-red-400">*</span>
+                                </label>
+                                <div class="relative">
                                     <select
-                                        id="currency"
-                                        class="border border-forge-black/20 rounded px-3 py-3 text-sm text-forge-black bg-white focus:outline-none focus:border-momentum-amber"
+                                        id="lf-trade" name="trade_type"
+                                        class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black bg-white focus:outline-none focus:border-tradewise-navy transition-colors duration-150 appearance-none pr-10"
                                     >
-                                        <option value="AUD">AUD $</option>
-                                        <option value="NZD">NZD $</option>
-                                        <option value="USD">USD $</option>
-                                        <option value="GBP">GBP £</option>
+                                        <option value="">Select trade type...</option>
+                                        <option>Plumbing</option>
+                                        <option>Electrical</option>
+                                        <option>HVAC</option>
+                                        <option>Building/Construction</option>
+                                        <option>Painting</option>
+                                        <option>Roofing</option>
+                                        <option>Landscaping</option>
+                                        <option>Fire Services</option>
+                                        <option>Other</option>
                                     </select>
-                                    <input
-                                        type="number"
-                                        id="revenue-input"
-                                        placeholder="e.g. 1500000"
-                                        min="0"
-                                        class="flex-1 border border-forge-black/20 rounded px-4 py-3 text-sm text-forge-black focus:outline-none focus:border-momentum-amber"
-                                    />
+                                    <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-forge-black/40 text-xs">▼</span>
                                 </div>
-                                <p id="revenue-error" class="text-red-500 text-xs mt-2 hidden">
-                                    Please enter a valid revenue figure.
-                                </p>
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex justify-between">
-                        <button
-                            type="button"
-                            id="back-to-questions-btn"
-                            class="text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
-                        >
-                            ← Back
-                        </button>
-                        <button
-                            type="submit"
-                            class="bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
-                        >
-                            Show My Results →
-                        </button>
-                    </div>
-                </div>
-            </form>
 
-            <!-- Results Panel -->
-            <div id="results-panel" style="display:none">
-
-                <!-- Score Summary -->
-                <div class="bg-tradewise-navy text-white rounded-xl p-8 mb-6 text-center">
-                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">
-                        Your Exit Readiness Score
-                    </p>
-                    <div class="flex items-end justify-center gap-2 mb-2">
-                        <span id="result-score" class="font-heading text-7xl font-bold"></span>
-                        <span class="text-white/40 text-2xl mb-3 font-heading">/ 60</span>
-                    </div>
-                    <p id="result-label" class="text-white/70 text-lg mb-8"></p>
-
-                    <!-- Score Bar -->
-                    <div class="w-full bg-white/10 rounded-full h-2 mb-8">
-                        <div id="result-bar" class="bg-momentum-amber h-2 rounded-full transition-all duration-700" style="width:0%"></div>
-                    </div>
-
-                    <!-- Valuation Range -->
-                    <div class="border-t border-white/10 pt-8">
-                        <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-4">
-                            Estimated Valuation Range
-                        </p>
-                        <div class="flex justify-center items-center gap-4 flex-wrap">
+                        <!-- Employees / Location -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <p class="text-white/50 text-xs uppercase tracking-wide mb-1">Low Estimate</p>
-                                <p id="val-low" class="font-heading text-3xl font-bold text-white"></p>
+                                <label for="lf-employees" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Number of Employees <span class="text-red-400">*</span>
+                                </label>
+                                <div class="relative">
+                                    <select
+                                        id="lf-employees" name="num_employees"
+                                        class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black bg-white focus:outline-none focus:border-tradewise-navy transition-colors duration-150 appearance-none pr-10"
+                                    >
+                                        <option value="">Select range...</option>
+                                        <option>1-5</option>
+                                        <option>6-10</option>
+                                        <option>11-20</option>
+                                        <option>21-50</option>
+                                        <option>50+</option>
+                                    </select>
+                                    <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-forge-black/40 text-xs">▼</span>
+                                </div>
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
                             </div>
-                            <div class="text-white/30 text-2xl font-heading">—</div>
                             <div>
-                                <p class="text-white/50 text-xs uppercase tracking-wide mb-1">High Estimate</p>
-                                <p id="val-high" class="font-heading text-3xl font-bold text-momentum-amber"></p>
+                                <label for="lf-location" class="block text-sm font-semibold text-forge-black mb-1">
+                                    Location / State <span class="text-red-400">*</span>
+                                </label>
+                                <div class="relative">
+                                    <select
+                                        id="lf-location" name="state"
+                                        class="w-full border border-forge-black/20 rounded-lg px-4 py-3 text-sm text-forge-black bg-white focus:outline-none focus:border-tradewise-navy transition-colors duration-150 appearance-none pr-10"
+                                    >
+                                        <option value="">Select state...</option>
+                                        <option>QLD</option>
+                                        <option>NSW</option>
+                                        <option>VIC</option>
+                                        <option>SA</option>
+                                        <option>WA</option>
+                                        <option>TAS</option>
+                                        <option>NT</option>
+                                        <option>ACT</option>
+                                        <option>New Zealand</option>
+                                        <option>Other</option>
+                                    </select>
+                                    <span class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-forge-black/40 text-xs">▼</span>
+                                </div>
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Required</p>
                             </div>
                         </div>
-                        <p class="text-white/30 text-xs mt-4">
-                            Based on your score and revenue. These are indicative figures only.
+
+                        <!-- Situation radio -->
+                        <div>
+                            <p class="text-sm font-semibold text-forge-black mb-3">
+                                What best describes where you're at right now? <span class="text-red-400">*</span>
+                            </p>
+                            <div class="flex flex-col gap-2">
+                                {situationOptions.map((opt) => (
+                                    <label class="flex items-start gap-3 border border-forge-black/10 rounded-lg p-3.5 cursor-pointer hover:border-tradewise-navy/30 transition-colors duration-150 has-[:checked]:border-tradewise-navy has-[:checked]:bg-tradewise-navy/5">
+                                        <input
+                                            type="radio" name="current_situation" value={opt}
+                                            class="mt-0.5 shrink-0 accent-tradewise-navy"
+                                        />
+                                        <span class="text-sm text-forge-black leading-relaxed">{opt}</span>
+                                    </label>
+                                ))}
+                            </div>
+                            <p id="err-situation" class="text-red-500 text-xs mt-1.5 hidden">Please select an option.</p>
+                        </div>
+
+                        <p id="err-hubspot" class="text-red-500 text-sm hidden">
+                            Something went wrong submitting your details — please try again.
                         </p>
-                    </div>
-                </div>
 
-                <!-- Areas to Improve -->
-                <div class="bg-white rounded-xl p-8 mb-6 shadow-sm">
-                    <h3 class="font-heading text-xl font-bold text-forge-black mb-2">Your Priority Areas to Improve</h3>
-                    <p class="text-forge-black/50 text-sm mb-6">
-                        Improving these areas will have the greatest impact on your business valuation.
-                    </p>
-                    <ul id="improvements-list" class="flex flex-col gap-3"></ul>
-                </div>
-
-                <!-- CTA -->
-                <div class="bg-momentum-amber/10 border border-momentum-amber/30 rounded-xl p-8 text-center">
-                    <h3 class="font-heading text-2xl font-bold text-forge-black mb-3">
-                        Ready to validate these numbers?
-                    </h3>
-                    <p class="text-forge-black/60 text-sm leading-relaxed mb-6 max-w-md mx-auto">
-                        Your scorecard gives you a strong starting point — but a Tradewise advisor can
-                        give you a real, qualified valuation based on your actual financials and market
-                        conditions. No cost. No obligation.
-                    </p>
-                    <a
-                        href="/valuation"
-                        class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200 mb-4"
-                    >
-                        Book a Free Valuation Session to Validate These Numbers
-                    </a>
-                    <p class="text-forge-black/40 text-xs">
-                        Free 45-minute session · No sales pressure · Real insights
-                    </p>
-                </div>
-
-                <!-- Retake -->
-                <div class="text-center mt-6">
-                    <button
-                        id="retake-btn"
-                        class="text-sm text-forge-black/40 hover:text-forge-black underline transition-colors duration-150"
-                    >
-                        Retake the scorecard
-                    </button>
+                        <div class="flex justify-between items-center pt-2">
+                            <button
+                                type="button" id="btn-step3-back"
+                                class="text-sm text-forge-black/50 hover:text-forge-black transition-colors duration-150 px-4 py-2"
+                            >
+                                ← Back
+                            </button>
+                            <button
+                                type="submit" id="btn-step3-submit"
+                                class="bg-momentum-amber text-white font-semibold text-sm px-8 py-3 rounded-lg hover:brightness-110 transition-all duration-200 flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                <span id="submit-label">Show My Valuation →</span>
+                                <svg id="submit-spinner" class="hidden animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
+            <!-- =========== STEP 4: Results =========== -->
+            <div id="step-4" style="display:none">
+
+                <!-- Valuation Card -->
+                <div class="bg-tradewise-navy text-white rounded-xl p-8 mb-6 text-center">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-5">
+                        Your Estimated Business Valuation
+                    </p>
+
+                    <div class="flex justify-center items-end gap-6 mb-3 flex-wrap">
+                        <div>
+                            <p class="text-white/40 text-xs uppercase tracking-wider mb-1">Low Estimate</p>
+                            <p id="r-val-low" class="font-heading text-4xl md:text-5xl font-bold text-white"></p>
+                        </div>
+                        <div class="text-white/25 text-3xl font-heading pb-2">—</div>
+                        <div>
+                            <p class="text-white/40 text-xs uppercase tracking-wider mb-1">High Estimate</p>
+                            <p id="r-val-high" class="font-heading text-4xl md:text-5xl font-bold" style="color:#D4820A"></p>
+                        </div>
+                    </div>
+                    <p class="text-white/30 text-xs mb-8">
+                        Based on your SDE and Risk & Quality Score. Indicative figures only.
+                    </p>
+
+                    <!-- Risk & Quality Score -->
+                    <div class="border-t border-white/10 pt-8">
+                        <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-3">
+                            Risk & Quality Score
+                        </p>
+                        <div class="flex items-end justify-center gap-1 mb-2">
+                            <span id="r-score" class="font-heading text-6xl font-bold text-white"></span>
+                            <span class="text-white/30 text-2xl font-heading mb-2">/ 100</span>
+                        </div>
+                        <p id="r-score-label" class="text-white/60 text-sm mb-5"></p>
+                        <div class="w-full bg-white/10 rounded-full h-2">
+                            <div id="r-score-bar" class="h-2 rounded-full transition-all duration-700" style="width:0%;background:#D4820A"></div>
+                        </div>
+                    </div>
+
+                    <!-- SDE + Multiple row -->
+                    <div class="border-t border-white/10 mt-8 pt-6 grid grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-white/40 text-xs uppercase tracking-wider mb-1">Seller's Discretionary Earnings</p>
+                            <p id="r-sde" class="font-heading text-2xl font-bold text-white/90"></p>
+                            <p class="text-white/25 text-xs mt-0.5">Net Profit + Owner's Salary</p>
+                        </div>
+                        <div>
+                            <p class="text-white/40 text-xs uppercase tracking-wider mb-1">Valuation Multiple</p>
+                            <p id="r-multiple" class="font-heading text-2xl font-bold text-white/90"></p>
+                            <p class="text-white/25 text-xs mt-0.5">Based on your score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pathway -->
+                <div class="bg-white rounded-xl p-8 mb-6 shadow-sm">
+                    <h3 class="font-heading text-xl font-bold text-forge-black mb-2">
+                        Your Pathway to a More Valuable Business
+                    </h3>
+                    <p class="text-forge-black/50 text-sm mb-6">
+                        These are your three lowest-scoring areas. Improving them will have the
+                        greatest impact on your valuation multiple.
+                    </p>
+                    <ul id="r-pathway" class="flex flex-col gap-4"></ul>
+                </div>
+
+                <!-- Main CTA -->
+                <div class="rounded-xl p-8 text-center mb-6" style="background:#1E3A5F">
+                    <h3 class="font-heading text-2xl font-bold text-white mb-4">
+                        Ready to Unlock the Full Value of Your Business?
+                    </h3>
+                    <p class="text-white/70 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
+                        This scorecard gives you a snapshot — but a real valuation goes deeper.
+                        Book a free 30-minute Valuation Debrief with our team. We'll validate these
+                        numbers, walk you through your personalised action plan, and show you exactly
+                        how TradeWise can help.
+                    </p>
+                    <a
+                        href="https://meetings.hubspot.com/tradewise"
+                        class="inline-block font-semibold px-10 py-4 rounded-lg hover:brightness-110 transition-all duration-200 text-base mb-5"
+                        style="background:#D4820A;color:white"
+                    >
+                        Book Your Free Valuation Debrief →
+                    </a>
+                    <p class="text-white/35 text-xs">No obligation. No jargon. Just clarity.</p>
+                </div>
+
+                <!-- PDF Download -->
+                <div class="text-center mb-6">
+                    <button
+                        id="btn-pdf"
+                        class="inline-flex items-center gap-2 text-sm text-forge-black/60 hover:text-forge-black border border-forge-black/20 hover:border-forge-black/40 px-6 py-3 rounded-lg transition-all duration-200"
+                    >
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Or download your results as a PDF
+                    </button>
+                </div>
+
+                <!-- Retake -->
+                <div class="text-center">
+                    <button id="btn-retake" class="text-xs text-forge-black/30 hover:text-forge-black/60 underline transition-colors duration-150">
+                        Start over / retake the scorecard
+                    </button>
+                </div>
+
+            </div>
         </div>
     </section>
 
 </MainLayout>
 
-<script>
-    const SCORES: Record<string, number> = { '1': 1, '5': 5, '10': 10 };
-    const DRIVERS = [
-        'Recurring Revenue',
-        'Systems & Processes',
-        'Team & Management',
-        'Financial Clarity',
-        'Customer Concentration',
-        'Growth & Scalability',
+<script is:inline>
+// ===================== CONFIG =====================
+// Replace these with your actual HubSpot portal ID and form GUID
+var HS_PORTAL_ID = 'YOUR_PORTAL_ID';
+var HS_FORM_GUID  = 'YOUR_FORM_GUID';
+
+// ===================== STATE =====================
+var financials   = { revenue: 0, profit: 0, salary: 0 };
+var currentQ     = 0;
+var cachedResults = null;
+
+// ===================== ELEMENTS =====================
+var step1El  = document.getElementById('step-1');
+var step2El  = document.getElementById('step-2');
+var step3El  = document.getElementById('step-3');
+var step4El  = document.getElementById('step-4');
+var qCards   = document.querySelectorAll('.q-card');
+var qNumEl   = document.getElementById('q-num');
+var qPctEl   = document.getElementById('q-pct');
+var qBarEl   = document.getElementById('q-bar');
+
+// ===================== STEP INDICATOR =====================
+function setStep(n) {
+    [1, 2, 3, 4].forEach(function(i) {
+        var dot   = document.getElementById('step-dot-' + i);
+        var label = document.getElementById('step-label-' + i);
+        if (!dot) return;
+        if (i < n) {
+            dot.style.background = '#1A7A6E';
+            dot.style.color      = 'white';
+            dot.textContent      = '✓';
+            if (label) label.style.color = '#1A7A6E';
+        } else if (i === n) {
+            dot.style.background = '#1E3A5F';
+            dot.style.color      = 'white';
+            dot.textContent      = String(i);
+            if (label) label.style.color = '#1E3A5F';
+        } else {
+            dot.style.background = '#E5E0D8';
+            dot.style.color      = '#9CA3AF';
+            dot.textContent      = String(i);
+            if (label) label.style.color = '#9CA3AF';
+        }
+    });
+    [1, 2, 3].forEach(function(i) {
+        var line = document.getElementById('step-line-' + i);
+        if (line) line.style.background = n > i ? '#1A7A6E' : '#E5E0D8';
+    });
+}
+
+// ===================== NAVIGATION =====================
+function goToStep(n) {
+    step1El.style.display = n === 1 ? 'block' : 'none';
+    step2El.style.display = n === 2 ? 'block' : 'none';
+    step3El.style.display = n === 3 ? 'block' : 'none';
+    step4El.style.display = n === 4 ? 'block' : 'none';
+    setStep(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showQuestion(qi) {
+    currentQ = qi;
+    qCards.forEach(function(card, i) {
+        card.style.display = i === qi ? 'block' : 'none';
+    });
+    var pct = Math.round((qi / 8) * 100);
+    qNumEl.textContent = String(qi + 1);
+    qPctEl.textContent = String(pct);
+    qBarEl.style.width = pct + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===================== STEP 1 → 2 =====================
+document.getElementById('btn-step1-next').addEventListener('click', function() {
+    var rev = parseFloat(document.getElementById('f-revenue').value);
+    var pro = parseFloat(document.getElementById('f-profit').value);
+    var sal = parseFloat(document.getElementById('f-salary').value);
+    var valid = true;
+
+    if (!rev || rev <= 0) { showFieldErr('err-revenue'); valid = false; } else { hideFieldErr('err-revenue'); }
+    if (isNaN(pro) || pro < 0) { showFieldErr('err-profit'); valid = false; } else { hideFieldErr('err-profit'); }
+    if (isNaN(sal) || sal < 0) { showFieldErr('err-salary'); valid = false; } else { hideFieldErr('err-salary'); }
+
+    if (!valid) return;
+    financials = { revenue: rev, profit: pro, salary: sal };
+    goToStep(2);
+    showQuestion(0);
+});
+
+// ===================== QUESTION NAVIGATION =====================
+document.querySelectorAll('.q-next-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var qi = parseInt(btn.dataset.qi);
+        var checked = document.querySelector('input[name="q' + qi + '"]:checked');
+        if (!checked) { flashCard(btn.closest('.bg-white')); return; }
+        showQuestion(qi + 1);
+    });
+});
+
+var btnStep2Done = document.getElementById('btn-step2-done');
+if (btnStep2Done) {
+    btnStep2Done.addEventListener('click', function() {
+        var qi = parseInt(btnStep2Done.dataset.qi);
+        var checked = document.querySelector('input[name="q' + qi + '"]:checked');
+        if (!checked) { flashCard(btnStep2Done.closest('.bg-white')); return; }
+        goToStep(3);
+    });
+}
+
+document.querySelectorAll('.q-prev-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var qi = parseInt(btn.dataset.qi);
+        if (qi === 0) { goToStep(1); } else { showQuestion(qi - 1); }
+    });
+});
+
+// ===================== STEP 3 BACK =====================
+document.getElementById('btn-step3-back').addEventListener('click', function() {
+    goToStep(2);
+    showQuestion(7);
+});
+
+// ===================== LEAD FORM SUBMIT =====================
+document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validate text/select fields
+    var fieldIds = ['lf-first', 'lf-last', 'lf-email', 'lf-phone', 'lf-company', 'lf-trade', 'lf-employees', 'lf-location'];
+    var valid = true;
+
+    fieldIds.forEach(function(id) {
+        var el  = document.getElementById(id);
+        var err = el.parentElement.querySelector('.lf-err') || el.closest('div').querySelector('.lf-err');
+        if (!el.value.trim()) {
+            if (err) err.classList.remove('hidden');
+            valid = false;
+        } else {
+            if (err) err.classList.add('hidden');
+        }
+    });
+
+    // Email format check
+    var emailEl  = document.getElementById('lf-email');
+    var emailErr = emailEl.parentElement.querySelector('.lf-err');
+    if (emailEl.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
+        if (emailErr) emailErr.classList.remove('hidden');
+        valid = false;
+    }
+
+    // Situation radio
+    var situation = document.querySelector('input[name="current_situation"]:checked');
+    var errSit    = document.getElementById('err-situation');
+    if (!situation) { errSit.classList.remove('hidden'); valid = false; }
+    else             { errSit.classList.add('hidden'); }
+
+    if (!valid) return;
+
+    // Calculate results now (before submission)
+    var results = calculateResults();
+    cachedResults = results;
+
+    // UI: loading state
+    var submitBtn     = document.getElementById('btn-step3-submit');
+    var submitLabel   = document.getElementById('submit-label');
+    var submitSpinner = document.getElementById('submit-spinner');
+    var hsErr         = document.getElementById('err-hubspot');
+
+    submitBtn.disabled = true;
+    submitLabel.textContent = 'Submitting...';
+    submitSpinner.classList.remove('hidden');
+    hsErr.classList.add('hidden');
+
+    try {
+        await submitToHubSpot(results);
+    } catch (err) {
+        console.warn('HubSpot submission error (showing results anyway):', err);
+        // Graceful degradation — show results even if HubSpot fails
+    }
+
+    submitBtn.disabled = false;
+    submitLabel.textContent = 'Show My Valuation →';
+    submitSpinner.classList.add('hidden');
+
+    renderResults(results);
+    goToStep(4);
+});
+
+// ===================== CALCULATIONS =====================
+function calculateResults() {
+    var sde        = financials.profit + financials.salary;
+    var totalScore = 0;
+    var qResults   = [];
+
+    var drivers = [
+        { driver: 'Owner Reliance',         service: 'Our Systems & Processes service is designed to reduce owner dependency.' },
+        { driver: 'Recurring Revenue',       service: 'Our Revenue Strategy service helps you build contracted, predictable income streams.' },
+        { driver: 'Systems & Processes',     service: 'Our Operational Systems service will document and systematise your key workflows.' },
+        { driver: 'Team & Leadership',       service: 'Our Team & Leadership service helps you build a management structure that runs without you.' },
+        { driver: 'Financial Clarity',       service: 'Our Financial Clarity service delivers real-time visibility into your numbers.' },
+        { driver: 'Customer Concentration',  service: 'Our Growth & Marketing service diversifies your client base and reduces concentration risk.' },
+        { driver: 'Growth & Scalability',    service: 'Our Scale & Exit service prepares your business model for sustainable growth.' },
+        { driver: 'Brand & Market Position', service: 'Our Brand & Marketing service strengthens your market position and lead pipeline.' },
     ];
 
-    const steps = document.querySelectorAll<HTMLElement>('.question-step');
-    const progressBar = document.getElementById('progress-bar')!;
-    const currentStepEl = document.getElementById('current-step')!;
-    const progressPctEl = document.getElementById('progress-pct')!;
-    const progressContainer = document.getElementById('progress-container')!;
-    const revenueStep = document.getElementById('revenue-step')!;
-    const resultsPanel = document.getElementById('results-panel')!;
-    const form = document.getElementById('scorecard-form')!;
-
-    let currentStep = 0;
-
-    function updateProgress(step: number, total: number) {
-        const pct = Math.round((step / total) * 100);
-        progressBar.style.width = `${pct}%`;
-        currentStepEl.textContent = String(Math.min(step + 1, total));
-        progressPctEl.textContent = String(pct);
+    for (var i = 0; i < 8; i++) {
+        var checked = document.querySelector('input[name="q' + i + '"]:checked');
+        var val     = checked ? parseFloat(checked.value) : 2;
+        totalScore += val;
+        qResults.push({ driver: drivers[i].driver, service: drivers[i].service, score: val });
     }
 
-    function showStep(index: number) {
-        steps.forEach((s, i) => {
-            s.style.display = i === index ? 'block' : 'none';
+    // Score out of 100 (max: 8 × 12.5 = 100)
+    var scoreRounded = Math.round(totalScore);
+    var multiple     = 1.5 + (totalScore / 100) * 3.0;
+    var valLow       = sde * (multiple * 0.9);
+    var valHigh      = sde * (multiple * 1.1);
+
+    // 3 weakest areas
+    var sorted  = qResults.slice().sort(function(a, b) { return a.score - b.score; });
+    var weakest = sorted.slice(0, 3);
+
+    return { sde: sde, totalScore: totalScore, scoreRounded: scoreRounded, multiple: multiple, valLow: valLow, valHigh: valHigh, qResults: qResults, weakest: weakest };
+}
+
+// ===================== HUBSPOT SUBMISSION =====================
+async function submitToHubSpot(results) {
+    var url = 'https://api.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
+
+    var fields = [
+        { name: 'firstname',           value: document.getElementById('lf-first').value.trim() },
+        { name: 'lastname',            value: document.getElementById('lf-last').value.trim() },
+        { name: 'email',               value: document.getElementById('lf-email').value.trim() },
+        { name: 'phone',               value: document.getElementById('lf-phone').value.trim() },
+        { name: 'company',             value: document.getElementById('lf-company').value.trim() },
+        { name: 'trade_type',          value: document.getElementById('lf-trade').value },
+        { name: 'number_of_employees', value: document.getElementById('lf-employees').value },
+        { name: 'state',               value: document.getElementById('lf-location').value },
+        { name: 'current_situation',   value: (document.querySelector('input[name="current_situation"]:checked') || {}).value || '' },
+        // Scorecard data
+        { name: 'scorecard_score',         value: String(results.scoreRounded) },
+        { name: 'scorecard_val_low',        value: fmt(results.valLow) },
+        { name: 'scorecard_val_high',       value: fmt(results.valHigh) },
+        { name: 'scorecard_weakest_areas',  value: results.weakest.map(function(w) { return w.driver; }).join(', ') },
+        { name: 'scorecard_multiple',       value: results.multiple.toFixed(2) },
+        { name: 'annual_revenue',           value: String(financials.revenue) },
+        { name: 'annual_net_profit',        value: String(financials.profit) },
+        { name: 'owner_salary_perks',       value: String(financials.salary) },
+    ];
+
+    var payload = {
+        fields:  fields,
+        context: { pageUri: window.location.href, pageName: 'Business Valuation Scorecard' },
+    };
+
+    var res = await fetch(url, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error('HubSpot returned status ' + res.status);
+    return res.json();
+}
+
+// ===================== RENDER RESULTS =====================
+function renderResults(r) {
+    document.getElementById('r-val-low').textContent   = fmt(r.valLow);
+    document.getElementById('r-val-high').textContent  = fmt(r.valHigh);
+    document.getElementById('r-score').textContent     = String(r.scoreRounded);
+    document.getElementById('r-score-label').textContent = scoreLabel(r.scoreRounded);
+    document.getElementById('r-sde').textContent       = fmt(r.sde);
+    document.getElementById('r-multiple').textContent  = r.multiple.toFixed(2) + 'x';
+
+    setTimeout(function() {
+        document.getElementById('r-score-bar').style.width = r.totalScore + '%';
+    }, 300);
+
+    var list = document.getElementById('r-pathway');
+    list.innerHTML = '';
+    r.weakest.forEach(function(item) {
+        var li = document.createElement('li');
+        li.className = 'flex items-start gap-4 p-4 rounded-lg';
+        li.style.background = '#F4F1EC';
+        li.innerHTML =
+            '<div style="width:10px;height:10px;border-radius:50%;background:#D4820A;margin-top:4px;flex-shrink:0"></div>' +
+            '<div>' +
+                '<p style="font-weight:600;color:#141C24;font-size:14px;margin-bottom:3px">' + item.driver + '</p>' +
+                '<p style="color:#141C24;opacity:.6;font-size:14px">' + item.service + '</p>' +
+            '</div>';
+        list.appendChild(li);
+    });
+
+    // Cache for PDF
+    window._twResults  = r;
+    window._twFinancials = financials;
+    window._twContact  = {
+        name:    (document.getElementById('lf-first').value + ' ' + document.getElementById('lf-last').value).trim(),
+        company: document.getElementById('lf-company').value.trim(),
+    };
+}
+
+// ===================== PDF GENERATION =====================
+document.getElementById('btn-pdf').addEventListener('click', async function() {
+    var btn = document.getElementById('btn-pdf');
+    btn.textContent = 'Generating PDF...';
+    btn.disabled    = true;
+
+    if (!window.jspdf) {
+        await new Promise(function(resolve, reject) {
+            var s    = document.createElement('script');
+            s.src    = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            s.onload = resolve;
+            s.onerror = reject;
+            document.head.appendChild(s);
         });
-        revenueStep.style.display = 'none';
-        currentStep = index;
-        updateProgress(index, steps.length);
     }
 
-    function showRevenueStep() {
-        steps.forEach(s => s.style.display = 'none');
-        revenueStep.style.display = 'block';
-        updateProgress(steps.length, steps.length);
-        currentStepEl.textContent = String(steps.length);
-        progressPctEl.textContent = '100';
-        progressBar.style.width = '100%';
+    var r       = window._twResults;
+    var contact = window._twContact;
+    var fin     = window._twFinancials;
+    var today   = new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+
+    var navy     = [30,  58, 95];
+    var amber    = [212, 130, 10];
+    var teal     = [26,  122, 110];
+    var darkGrey = [80,  80,  80];
+    var lightBg  = [244, 241, 236];
+    var white    = [255, 255, 255];
+
+    var W = 210, pad = 15;
+    var y = 0;
+
+    // ── Header bar ──
+    doc.setFillColor.apply(doc, navy);
+    doc.rect(0, 0, W, 42, 'F');
+
+    doc.setTextColor.apply(doc, white);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Business Valuation Scorecard', pad, 16);
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Prepared by TradeWise Group  ·  ' + today, pad, 25);
+
+    if (contact.company || contact.name) {
+        doc.setTextColor.apply(doc, amber);
+        doc.text('Prepared for: ' + (contact.company || contact.name), pad, 34);
     }
 
-    // Next buttons
-    document.querySelectorAll<HTMLButtonElement>('.next-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const step = parseInt(btn.dataset.step ?? '0');
-            const selected = document.querySelector<HTMLInputElement>(`input[name="q${step}"]:checked`);
-            if (!selected) {
-                const questionBlock = steps[step].querySelector('.bg-white');
-                questionBlock?.classList.add('ring-2', 'ring-red-400');
-                setTimeout(() => questionBlock?.classList.remove('ring-2', 'ring-red-400'), 1500);
-                return;
-            }
-            showStep(step + 1);
-        });
+    y = 52;
+
+    // ── Valuation range ──
+    doc.setFillColor.apply(doc, lightBg);
+    doc.roundedRect(pad, y, W - pad * 2, 28, 3, 3, 'F');
+
+    doc.setTextColor.apply(doc, amber);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ESTIMATED VALUATION RANGE', W / 2, y + 8, { align: 'center' });
+
+    doc.setTextColor.apply(doc, navy);
+    doc.setFontSize(20);
+    doc.text(fmt(r.valLow) + '  —  ' + fmt(r.valHigh), W / 2, y + 22, { align: 'center' });
+
+    y += 35;
+
+    // ── Three metric boxes ──
+    var boxW = 57, boxH = 24, gap = 4;
+    var boxes = [
+        ['RISK & QUALITY SCORE', String(r.scoreRounded) + ' / 100'],
+        ["SELLER'S DISCRETIONARY EARNINGS", fmt(r.sde)],
+        ['VALUATION MULTIPLE', r.multiple.toFixed(2) + 'x'],
+    ];
+    boxes.forEach(function(box, idx) {
+        var bx = pad + idx * (boxW + gap);
+        doc.setFillColor(248, 246, 242);
+        doc.roundedRect(bx, y, boxW, boxH, 2, 2, 'F');
+        doc.setTextColor.apply(doc, darkGrey);
+        doc.setFontSize(6.5);
+        doc.setFont('helvetica', 'bold');
+        doc.text(box[0], bx + boxW / 2, y + 7, { align: 'center', maxWidth: boxW - 4 });
+        doc.setTextColor.apply(doc, navy);
+        doc.setFontSize(12);
+        doc.text(String(box[1]), bx + boxW / 2, y + 18, { align: 'center' });
+    });
+    y += boxH + 6;
+
+    doc.setTextColor.apply(doc, darkGrey);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'italic');
+    doc.text(scoreLabel(r.scoreRounded), pad, y);
+    y += 10;
+
+    // ── Divider ──
+    doc.setDrawColor(220, 216, 210);
+    doc.line(pad, y, W - pad, y);
+    y += 8;
+
+    // ── Pathway ──
+    doc.setTextColor.apply(doc, navy);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Your Pathway to a More Valuable Business', pad, y);
+    y += 5;
+
+    doc.setTextColor.apply(doc, darkGrey);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Improving these three areas will have the greatest impact on your valuation.', pad, y);
+    y += 7;
+
+    r.weakest.forEach(function(item) {
+        doc.setFillColor.apply(doc, lightBg);
+        doc.roundedRect(pad, y, W - pad * 2, 20, 2, 2, 'F');
+
+        doc.setFillColor.apply(doc, amber);
+        doc.circle(pad + 6, y + 10, 2.5, 'F');
+
+        doc.setTextColor.apply(doc, navy);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text(item.driver, pad + 12, y + 8);
+
+        doc.setTextColor.apply(doc, darkGrey);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text(item.service, pad + 12, y + 16, { maxWidth: W - pad * 2 - 16 });
+
+        y += 24;
     });
 
-    // Show revenue step
-    document.getElementById('show-revenue-btn')?.addEventListener('click', () => {
-        const lastStep = steps.length - 1;
-        const selected = document.querySelector<HTMLInputElement>(`input[name="q${lastStep}"]:checked`);
-        if (!selected) {
-            const questionBlock = steps[lastStep].querySelector('.bg-white');
-            questionBlock?.classList.add('ring-2', 'ring-red-400');
-            setTimeout(() => questionBlock?.classList.remove('ring-2', 'ring-red-400'), 1500);
-            return;
-        }
-        showRevenueStep();
+    y += 2;
+    doc.setDrawColor(220, 216, 210);
+    doc.line(pad, y, W - pad, y);
+    y += 8;
+
+    // ── Financial summary ──
+    doc.setTextColor.apply(doc, navy);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Financial Inputs Used', pad, y);
+    y += 7;
+
+    [
+        ['Annual Revenue',                         fmt(fin.revenue)],
+        ['Annual Net Profit (before tax & wage)',  fmt(fin.profit)],
+        ['Owner Salary & Perks',                   fmt(fin.salary)],
+    ].forEach(function(row) {
+        doc.setTextColor.apply(doc, darkGrey);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.text(row[0] + ':', pad, y);
+        doc.setTextColor.apply(doc, navy);
+        doc.setFont('helvetica', 'bold');
+        doc.text(row[1], W - pad, y, { align: 'right' });
+        y += 6;
     });
 
-    // Back buttons
-    document.querySelectorAll<HTMLButtonElement>('.prev-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const step = parseInt(btn.dataset.step ?? '1');
-            showStep(step - 1);
-        });
-    });
+    y += 6;
 
-    document.getElementById('back-to-questions-btn')?.addEventListener('click', () => {
-        showStep(steps.length - 1);
-    });
+    // ── CTA box ──
+    doc.setFillColor.apply(doc, navy);
+    doc.roundedRect(pad, y, W - pad * 2, 30, 3, 3, 'F');
 
-    // Format currency
-    function formatCurrency(amount: number, currency: string): string {
-        return new Intl.NumberFormat('en-AU', {
-            style: 'currency',
-            currency,
-            maximumFractionDigits: 0,
-        }).format(amount);
-    }
+    doc.setTextColor.apply(doc, white);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Ready to validate these numbers?', W / 2, y + 10, { align: 'center' });
 
-    // Score label
-    function scoreLabel(score: number): string {
-        if (score <= 20) return 'Early Stage — significant work to do before exit.';
-        if (score <= 35) return 'Developing — good foundations, but key gaps remain.';
-        if (score <= 50) return 'Progressing — above average, with clear upside available.';
-        return 'Exit-Ready — your business is well-positioned for a strong sale.';
-    }
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Book a free 30-minute Valuation Debrief: meetings.hubspot.com/tradewise', W / 2, y + 19, { align: 'center' });
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(7);
+    doc.text('No obligation. No jargon. Just clarity.', W / 2, y + 26, { align: 'center' });
 
-    // Submit
-    form.addEventListener('submit', e => {
-        e.preventDefault();
+    y += 36;
 
-        const revenueInput = document.getElementById('revenue-input') as HTMLInputElement;
-        const revenueError = document.getElementById('revenue-error')!;
-        const currency = (document.getElementById('currency') as HTMLSelectElement).value;
-        const revenue = parseFloat(revenueInput.value);
+    // ── Disclaimer ──
+    doc.setTextColor(180, 180, 180);
+    doc.setFontSize(6.5);
+    doc.setFont('helvetica', 'italic');
+    var disclaimer = 'This report is indicative only and should not be relied upon as a formal business valuation. Actual valuations depend on verified financials, market conditions, and other factors. TradeWise Group recommends seeking professional advice before making any decisions based on this estimate.';
+    var lines = doc.splitTextToSize(disclaimer, W - pad * 2);
+    doc.text(lines, pad, y);
 
-        if (!revenue || revenue <= 0) {
-            revenueError.classList.remove('hidden');
-            revenueInput.focus();
-            return;
-        }
-        revenueError.classList.add('hidden');
+    // ── Footer ──
+    doc.setFillColor.apply(doc, navy);
+    doc.rect(0, 285, W, 12, 'F');
+    doc.setTextColor.apply(doc, white);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'normal');
+    doc.text('TradeWise Group  |  tradewisegroup.com.au', pad, 292);
+    doc.text('Confidential — for ' + (contact.name || contact.company || 'client') + ' only', W - pad, 292, { align: 'right' });
 
-        // Collect scores and labels
-        const results: { driver: string; score: number; label: string }[] = [];
-        let total = 0;
+    doc.save('tradewise-valuation-scorecard.pdf');
 
-        steps.forEach((_, i) => {
-            const selected = document.querySelector<HTMLInputElement>(`input[name="q${i}"]:checked`);
-            const score = selected ? SCORES[selected.value] ?? 1 : 1;
-            const label = selected?.dataset.label ?? 'Not Started';
-            total += score;
-            results.push({ driver: DRIVERS[i], score, label });
-        });
+    btn.innerHTML = '<svg style="width:16px;height:16px;display:inline;margin-right:6px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Or download your results as a PDF';
+    btn.disabled = false;
+});
 
-        // Valuation
-        const ratio = total / 60;
-        const valLow = revenue * ratio * 2.5;
-        const valHigh = revenue * ratio * 4.0;
+// ===================== RETAKE =====================
+document.getElementById('btn-retake').addEventListener('click', function() {
+    document.querySelectorAll('input[type="radio"]').forEach(function(r) { r.checked = false; });
+    document.getElementById('f-revenue').value = '';
+    document.getElementById('f-profit').value  = '';
+    document.getElementById('f-salary').value  = '';
+    document.getElementById('lead-form').reset();
+    document.getElementById('r-score-bar').style.width = '0%';
+    financials    = { revenue: 0, profit: 0, salary: 0 };
+    cachedResults = null;
+    goToStep(1);
+    showQuestion(0);
+});
 
-        // Worst 3 areas
-        const sorted = [...results].sort((a, b) => a.score - b.score);
-        const weakest = sorted.slice(0, 3);
+// ===================== HELPERS =====================
+function fmt(n) {
+    return new Intl.NumberFormat('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 }).format(n || 0);
+}
 
-        // Show results
-        form.style.display = 'none';
-        progressContainer.style.display = 'none';
-        resultsPanel.style.display = 'block';
+function scoreLabel(s) {
+    if (s <= 25) return 'High Risk — significant improvements needed before exit.';
+    if (s <= 50) return 'Developing — good foundations, but key gaps reduce your multiple.';
+    if (s <= 75) return 'Progressing — above average, with clear upside available.';
+    return 'Exit-Ready — your business is well-positioned for a strong sale.';
+}
 
-        document.getElementById('result-score')!.textContent = String(total);
-        document.getElementById('result-label')!.textContent = scoreLabel(total);
-        document.getElementById('val-low')!.textContent = formatCurrency(valLow, currency);
-        document.getElementById('val-high')!.textContent = formatCurrency(valHigh, currency);
+function showFieldErr(id) { var el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+function hideFieldErr(id) { var el = document.getElementById(id); if (el) el.classList.add('hidden'); }
 
-        setTimeout(() => {
-            const bar = document.getElementById('result-bar')!;
-            bar.style.width = `${(total / 60) * 100}%`;
-        }, 100);
-
-        const list = document.getElementById('improvements-list')!;
-        list.innerHTML = '';
-        weakest.forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'flex items-start gap-3 p-4 bg-concrete rounded-lg';
-            li.innerHTML = `
-                <div class="w-2 h-2 rounded-full bg-momentum-amber mt-1.5 shrink-0"></div>
-                <div>
-                    <p class="font-semibold text-forge-black text-sm">${item.driver}</p>
-                    <p class="text-forge-black/50 text-sm">Currently: <span class="text-momentum-amber font-medium">${item.label}</span> — improving this to Fully Systematised adds the most value.</p>
-                </div>`;
-            list.appendChild(li);
-        });
-    });
-
-    // Retake
-    document.getElementById('retake-btn')?.addEventListener('click', () => {
-        // Reset all radios
-        document.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(r => r.checked = false);
-        (document.getElementById('revenue-input') as HTMLInputElement).value = '';
-
-        resultsPanel.style.display = 'none';
-        progressContainer.style.display = 'block';
-        form.style.display = 'block';
-        document.getElementById('result-bar')!.style.width = '0%';
-        showStep(0);
-    });
-
-    // Init
-    showStep(0);
+function flashCard(el) {
+    if (!el) return;
+    el.classList.add('ring-2', 'ring-red-400');
+    setTimeout(function() { el.classList.remove('ring-2', 'ring-red-400'); }, 1500);
+}
 </script>
