@@ -3,15 +3,19 @@ const sitemapLinks = [
     {
         heading: 'Services',
         links: [
-            { label: 'Outsourced Operations', href: '/services', parent: true },
-            { label: 'HR & People', href: '/services#hr', indent: true },
-            { label: 'Finance & Reporting', href: '/services#finance', indent: true },
-            { label: 'Systems & Operations', href: '/services#systems', indent: true },
-            { label: 'Marketing & Growth', href: '/services#marketing', indent: true },
-            { label: 'Exit Planning', href: '/equity-partnership', parent: true },
-            { label: 'Value Maximiser — increase your selling price', href: '/equity-partnership', indent: true },
-            { label: 'Staged Buyout', href: '/equity-partnership', indent: true },
-            { label: 'Equity Partnership', href: '/equity-partnership', indent: true },
+            { label: 'HR & People',             href: '/services#hr' },
+            { label: 'Finance & Reporting',      href: '/services#finance' },
+            { label: 'Systems & Operations',     href: '/services#systems' },
+            { label: 'Marketing & Growth',       href: '/services#marketing' },
+            { label: 'Admin',                    href: null, soon: true },
+        ],
+    },
+    {
+        heading: 'Exit Planning',
+        links: [
+            { label: 'Value Maximiser — increase your selling price', href: '/equity-partnership' },
+            { label: 'Staged Buyout',            href: '/equity-partnership' },
+            { label: 'Equity Partnership',       href: '/equity-partnership' },
         ],
     },
     {
@@ -70,15 +74,22 @@ const sitemapLinks = [
                     <h3 class="text-xs font-semibold tracking-widest uppercase text-white/40 mb-4">
                         {section.heading}
                     </h3>
-                    <ul class="flex flex-col gap-2">
+                    <ul class="flex flex-col gap-3">
                         {section.links.map(link => (
-                            <li class={link.indent ? 'pl-3 border-l border-white/10' : ''}>
-                                <a
-                                    href={link.href}
-                                    class={`text-sm transition-colors duration-200 ${link.parent ? 'text-white/90 font-semibold hover:text-white' : link.indent ? 'text-white/50 hover:text-white/80 text-xs' : 'text-white/70 hover:text-white'}`}
-                                >
-                                    {link.label}
-                                </a>
+                            <li>
+                                {link.soon ? (
+                                    <span class="flex items-center gap-2 text-sm text-white/30">
+                                        {link.label}
+                                        <span class="text-xs bg-white/8 text-white/30 px-1.5 py-0.5 rounded">Coming Soon</span>
+                                    </span>
+                                ) : (
+                                    <a
+                                        href={link.href}
+                                        class="text-sm text-white/70 hover:text-white transition-colors duration-200"
+                                    >
+                                        {link.label}
+                                    </a>
+                                )}
                             </li>
                         ))}
                     </ul>
