@@ -618,9 +618,8 @@ const situationOptions = [
 
 <script is:inline>
 // ===================== CONFIG =====================
-// Replace these with your actual HubSpot portal ID and form GUID
-var HS_PORTAL_ID = 'YOUR_PORTAL_ID';
-var HS_FORM_GUID  = 'YOUR_FORM_GUID';
+var HS_PORTAL_ID = '442932388';
+var HS_FORM_GUID  = '35c92a91-6509-41b6-83e0-9db9f66c7ba8';
 
 // ===================== STATE =====================
 var financials   = { revenue: 0, profit: 0, salary: 0 };
@@ -842,7 +841,7 @@ function calculateResults() {
 
 // ===================== HUBSPOT SUBMISSION =====================
 async function submitToHubSpot(results) {
-    var url = 'https://api.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
+    var url = 'https://api-ap1.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
 
     var fields = [
         { name: 'firstname',           value: document.getElementById('lf-first').value.trim() },
