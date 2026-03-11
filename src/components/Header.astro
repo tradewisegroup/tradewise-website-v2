@@ -1,15 +1,13 @@
 ---
 const navLinks = [
-    { label: 'Services', href: '/services' },
     { label: 'Who We Help', href: '/who-we-help' },
     { label: 'How It Works', href: '/how-it-works' },
-    { label: 'Equity Partnership', href: '/equity-partnership' },
     { label: 'Resources', href: '/resources' },
     { label: 'About', href: '/about' },
 ];
 ---
 
-<header class="bg-tradewise-navy text-white">
+<header class="bg-tradewise-navy text-white relative z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         <!-- Wordmark -->
@@ -19,6 +17,50 @@ const navLinks = [
 
         <!-- Desktop Nav -->
         <nav class="hidden lg:flex items-center gap-8">
+
+            <!-- Services Dropdown -->
+            <div class="relative group">
+                <button class="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors duration-200">
+                    Services
+                    <svg class="w-3 h-3 mt-0.5 opacity-60 group-hover:opacity-100 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown Panel -->
+                <div class="absolute top-full left-0 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-72">
+                    <div class="bg-tradewise-navy border border-white/15 rounded-xl shadow-2xl overflow-hidden">
+
+                        <!-- Outsourced Operations -->
+                        <div class="p-4 border-b border-white/10">
+                            <a href="/services" class="flex items-center gap-2 mb-3 hover:opacity-100">
+                                <p class="text-xs font-semibold tracking-widest uppercase text-momentum-amber">Outsourced Operations</p>
+                            </a>
+                            <div class="flex flex-col gap-1 pl-2 border-l border-white/10">
+                                <a href="/services#hr"      class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">HR & People</a>
+                                <a href="/services#finance"  class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Finance & Reporting</a>
+                                <a href="/services#systems"  class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Systems & Operations</a>
+                                <a href="/services#marketing" class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Marketing & Growth</a>
+                            </div>
+                        </div>
+
+                        <!-- Exit Planning -->
+                        <div class="p-4">
+                            <a href="/equity-partnership" class="flex items-center gap-2 mb-3">
+                                <p class="text-xs font-semibold tracking-widest uppercase text-momentum-amber">Exit Planning</p>
+                            </a>
+                            <div class="flex flex-col gap-1 pl-2 border-l border-white/10">
+                                <a href="/equity-partnership" class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Value Maximiser — increase your selling price</a>
+                                <a href="/equity-partnership" class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Staged Buyout</a>
+                                <a href="/equity-partnership" class="text-sm text-white/65 hover:text-white transition-colors duration-150 py-1">Equity Partnership</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other nav links -->
             {navLinks.map(link => (
                 <a
                     href={link.href}
@@ -54,7 +96,26 @@ const navLinks = [
 
     <!-- Mobile Nav -->
     <nav id="mobile-menu" class="hidden lg:hidden border-t border-white/10">
-        <ul class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4">
+        <ul class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
+
+            <!-- Services group -->
+            <li>
+                <p class="text-xs font-semibold tracking-widest uppercase text-white/40 mb-2">Outsourced Operations</p>
+                <div class="flex flex-col gap-2 pl-3 border-l border-white/10 mb-4">
+                    <a href="/services#hr"       class="text-sm text-white/70 hover:text-white transition-colors duration-150">HR & People</a>
+                    <a href="/services#finance"   class="text-sm text-white/70 hover:text-white transition-colors duration-150">Finance & Reporting</a>
+                    <a href="/services#systems"   class="text-sm text-white/70 hover:text-white transition-colors duration-150">Systems & Operations</a>
+                    <a href="/services#marketing" class="text-sm text-white/70 hover:text-white transition-colors duration-150">Marketing & Growth</a>
+                </div>
+                <p class="text-xs font-semibold tracking-widest uppercase text-white/40 mb-2">Exit Planning</p>
+                <div class="flex flex-col gap-2 pl-3 border-l border-white/10">
+                    <a href="/equity-partnership" class="text-sm text-white/70 hover:text-white transition-colors duration-150">Value Maximiser — increase your selling price</a>
+                    <a href="/equity-partnership" class="text-sm text-white/70 hover:text-white transition-colors duration-150">Staged Buyout</a>
+                    <a href="/equity-partnership" class="text-sm text-white/70 hover:text-white transition-colors duration-150">Equity Partnership</a>
+                </div>
+            </li>
+
+            <!-- Other links -->
             {navLinks.map(link => (
                 <li>
                     <a
@@ -65,6 +126,7 @@ const navLinks = [
                     </a>
                 </li>
             ))}
+
             <li>
                 <a
                     href="https://meetings.hubspot.com/tradewise"
@@ -79,7 +141,7 @@ const navLinks = [
 
 <script>
     const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('mobile-menu');
+    const menu   = document.getElementById('mobile-menu');
 
     toggle?.addEventListener('click', () => {
         const isOpen = !menu?.classList.contains('hidden');
