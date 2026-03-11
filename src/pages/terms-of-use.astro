@@ -1,0 +1,432 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const lastUpdated = '11 March 2026';
+const companyName = 'TradeWise Group Pty Ltd';
+const abn = 'ABN [INSERT ABN]';
+const email = 'kate@tradewisegroup.au';
+const phone = '1300 TRADEWISE';
+const address = '[Insert Registered Address], Australia';
+---
+
+<MainLayout
+    title="Terms of Use | Tradewise Group"
+    description="Terms and conditions governing your use of the Tradewise Group website and services."
+>
+
+    <!-- Header -->
+    <section class="bg-tradewise-navy text-white py-16 md:py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">Legal</p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-4 text-growth-teal">Terms of Use</h1>
+                <p class="text-white/60 text-sm">Last updated: {lastUpdated}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-16 md:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+
+                <!-- Sidebar TOC -->
+                <aside class="lg:col-span-1">
+                    <div class="sticky top-8">
+                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-4">Contents</p>
+                        <nav class="flex flex-col gap-2">
+                            <a href="#acceptance" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">1. Acceptance of Terms</a>
+                            <a href="#about" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">2. About Us</a>
+                            <a href="#use-of-site" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">3. Use of This Website</a>
+                            <a href="#intellectual-property" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">4. Intellectual Property</a>
+                            <a href="#no-advice" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">5. No Professional Advice</a>
+                            <a href="#data-collection" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">6. Data Collection & Use</a>
+                            <a href="#third-party" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">7. Third-Party Links & Tools</a>
+                            <a href="#liability" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">8. Limitation of Liability</a>
+                            <a href="#consumer-guarantees" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">9. Australian Consumer Law</a>
+                            <a href="#changes" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">10. Changes to Terms</a>
+                            <a href="#governing-law" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">11. Governing Law</a>
+                            <a href="#contact" class="text-sm text-forge-black/60 hover:text-growth-teal transition-colors duration-150">12. Contact Us</a>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main content -->
+                <div class="lg:col-span-3 prose-content">
+
+                    <div class="info-box mb-10">
+                        <p>
+                            These Terms of Use govern your access to and use of the Tradewise Group website located at
+                            <strong>tradewisegroup.au</strong> (the "Site") and any associated services. By accessing or using
+                            the Site, you agree to be bound by these terms. If you do not agree, please do not use the Site.
+                        </p>
+                    </div>
+
+                    <!-- 1. Acceptance -->
+                    <section id="acceptance">
+                        <h2>1. Acceptance of Terms</h2>
+                        <p>
+                            By accessing, browsing, or using the Site in any way — including submitting forms, downloading
+                            resources, or booking calls — you acknowledge that you have read, understood, and agree to these
+                            Terms of Use and our <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
+                        </p>
+                        <p>
+                            These terms apply to all visitors, users, and clients of {companyName}. If you are using the Site
+                            on behalf of a business or organisation, you represent that you have authority to bind that entity
+                            to these terms.
+                        </p>
+                        <p>
+                            Use of the Site is subject to the laws of Australia. If you access the Site from outside Australia,
+                            you do so at your own risk and are responsible for compliance with local laws.
+                        </p>
+                    </section>
+
+                    <!-- 2. About Us -->
+                    <section id="about">
+                        <h2>2. About Us</h2>
+                        <p>
+                            The Site is operated by <strong>{companyName}</strong> ({abn}), a business management and advisory
+                            firm servicing trade business owners across Australia and internationally.
+                        </p>
+                        <p>
+                            We provide outsourced business management services across HR, finance, systems, marketing, and
+                            exit planning (including equity partnership and staged buyout arrangements).
+                        </p>
+                        <p>Contact details:</p>
+                        <ul>
+                            <li>Email: <a href={`mailto:${email}`} class="text-growth-teal hover:underline">{email}</a></li>
+                            <li>Phone: {phone}</li>
+                            <li>Address: {address}</li>
+                        </ul>
+                    </section>
+
+                    <!-- 3. Use of Site -->
+                    <section id="use-of-site">
+                        <h2>3. Use of This Website</h2>
+                        <p>You may use the Site only for lawful purposes and in a manner consistent with these terms. You agree not to:</p>
+                        <ul>
+                            <li>Use the Site in any way that violates applicable Australian or international law or regulation</li>
+                            <li>Transmit any unsolicited commercial communications (spam) or engage in conduct prohibited under the <em>Spam Act 2003</em> (Cth)</li>
+                            <li>Attempt to gain unauthorised access to any part of the Site, our servers, or any databases connected to the Site</li>
+                            <li>Reproduce, duplicate, copy, sell, or otherwise exploit any portion of the Site without our express written permission</li>
+                            <li>Introduce viruses, trojans, worms, logic bombs, or other technologically harmful material</li>
+                            <li>Use automated scraping tools, bots, or scripts to access or extract content from the Site</li>
+                            <li>Use the Site to submit false, misleading, or fraudulent information</li>
+                            <li>Impersonate any person or entity, or falsely state or misrepresent your affiliation with any person or entity</li>
+                        </ul>
+                        <p>
+                            We reserve the right to terminate or restrict your access to the Site at any time without notice
+                            if we reasonably believe you have breached these terms.
+                        </p>
+                    </section>
+
+                    <!-- 4. Intellectual Property -->
+                    <section id="intellectual-property">
+                        <h2>4. Intellectual Property</h2>
+                        <p>
+                            All content on the Site — including but not limited to text, graphics, logos, icons, images,
+                            downloadable resources, tools (including the Business Valuation Scorecard), and software —
+                            is the property of {companyName} or its content suppliers and is protected by Australian and
+                            international copyright and intellectual property laws.
+                        </p>
+                        <p>
+                            You may access and use the Site for your own personal, non-commercial informational purposes.
+                            You may not:
+                        </p>
+                        <ul>
+                            <li>Reproduce, republish, or redistribute any content from the Site without written permission</li>
+                            <li>Use our trade name, logos, or branding without express authorisation</li>
+                            <li>Create derivative works from Site content</li>
+                            <li>Frame or embed Site content within another website or platform</li>
+                        </ul>
+                        <p>
+                            The Tradewise Group name, logo, and service names are trade marks of {companyName}.
+                            Nothing on this Site confers any licence or right to use any trade mark without our prior
+                            written consent.
+                        </p>
+                    </section>
+
+                    <!-- 5. No Professional Advice -->
+                    <section id="no-advice">
+                        <h2>5. No Professional Advice</h2>
+                        <p>
+                            The information provided on this Site — including our Business Valuation Scorecard, cost guides,
+                            process guides, and general resources — is for general informational purposes only. It does not
+                            constitute financial, legal, accounting, taxation, or professional advice.
+                        </p>
+                        <p>
+                            Valuation ranges and scoring outputs generated by the Scorecard tool are indicative estimates based
+                            on the information you provide. They are not formal business valuations and should not be relied
+                            upon as such. Actual business value is affected by many factors including market conditions, buyer
+                            appetite, due diligence findings, and professional assessment.
+                        </p>
+                        <p>
+                            Before making any financial, legal, or business decisions, you should seek independent professional
+                            advice from a suitably qualified adviser. Tradewise Group does not hold an Australian Financial
+                            Services Licence (AFSL) and does not provide financial product advice as defined under the
+                            <em>Corporations Act 2001</em> (Cth).
+                        </p>
+                    </section>
+
+                    <!-- 6. Data Collection -->
+                    <section id="data-collection">
+                        <h2>6. Data Collection & Use</h2>
+                        <p>
+                            When you submit a form, complete the Scorecard, book a call, or otherwise interact with the Site,
+                            you provide us with personal and business information. By doing so, you consent to our collection
+                            and use of that information as described in our
+                            <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a> and summarised here.
+                        </p>
+
+                        <h3>How we use your data</h3>
+                        <p>We collect and use your data for the following purposes:</p>
+                        <ul>
+                            <li>
+                                <strong>Service delivery:</strong> To contact you, deliver the services you've requested,
+                                and manage our client relationship with you.
+                            </li>
+                            <li>
+                                <strong>Internal marketing:</strong> To send you relevant information about Tradewise Group
+                                services, updates, and resources that we believe may be of interest to you. You can
+                                opt out of marketing communications at any time.
+                            </li>
+                            <li>
+                                <strong>Business intelligence:</strong> We may use aggregated, de-identified data from
+                                our client base to analyse industry trends, benchmark business performance, and
+                                develop purchasing power insights for the benefit of our client group. Any such
+                                analysis will use aggregated, anonymised data that cannot be used to identify
+                                you individually.
+                            </li>
+                            <li>
+                                <strong>Service improvement:</strong> To improve how we operate, develop new services,
+                                and better serve the trade business community.
+                            </li>
+                        </ul>
+
+                        <div class="info-box">
+                            <strong>Our commitment regarding your data:</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>We will <strong>never sell your personal information</strong> to third parties.</li>
+                                <li>We will <strong>seek your explicit permission</strong> before using your identifiable data for any purpose beyond the above — including any group purchasing or commercial partnerships.</li>
+                                <li>We will <strong>not share your data</strong> with external organisations for their own marketing purposes without your consent.</li>
+                            </ul>
+                        </div>
+
+                        <h3>Third-party platforms</h3>
+                        <p>
+                            We use HubSpot CRM (operated by HubSpot, Inc., United States) to manage contact data, form
+                            submissions, and email communications. Data submitted via this Site may be stored on HubSpot's
+                            servers. HubSpot is certified under applicable international data transfer frameworks.
+                            See our <a href="/privacy-policy#overseas" class="text-growth-teal hover:underline">Privacy Policy — Overseas Disclosure</a> for more detail.
+                        </p>
+                        <p>
+                            Our full privacy practices — including your rights of access, correction, and complaint — are set
+                            out in our <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>,
+                            which forms part of these Terms of Use.
+                        </p>
+                    </section>
+
+                    <!-- 7. Third-Party Links -->
+                    <section id="third-party">
+                        <h2>7. Third-Party Links & Tools</h2>
+                        <p>
+                            The Site may contain links to external websites, platforms, and tools operated by third parties
+                            (including HubSpot booking pages). These links are provided for your convenience only. We do not
+                            endorse, control, or accept responsibility for the content, privacy practices, or reliability of
+                            any third-party site.
+                        </p>
+                        <p>
+                            Your use of any linked third-party site is subject to that site's own terms and privacy policy.
+                            We encourage you to review those documents before providing any personal information to a
+                            third-party platform.
+                        </p>
+                    </section>
+
+                    <!-- 8. Limitation of Liability -->
+                    <section id="liability">
+                        <h2>8. Limitation of Liability</h2>
+                        <p>
+                            To the maximum extent permitted by law, {companyName} and its directors, employees, contractors,
+                            and agents will not be liable for any loss or damage — including direct, indirect, incidental,
+                            consequential, or special damages — arising from or in connection with:
+                        </p>
+                        <ul>
+                            <li>Your use of, or inability to use, the Site or any content on it</li>
+                            <li>Any reliance on information, tools, or resources provided on the Site</li>
+                            <li>Valuation estimates generated by the Business Valuation Scorecard</li>
+                            <li>Errors, omissions, interruptions, or delays in the operation of the Site</li>
+                            <li>Unauthorised access to or alteration of your data</li>
+                            <li>Any conduct or content of any third party on or via the Site</li>
+                        </ul>
+                        <p>
+                            The Site and its content are provided on an "as is" and "as available" basis without warranties
+                            of any kind, express or implied, including but not limited to implied warranties of merchantability,
+                            fitness for a particular purpose, or non-infringement.
+                        </p>
+                        <p>
+                            Where our liability cannot be excluded under the <em>Australian Consumer Law</em> (Schedule 2 of
+                            the <em>Competition and Consumer Act 2010</em> (Cth)) or other applicable legislation, our
+                            liability is limited to the extent permitted by that legislation.
+                        </p>
+                    </section>
+
+                    <!-- 9. Australian Consumer Law -->
+                    <section id="consumer-guarantees">
+                        <h2>9. Australian Consumer Law</h2>
+                        <p>
+                            Nothing in these Terms of Use is intended to exclude, restrict, or modify any right or remedy
+                            you may have under the <em>Australian Consumer Law</em> (ACL) or any other applicable consumer
+                            protection legislation that cannot be excluded by agreement.
+                        </p>
+                        <p>
+                            Under the ACL, consumers have the benefit of statutory guarantees in relation to services,
+                            including that services will be rendered with due care and skill, be fit for any purpose you
+                            make known to us, and be supplied within a reasonable time. Where these guarantees apply,
+                            you may be entitled to a remedy.
+                        </p>
+                        <p>
+                            Our services are primarily directed to businesses. To the extent permitted by law, where
+                            services are acquired for the purposes of a business (not a consumer), the application of
+                            consumer guarantees under the ACL may be limited or excluded as permitted by section 64A
+                            of the ACL.
+                        </p>
+                    </section>
+
+                    <!-- 10. Changes -->
+                    <section id="changes">
+                        <h2>10. Changes to These Terms</h2>
+                        <p>
+                            We may update these Terms of Use from time to time to reflect changes to our services, technology,
+                            legal requirements, or business practices. When we do, we will update the "Last updated" date at
+                            the top of this page.
+                        </p>
+                        <p>
+                            Your continued use of the Site after any changes constitutes your acceptance of the revised terms.
+                            We encourage you to review this page periodically. If a change materially affects your rights,
+                            we will take reasonable steps to notify you where practicable.
+                        </p>
+                    </section>
+
+                    <!-- 11. Governing Law -->
+                    <section id="governing-law">
+                        <h2>11. Governing Law & Jurisdiction</h2>
+                        <p>
+                            These Terms of Use are governed by and construed in accordance with the laws of the State of
+                            Queensland, Australia, without regard to its conflict of law provisions.
+                        </p>
+                        <p>
+                            You agree to submit to the exclusive jurisdiction of the courts of Queensland (and any courts
+                            competent to hear appeals from those courts) in respect of any dispute arising from or related
+                            to these terms or your use of the Site.
+                        </p>
+                        <p>
+                            If you are accessing the Site from outside Australia, you acknowledge that your local laws may
+                            also apply. Nothing in these terms limits your rights under any applicable mandatory local
+                            consumer protection legislation.
+                        </p>
+                    </section>
+
+                    <!-- 12. Contact -->
+                    <section id="contact">
+                        <h2>12. Contact Us</h2>
+                        <p>
+                            If you have any questions about these Terms of Use, please contact us:
+                        </p>
+                        <ul>
+                            <li><strong>Email:</strong> <a href={`mailto:${email}`} class="text-growth-teal hover:underline">{email}</a></li>
+                            <li><strong>Phone:</strong> {phone}</li>
+                            <li><strong>Mail:</strong> {companyName}, {address}</li>
+                        </ul>
+                        <p>
+                            For privacy-related queries, please refer to our
+                            <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a> or
+                            contact us at the details above.
+                        </p>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</MainLayout>
+
+<style>
+    .prose-content section {
+        margin-bottom: 3rem;
+    }
+
+    .prose-content h2 {
+        font-family: Georgia, serif;
+        font-size: 1.375rem;
+        font-weight: 700;
+        color: #141C24;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #1A7A6E;
+    }
+
+    .prose-content h3 {
+        font-family: Georgia, serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #141C24;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .prose-content p {
+        color: rgba(20, 28, 36, 0.70);
+        line-height: 1.75;
+        font-size: 0.9375rem;
+        margin-bottom: 1rem;
+    }
+
+    .prose-content ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .prose-content ul li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.625rem;
+        color: rgba(20, 28, 36, 0.70);
+        font-size: 0.9375rem;
+        line-height: 1.6;
+    }
+
+    .prose-content ul li::before {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #D4820A;
+        flex-shrink: 0;
+        margin-top: 0.55rem;
+    }
+
+    .info-box {
+        background: rgba(26, 122, 110, 0.07);
+        border-left: 4px solid #1A7A6E;
+        border-radius: 0 0.5rem 0.5rem 0;
+        padding: 1rem 1.25rem;
+        color: rgba(20, 28, 36, 0.75);
+        font-size: 0.9rem;
+        line-height: 1.65;
+        margin-bottom: 1.25rem;
+    }
+
+    .info-box ul {
+        margin: 0;
+    }
+
+    .info-box ul li::before {
+        background: #1A7A6E;
+    }
+</style>
