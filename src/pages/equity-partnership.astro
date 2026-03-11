@@ -1,0 +1,671 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const problems = [
+    {
+        icon: '↓',
+        title: 'Low Valuations',
+        body: 'Most trade businesses sell for 1–2x earnings on the open market. Buyers know how to negotiate down, and owners — who\'ve never sold a business before — rarely have the knowledge or leverage to push back. The result: years of hard work sold for a fraction of its real worth.',
+    },
+    {
+        icon: '%',
+        title: 'High Fees & Hidden Costs',
+        body: 'Business brokers charge 5–10% of the sale price. Add legal fees, accounting fees, and due diligence costs, and a significant portion of the proceeds disappears before the owner sees a dollar. The people helping you sell are incentivised to close — not to maximise your outcome.',
+    },
+    {
+        icon: '✕',
+        title: 'Legacy Destruction',
+        body: 'A trade sale is rarely a clean handover. New owners cut staff, change suppliers, rebrand, and strip the culture that made the business successful. The owner walks away watching everything they built — their reputation, their team, their name in the market — dismantled for short-term gain.',
+    },
+];
+
+const steps = [
+    { num: '01', title: 'Valuation', body: 'We conduct a thorough assessment of your business — financials, operations, team, systems, and market position — to establish an accurate baseline value.' },
+    { num: '02', title: 'Structure', body: 'Together we design the right model for your goals. Value Maximiser, Staged Buyout, or Equity Partnership — each is tailored to your timeline, your needs, and your definition of a great outcome.' },
+    { num: '03', title: 'Agreement', body: 'A formal Shareholders Agreement and/or Service Agreement is drafted by independent solicitors. All terms — equity split, valuation formula, timelines, and obligations — are documented and agreed before anything begins.' },
+    { num: '04', title: 'Embed', body: 'Our team integrates into your business. We take over the back-end functions — finance, HR, systems, marketing — and begin the structured process of building value from the inside.' },
+    { num: '05', title: 'Growth', body: 'Over an agreed timeframe, we drive measurable improvements across every value driver: revenue quality, team independence, financial clarity, and operational efficiency. Your business becomes more valuable every quarter.' },
+    { num: '06', title: 'Realise', body: 'At the agreed milestone — whether that\'s a full exit, a staged buyout completion, or a strategic sale — you realise the full, grown value of your equity. Maximum outcome. Minimum friction.' },
+];
+
+const pros = [
+    'Higher exit value — multiples of 3–5x versus the typical 1–2x on the open market',
+    'Two paydays in the Staged Buyout model — one now, one at a higher future valuation',
+    'No broker commission — typically saving 5–10% of total sale proceeds',
+    'Legacy protected — staff, brand, and culture preserved through the transition',
+    'Ongoing income during the partnership period while value is being built',
+    'Access to group purchasing power across the TradeWise portfolio',
+    'Professional back-end management — reducing your workload from day one',
+    'Structured, certain process with agreed terms — no open-market uncertainty',
+];
+
+const cons = [
+    'Equity dilution — you own a smaller percentage, though typically of a significantly larger business',
+    'Longer timeline — full exit typically takes 2–5 years, not weeks',
+    'Shared decision-making — major decisions require agreement from both parties',
+    'Independent legal advice is required and comes at the owner\'s cost',
+    'Not suitable for owners requiring immediate full liquidity',
+    'Growth outcomes depend on business performance and market conditions',
+    'Requires active cooperation and transparency throughout the partnership',
+    'Not every business will qualify — a minimum revenue and profitability threshold applies',
+];
+---
+
+<MainLayout
+    title="TradeWise Equity Partnership | A Better Way to Exit"
+    description="Don't sell your trade business short. The TradeWise Equity Partnership Model helps owners maximise value, protect their legacy, and exit on their terms — without broker fees or a rushed sale."
+>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="bg-tradewise-navy text-white py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
+                    Equity Partnership Model
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">
+                    Your Business is Your Life's Work.<br />
+                    <span style="color:#1A7A6E">We Help You Realise Its True Value.</span>
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl">
+                    Most trade business owners sell for far less than their business is worth. They use brokers
+                    who take a cut, accept lowball offers from opportunistic buyers, and watch their legacy
+                    dismantled. The TradeWise Equity Partnership Model is a fundamentally different approach —
+                    one that puts the owner first.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a
+                        href="/scorecard"
+                        class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200"
+                    >
+                        Get Your Free Valuation →
+                    </a>
+                    <a
+                        href="https://meetings.hubspot.com/tradewise"
+                        class="inline-block border border-white/30 text-white font-semibold px-8 py-4 rounded hover:border-white/60 hover:bg-white/5 transition-all duration-200"
+                    >
+                        Book a Strategy Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== THE PROBLEM ===================== -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    The Problem
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">
+                    The Traditional Exit is Broken.
+                </h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">
+                    For most trade business owners, selling means stress, compromise, and a payout that
+                    doesn't reflect the years of work behind it. Here's why the traditional path fails.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {problems.map(p => (
+                    <div class="bg-white rounded-xl p-8 shadow-sm border-t-4 border-momentum-amber">
+                        <div class="w-12 h-12 rounded-full bg-momentum-amber/10 flex items-center justify-center mb-6">
+                            <span class="text-momentum-amber font-bold text-xl font-heading">{p.icon}</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-forge-black mb-4">{p.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{p.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== THE SOLUTION ===================== -->
+    <section class="bg-tradewise-navy py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    The TradeWise Solution
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">
+                    A Better Way to Exit.
+                </h2>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    TradeWise offers three structured pathways — each designed to maximise what you walk away
+                    with, protect what you've built, and give you control over how and when you exit.
+                </p>
+            </div>
+
+            <!-- Tab Nav -->
+            <div class="flex flex-col sm:flex-row gap-2 mb-10" id="tab-nav">
+                {[
+                    { id: 'value-maximiser', label: 'The Value Maximiser' },
+                    { id: 'staged-buyout',   label: 'The Staged Buyout' },
+                    { id: 'equity-partner',  label: 'The Equity Partnership' },
+                ].map((tab, i) => (
+                    <button
+                        class="tab-btn text-sm font-semibold px-6 py-3 rounded-lg transition-all duration-200 text-left sm:text-center"
+                        data-tab={tab.id}
+                        style={i === 0 ? 'background:#D4820A;color:white' : 'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6)'}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+
+            <!-- Tab Panels -->
+            <div id="tab-value-maximiser" class="tab-panel">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">Pathway 01</p>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mb-5">
+                            Sell at Peak Value — Not Market Value.
+                        </h3>
+                        <p class="text-white/70 leading-relaxed mb-6">
+                            Most businesses go to market before they're ready. The Value Maximiser is a structured
+                            12–24 month pre-sale engagement where TradeWise embeds into your business to systematically
+                            increase its value — before a single buyer is approached.
+                        </p>
+                        <p class="text-white/70 leading-relaxed mb-8">
+                            We fix the gaps that buyers use to negotiate you down: owner dependency, weak financials,
+                            informal processes, and customer concentration. By the time we go to market, your business
+                            commands a premium multiple — and you have the data to justify it.
+                        </p>
+                        <div class="border-l-2 border-momentum-amber pl-5">
+                            <p class="text-white/60 text-sm italic">
+                                Best for: Owners planning to exit in 1–3 years who want to maximise their sale price
+                                without giving up equity during the process.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {[
+                            { title: 'Business Systemisation', body: 'SOPs, job management, and operational frameworks that reduce owner dependency and increase buyer confidence.' },
+                            { title: 'Financial Optimisation', body: 'Clean books, monthly reporting, and profitability tracking that demonstrate a well-run, investable business.' },
+                            { title: 'Team & Leadership', body: 'Build the management layer that lets the business run without the owner — the single biggest value driver in any trade business.' },
+                            { title: 'Sale Process Management', body: 'We manage the sale process — including information memorandum, buyer negotiations, and due diligence — on your behalf.' },
+                        ].map(f => (
+                            <div class="bg-white/8 rounded-lg p-5 border border-white/10">
+                                <h4 class="font-semibold text-white text-sm mb-2">{f.title}</h4>
+                                <p class="text-white/50 text-sm leading-relaxed">{f.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-staged-buyout" class="tab-panel" style="display:none">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">Pathway 02</p>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mb-5">
+                            Two Paydays. One Business.
+                        </h3>
+                        <p class="text-white/70 leading-relaxed mb-6">
+                            The Staged Buyout is designed for owners who want liquidity now, without selling everything
+                            at today's value. TradeWise acquires a minority stake (typically 30–49%) at the current
+                            agreed valuation, providing an immediate cash event while the owner retains control and
+                            continues to receive income.
+                        </p>
+                        <p class="text-white/70 leading-relaxed mb-8">
+                            Over an agreed period — typically 2–4 years — TradeWise drives growth and value improvement.
+                            At the agreed trigger point, TradeWise acquires the remaining equity using a pre-agreed
+                            formula. The owner gets a first payout at today's value and a second, larger payout when
+                            the business is worth significantly more.
+                        </p>
+                        <div class="border-l-2 border-momentum-amber pl-5">
+                            <p class="text-white/60 text-sm italic">
+                                Best for: Owners who want immediate partial liquidity but believe in the future value
+                                of their business and want to share in the upside.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {[
+                            { title: 'Immediate Liquidity', body: 'A cash payment for the acquired equity stake at completion of the agreement — no waiting years for a buyer.' },
+                            { title: 'Retained Control', body: 'The owner remains in the business as majority shareholder and continues to draw income throughout the partnership.' },
+                            { title: 'Upside Participation', body: 'The second payout is based on the grown valuation — owners share directly in the value TradeWise creates.' },
+                            { title: 'Pre-agreed Formula', body: 'The second buyout price is calculated using a formula agreed at the outset — no renegotiation, no surprises.' },
+                        ].map(f => (
+                            <div class="bg-white/8 rounded-lg p-5 border border-white/10">
+                                <h4 class="font-semibold text-white text-sm mb-2">{f.title}</h4>
+                                <p class="text-white/50 text-sm leading-relaxed">{f.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-equity-partner" class="tab-panel" style="display:none">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-3">Pathway 03</p>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mb-5">
+                            Keep Running Your Business. Let Us Run the Back-End.
+                        </h3>
+                        <p class="text-white/70 leading-relaxed mb-6">
+                            The Equity Partnership is for owners who love their trade but are drowning in the business
+                            side. TradeWise takes an equity position in exchange for providing ongoing management services —
+                            finance, HR, systems, and marketing — effectively at no monthly cash cost.
+                        </p>
+                        <p class="text-white/70 leading-relaxed mb-8">
+                            The owner retains majority control, continues to earn from the business, and works alongside
+                            TradeWise as a genuine partner. Exit is not the primary goal — growth is. When the time
+                            eventually comes to sell, both parties exit together at maximum value.
+                        </p>
+                        <div class="border-l-2 border-momentum-amber pl-5">
+                            <p class="text-white/60 text-sm italic">
+                                Best for: Owners who want relief from the back-end burden now, a long-term growth partner,
+                                and a well-supported exit at a future date of their choosing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {[
+                            { title: 'Services for Equity', body: 'TradeWise provides full back-end management in exchange for an equity stake — preserving the owner\'s monthly cash position.' },
+                            { title: 'Shared Growth', body: 'Both parties are financially motivated to grow the business — incentives are fully aligned from day one.' },
+                            { title: 'Owner Remains in Control', body: 'The owner continues to run the trade and client relationships. TradeWise handles everything else.' },
+                            { title: 'Long-Term Partnership', body: 'Designed as a multi-year relationship — with a clear, agreed exit mechanism when the time is right for both parties.' },
+                        ].map(f => (
+                            <div class="bg-white/8 rounded-lg p-5 border border-white/10">
+                                <h4 class="font-semibold text-white text-sm mb-2">{f.title}</h4>
+                                <p class="text-white/50 text-sm leading-relaxed">{f.body}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-16">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    The Process
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">
+                    How It Works — Step by Step.
+                </h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">
+                    Every engagement follows a structured, transparent process. No surprises. No ambiguity.
+                    Just a clear path from where you are now to the outcome you want.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {steps.map((step, i) => (
+                    <div class="relative bg-white rounded-xl p-8 shadow-sm">
+                        <!-- Step number accent -->
+                        <div class="flex items-start gap-5 mb-5">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-heading font-bold text-sm text-white" style="background:#1E3A5F">
+                                {step.num}
+                            </div>
+                            {i < steps.length - 1 && (
+                                <div class="hidden lg:block absolute top-12 right-0 w-8 h-px translate-x-full" style="background:#D4820A;opacity:0.4"></div>
+                            )}
+                            <h3 class="font-heading text-lg font-bold text-forge-black pt-2">{step.title}</h3>
+                        </div>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{step.body}</p>
+                        {step.num === '06' && (
+                            <div class="mt-4 inline-flex items-center gap-2 text-momentum-amber text-xs font-semibold">
+                                <span class="w-5 h-5 rounded-full bg-momentum-amber/10 flex items-center justify-center">★</span>
+                                Maximum value. Minimum friction.
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== COSTS GUIDE ===================== -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    Cost Guide
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">
+                    What Does It Cost to Structure a Partnership?
+                </h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">
+                    Entering an equity partnership involves a number of one-off and ongoing costs beyond
+                    the TradeWise engagement itself. These are third-party costs you should budget for
+                    and seek independent quotes on. All figures below are indicative estimates only.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                {[
+                    {
+                        category: 'Legal Fees',
+                        icon: '⚖️',
+                        items: [
+                            { name: 'Shareholders Agreement (your solicitor)', cost: '$3,000 – $8,000' },
+                            { name: 'Independent legal advice review', cost: '$1,500 – $3,500' },
+                            { name: 'Share transfer documentation', cost: '$500 – $1,500' },
+                            { name: 'Ongoing legal (amendments, disputes)', cost: 'Varies' },
+                        ],
+                        note: 'Costs vary significantly by firm and complexity. Always obtain at least two quotes.',
+                    },
+                    {
+                        category: 'Accounting & Tax',
+                        icon: '📋',
+                        items: [
+                            { name: 'Business valuation (independent CPA)', cost: '$2,500 – $8,000' },
+                            { name: 'Structuring & tax advice', cost: '$1,500 – $4,000' },
+                            { name: 'CGT & stamp duty assessment', cost: '$500 – $2,000' },
+                            { name: 'Annual compliance (ongoing)', cost: '$2,000 – $5,000 p.a.' },
+                        ],
+                        note: 'A business restructure may trigger Capital Gains Tax events. Specialist advice is essential.',
+                    },
+                    {
+                        category: 'ASIC & Government',
+                        icon: '🏛️',
+                        items: [
+                            { name: 'Company registration (if new SPV required)', cost: '$576 (ASIC fee)' },
+                            { name: 'Annual ASIC company review fee', cost: '$310 p.a. (small company)' },
+                            { name: 'Share transfer duty (state-dependent)', cost: 'Varies by state' },
+                            { name: 'Business name registration (if applicable)', cost: '$42 – $98' },
+                        ],
+                        note: 'ASIC fees are set by the Australian Government and subject to annual indexation.',
+                    },
+                    {
+                        category: 'Due Diligence',
+                        icon: '🔍',
+                        items: [
+                            { name: 'Financial due diligence (accountant)', cost: '$2,000 – $6,000' },
+                            { name: 'Legal due diligence (solicitor)', cost: '$1,500 – $4,000' },
+                            { name: 'Trade licence & compliance checks', cost: '$500 – $1,500' },
+                            { name: 'Insurance review', cost: '$500 – $1,000' },
+                        ],
+                        note: 'Due diligence protects both parties. Costs are typically shared or negotiated as part of the deal terms.',
+                    },
+                    {
+                        category: 'Finance & Banking',
+                        icon: '🏦',
+                        items: [
+                            { name: 'Broker fee (if finance required)', cost: '0 – 1% of loan value' },
+                            { name: 'Loan establishment fees', cost: '$500 – $2,000' },
+                            { name: 'Security registration (PPSR)', cost: '$6 – $10 per registration' },
+                            { name: 'Bank account set-up (new entity)', cost: 'Nil – $500' },
+                        ],
+                        note: 'Finance costs only apply where the acquisition or restructure involves external debt.',
+                    },
+                    {
+                        category: 'Ongoing Partnership Costs',
+                        icon: '🔄',
+                        items: [
+                            { name: 'Annual ASIC review & compliance', cost: '$310 – $1,500 p.a.' },
+                            { name: 'Bookkeeping & accounting (entity)', cost: '$2,000 – $6,000 p.a.' },
+                            { name: 'Directors & Officers insurance', cost: '$800 – $3,000 p.a.' },
+                            { name: 'Annual shareholder agreement review', cost: '$500 – $1,500 p.a.' },
+                        ],
+                        note: 'Ongoing costs should be factored into the business\'s operating budget from the outset.',
+                    },
+                ].map(section => (
+                    <div class="bg-concrete rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <span class="text-2xl">{section.icon}</span>
+                            <h3 class="font-heading font-bold text-forge-black text-base">{section.category}</h3>
+                        </div>
+                        <div class="flex flex-col gap-3 mb-5">
+                            {section.items.map(item => (
+                                <div class="flex items-start justify-between gap-3 border-b border-forge-black/8 pb-3 last:border-0 last:pb-0">
+                                    <span class="text-forge-black/65 text-xs leading-relaxed">{item.name}</span>
+                                    <span class="text-forge-black font-semibold text-xs shrink-0 text-right">{item.cost}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <p class="text-forge-black/40 text-xs italic leading-relaxed">{section.note}</p>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="bg-momentum-amber/8 border border-momentum-amber/25 rounded-xl p-6 max-w-4xl">
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-full bg-momentum-amber/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <span class="text-momentum-amber font-bold text-sm">!</span>
+                    </div>
+                    <p class="text-forge-black/60 text-sm leading-relaxed italic">
+                        <strong class="not-italic font-semibold text-forge-black/80">Important:</strong> All cost
+                        figures above are indicative estimates based on typical market rates as at 2025 and are
+                        subject to change. Actual costs will vary depending on the complexity of your structure,
+                        the professionals engaged, and the jurisdiction in which the transaction occurs. This
+                        guide does not constitute financial, legal, or tax advice. You should obtain independent
+                        quotes and professional advice before making any decisions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PROS & CONS ===================== -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    Full Transparency
+                </p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">
+                    Is This Model Right for You?
+                </h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">
+                    The TradeWise model isn't for everyone — and we'd rather tell you that upfront than
+                    waste your time. Here is an honest breakdown of the advantages and the trade-offs.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Pros -->
+                <div class="bg-growth-teal/5 border border-growth-teal/20 rounded-xl p-8">
+                    <div class="flex items-center gap-3 mb-7">
+                        <div class="w-8 h-8 rounded-full bg-growth-teal flex items-center justify-center text-white font-bold text-sm">✓</div>
+                        <h3 class="font-heading text-xl font-bold text-forge-black">Advantages</h3>
+                    </div>
+                    <ul class="flex flex-col gap-4">
+                        {pros.map(pro => (
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1 w-4 h-4 rounded-full bg-growth-teal/20 flex items-center justify-center shrink-0">
+                                    <span style="width:6px;height:6px;border-radius:50%;background:#1A7A6E;display:block"></span>
+                                </span>
+                                <span class="text-forge-black/70 text-sm leading-relaxed">{pro}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <!-- Cons -->
+                <div class="bg-forge-black/3 border border-forge-black/10 rounded-xl p-8">
+                    <div class="flex items-center gap-3 mb-7">
+                        <div class="w-8 h-8 rounded-full bg-forge-black/15 flex items-center justify-center text-forge-black font-bold text-sm">!</div>
+                        <h3 class="font-heading text-xl font-bold text-forge-black">Considerations</h3>
+                    </div>
+                    <ul class="flex flex-col gap-4">
+                        {cons.map(con => (
+                            <li class="flex items-start gap-3">
+                                <span class="mt-1 w-4 h-4 rounded-full bg-forge-black/10 flex items-center justify-center shrink-0">
+                                    <span style="width:6px;height:6px;border-radius:50%;background:#141C24;opacity:0.4;display:block"></span>
+                                </span>
+                                <span class="text-forge-black/60 text-sm leading-relaxed">{con}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PORTFOLIO ADVANTAGE ===================== -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                        The Portfolio Advantage
+                    </p>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-6">
+                        You're Not Just Getting a Partner. You're Joining a Portfolio.
+                    </h2>
+                    <p class="text-forge-black/60 text-lg leading-relaxed mb-6">
+                        When you enter a partnership with TradeWise, your business becomes part of a growing
+                        portfolio of trade businesses operating under one management group. That collective
+                        scale creates advantages no individual trade business can access on its own.
+                    </p>
+                    <p class="text-forge-black/60 leading-relaxed mb-8">
+                        Suppliers, insurers, software providers, and subcontractors all respond differently
+                        when you represent volume. The savings flow directly to portfolio businesses — improving
+                        margins, reducing costs, and accelerating the value creation process.
+                    </p>
+                    <div class="border-l-4 border-momentum-amber pl-5">
+                        <p class="text-forge-black/70 text-sm italic leading-relaxed">
+                            "Individually, you're a trade business. Inside the TradeWise portfolio, you're part of
+                            a group with the buying power, systems, and infrastructure of a much larger operation."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {[
+                        { icon: '📦', title: 'Group Purchasing Power', body: 'Negotiated rates on materials, equipment, insurance, and software — passed directly to every portfolio business.' },
+                        { icon: '⚙️', title: 'Shared Back-Office', body: 'Finance, HR, and admin costs are spread across the portfolio — dramatically reducing per-business overhead.' },
+                        { icon: '🔗', title: 'Cross-Referral Network', body: 'Portfolio businesses refer complementary trades to each other — creating a built-in pipeline of warm, qualified work.' },
+                        { icon: '📊', title: 'Benchmarking & Insights', body: 'Performance data from across the portfolio informs better decisions — you benefit from what other businesses have already learned.' },
+                    ].map(item => (
+                        <div class="bg-white rounded-xl p-6 shadow-sm">
+                            <div class="text-3xl mb-4">{item.icon}</div>
+                            <h3 class="font-heading font-bold text-forge-black text-base mb-2">{item.title}</h3>
+                            <p class="text-forge-black/55 text-sm leading-relaxed">{item.body}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== LEGAL FRAMEWORK ===================== -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+                <div>
+                    <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                        Legal Framework
+                    </p>
+                    <h2 class="font-heading text-3xl font-bold text-white mb-6">
+                        Structured. Documented. Transparent.
+                    </h2>
+                    <p class="text-white/70 leading-relaxed mb-6">
+                        Every TradeWise partnership is governed by a formal legal structure, prepared by
+                        independent solicitors and agreed by all parties before any engagement begins.
+                        There are no handshake deals — every right, obligation, and exit mechanism is
+                        documented in writing.
+                    </p>
+                    <div class="flex flex-col gap-4">
+                        {[
+                            { label: 'Shareholders Agreement', body: 'Governs equity ownership, voting rights, dividend policy, and exit mechanisms for all parties.' },
+                            { label: 'Service Agreement', body: 'Details the management services TradeWise provides, the obligations of each party, and performance expectations.' },
+                            { label: 'Valuation Methodology', body: 'The formula for calculating equity value at each trigger point is agreed and documented at the outset — not negotiated under pressure later.' },
+                            { label: 'Dispute Resolution', body: 'A structured mediation and arbitration process is included to resolve any disagreements without costly litigation.' },
+                        ].map(item => (
+                            <div class="flex items-start gap-4 bg-white/5 rounded-lg p-4 border border-white/10">
+                                <div class="w-2 h-2 rounded-full bg-momentum-amber mt-2 shrink-0"></div>
+                                <div>
+                                    <p class="font-semibold text-white text-sm mb-1">{item.label}</p>
+                                    <p class="text-white/55 text-sm leading-relaxed">{item.body}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-white/5 border border-white/15 rounded-xl p-8">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-full bg-momentum-amber/20 flex items-center justify-center shrink-0">
+                                <span class="text-momentum-amber font-bold text-lg">!</span>
+                            </div>
+                            <h3 class="font-heading text-lg font-bold text-white">Independent Legal Advice — Required.</h3>
+                        </div>
+                        <p class="text-white/65 text-sm leading-relaxed mb-5">
+                            Before entering into any agreement with TradeWise, all business owners are required to
+                            obtain independent legal advice from a qualified solicitor of their own choosing.
+                            This is not optional — it is a condition of proceeding.
+                        </p>
+                        <p class="text-white/65 text-sm leading-relaxed mb-5">
+                            TradeWise will provide all draft documentation in advance to allow sufficient review
+                            time. We encourage owners to ask hard questions, push back on terms they don't
+                            understand, and take as long as they need before signing anything.
+                        </p>
+                        <div class="border-t border-white/10 pt-5">
+                            <p class="text-white/40 text-xs italic leading-relaxed">
+                                <strong class="not-italic font-semibold text-white/60">Legal Disclaimer:</strong> The
+                                information on this page is general in nature and does not constitute legal, financial,
+                                or investment advice. Equity partnership arrangements involve complex legal and financial
+                                considerations. You should obtain independent advice from qualified legal, accounting,
+                                and financial professionals before entering into any agreement. TradeWise Group Pty Ltd
+                                makes no representation or warranty regarding the suitability of any arrangement for
+                                your specific circumstances.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CTA ===================== -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                Your First Step
+            </p>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-5">
+                Find Out What Your Business is Worth — Before You Decide Anything.
+            </h2>
+            <p class="text-forge-black/60 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                The right exit decision starts with knowing your real number. Complete the free
+                Business Valuation Scorecard and get an estimated valuation range in under 5 minutes —
+                using the same methodology used by trade business brokers and buyers.
+            </p>
+            <a
+                href="/scorecard"
+                class="inline-block bg-momentum-amber text-white font-semibold text-lg px-10 py-4 rounded-lg hover:brightness-110 transition-all duration-200 mb-6"
+            >
+                Complete the Free Valuation Scorecard →
+            </a>
+            <p class="text-forge-black/40 text-sm">
+                Or if you'd prefer to talk first —
+                <a href="https://meetings.hubspot.com/tradewise" class="text-growth-teal hover:underline font-medium">book a free Strategy Call</a>.
+            </p>
+        </div>
+    </section>
+
+</MainLayout>
+
+<script is:inline>
+    var tabBtns   = document.querySelectorAll('.tab-btn');
+    var tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var target = btn.dataset.tab;
+
+            // Update buttons
+            tabBtns.forEach(function(b) {
+                b.style.background = 'rgba(255,255,255,0.08)';
+                b.style.color      = 'rgba(255,255,255,0.6)';
+            });
+            btn.style.background = '#D4820A';
+            btn.style.color      = 'white';
+
+            // Update panels
+            tabPanels.forEach(function(panel) {
+                panel.style.display = panel.id === 'tab-' + target ? 'block' : 'none';
+            });
+        });
+    });
+</script>
