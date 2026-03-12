@@ -264,24 +264,11 @@ import MainLayout from '../layouts/MainLayout.astro';
                         <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Rate is Ready</h2>
                         <p class="text-forge-black/50 text-sm max-w-sm mx-auto">Enter your details below to reveal your personalised charge out rate and action plan.</p>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label class="calc-label">First Name</label>
-                            <input id="lead-name" type="text" class="calc-input" placeholder="Your first name" />
-                        </div>
-                        <div>
-                            <label class="calc-label">Email Address</label>
-                            <input id="lead-email" type="email" class="calc-input" placeholder="you@yourbusiness.com.au" />
-                        </div>
-                    </div>
-                    <p class="text-forge-black/35 text-xs text-center mb-6">
-                        We'll send your results to this email. No spam — ever. See our
-                        <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
+                    <script src="https://js-ap1.hsforms.net/forms/embed/442932388.js" defer></script>
+                    <div class="hs-form-frame" data-region="ap1" data-form-id="457aa646-55f4-4da5-a868-6ab7aa3935bc" data-portal-id="442932388"></div>
+                    <p class="text-forge-black/35 text-xs text-center mt-4">
+                        No spam — ever. See our <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
                     </p>
-                    <button onclick="submitLead()" class="calc-btn-primary w-full text-center">
-                        Reveal My Charge Out Rate →
-                    </button>
-                    <p id="lead-error" class="hidden text-red-500 text-xs text-center mt-3">Please enter your name and a valid email address.</p>
                 </div>
             </div>
 
@@ -622,41 +609,12 @@ function calcRate(productivity) {
     return { rate, hours: billable, labourCost, overheadAlloc, totalCost };
 }
 
-// ─── Lead Capture & HubSpot ──────────────────────────────────────────────────
-function submitLead() {
-    var name  = document.getElementById('lead-name').value.trim();
-    var email = document.getElementById('lead-email').value.trim();
-    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!name || !emailOk) {
-        document.getElementById('lead-error').classList.remove('hidden');
-        return;
+// ─── Lead Capture — HubSpot form submission listener ─────────────────────────
+window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmit') {
+        showResults();
     }
-    document.getElementById('lead-error').classList.add('hidden');
-    calcData.leadName  = name;
-    calcData.leadEmail = email;
-
-    // HubSpot form submission
-    var PORTAL_ID = 'YOUR_PORTAL_ID';       // ← replace with HubSpot Portal ID
-    var FORM_GUID = 'YOUR_FORM_GUID';       // ← replace with HubSpot Form GUID
-    var hsUrl = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_GUID;
-    var payload = {
-        fields: [
-            { name: 'firstname',    value: name },
-            { name: 'email',        value: email },
-            { name: 'company',      value: calcData.companyName || '' },
-            { name: 'jobtitle',     value: calcData.tradeType || '' },
-            { name: 'state',        value: calcData.location || '' },
-        ],
-        context: { pageUri: window.location.href, pageName: document.title }
-    };
-    fetch(hsUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    }).catch(function(){});  // fail silently — still show results
-
-    showResults();
-}
+});
 
 // ─── Results ─────────────────────────────────────────────────────────────────
 function showResults() {
@@ -664,7 +622,7 @@ function showResults() {
     var r    = calcRate(prod);
 
     document.getElementById('result-rate').textContent  = Math.ceil(r.rate);
-    document.getElementById('result-name').textContent  = calcData.leadName + ' · ' + calcData.companyName;
+    document.getElementById('result-name').textContent  = calcData.companyName || '';
     document.getElementById('result-trade').textContent = calcData.tradeType + ' · ' + calcData.location;
     document.getElementById('res-labour').textContent   = fmt(r.labourCost);
     document.getElementById('res-overhead').textContent = fmt(r.overheadAlloc);
