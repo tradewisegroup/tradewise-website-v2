@@ -25,9 +25,7 @@ const team = [
         name: 'Kate Lynch',
         role: 'Founder & Head of Operations',
         paragraphs: [
-            'Kate Lynch founded TradeWise with a single belief: that trade business owners deserve the same quality of back-end support as any large corporation — without the corporate price tag or the corporate runaround.',
-            'With a Masters in Project Management, over 15 years of senior leadership experience, and a background spanning construction, hospitality, and operations, Kate has spent her career building the systems, teams, and strategies that make businesses run better. She has managed multi-million dollar projects, led teams of 60+, and turned underperforming operations into lean, high-performing businesses.',
-            'But what sets Kate apart is not just the credentials — it is the conviction. TradeWise exists because Kate saw first-hand how many talented tradies were being held back not by their craft, but by the chaos behind it. So she built the engine room they never had.',
+            'Kate founded TradeWise on one conviction: trade business owners deserve corporate-quality back-end support without the corporate price tag. With a Masters in Project Management, 15+ years of senior leadership, and a background across construction, hospitality, and operations, she has built the systems and teams behind multi-million dollar operations.',
         ],
         bulletHeading: 'What Kate leads at TradeWise:',
         bullets: [
@@ -37,16 +35,14 @@ const team = [
             'Quality, accountability, and continuous improvement',
         ],
         closings: [
-            'Every service TradeWise delivers — finance, people, marketing, systems — is built on the foundations Kate designed. When you partner with TradeWise, you are backed by her vision, her standards, and her team.',
-            'TradeWise is Kate\'s accumulation of over 20 years of lived experience. Your success is the measure of it.',
+            'Every service TradeWise delivers is built on the foundations Kate designed.',
         ],
     },
     {
         name: 'Jordan Blake',
         role: 'Head of Finance',
         paragraphs: [
-            'Jordan brings 20+ years of CFO-level experience and a modern, tech-forward approach to numbers — giving trade business owners real clarity over their cashflow without the jargon.',
-            'From cleaning up messy books to building full financial reporting systems, Jordan has helped 40+ SMEs across construction, hospitality, and manufacturing take control of their finances. Xero, payroll, BAS, job costing — all handled, all integrated, all working in the background while you are on the tools.',
+            'Jordan brings 20+ years of CFO-level experience and a tech-forward approach to trade business finance — cutting through the jargon to give owners real clarity on their numbers. Xero, payroll, BAS, job costing — handled and integrated.',
         ],
         bulletHeading: 'What Jordan does for you:',
         bullets: [
@@ -58,14 +54,13 @@ const team = [
         closings: [
             'No more guessing your numbers. Just clean financials and a partner who knows your industry.',
         ],
-        aiAgent: 'Jordan is a TradeWise AI agent — built from the expertise of trusted industry professionals to deliver expert-level financial support every day.',
+        aiAgent: true,
     },
     {
         name: 'Brooke Rhodes',
         role: 'Head of People & HR',
         paragraphs: [
-            'Brooke brings 15+ years of senior HR leadership and employment law expertise — giving trade business owners the people systems and compliance frameworks they need to hire well, manage fairly, and grow without the legal headaches.',
-            'From Fair Work obligations to performance frameworks, Brooke turns reactive people management into confident, structured leadership. Whether you are taking on your first employee or managing a full crew, the right foundations make all the difference.',
+            'Brooke brings 15+ years of senior HR leadership and employment law expertise — turning reactive people management into confident, structured leadership for trade business owners at every stage of growth.',
         ],
         bulletHeading: 'What Brooke does for you:',
         bullets: [
@@ -77,48 +72,43 @@ const team = [
         closings: [
             'Your crew is your business. Brooke makes sure they are set up to perform.',
         ],
-        aiAgent: 'Brooke is a TradeWise AI agent — built from the expertise of trusted industry professionals to deliver expert-level people and HR support every day.',
+        aiAgent: true,
     },
     {
         name: 'Troy Callahan',
         role: 'Head of Systems & Operations',
         paragraphs: [
-            'Troy brings together 14+ years of ICT, operations, and administration experience with hands-on construction and project management expertise — the rare combination that trade businesses actually need when it comes to getting their systems and job sites working together.',
-            'On the tech side, Troy has spent over a decade coordinating ICT infrastructure, operations, and finance systems for large organisations — building the kind of integrated, reliable back-end that keeps businesses running smoothly. On the ground, Troy has delivered construction and landscape projects from site supervision through to completion, managing contractors, timelines, and budgets with precision.',
-            'That blend of digital systems thinking and real-world trade experience means Troy does not just set up your software — Troy understands how your business actually works.',
+            'Troy combines 14+ years of ICT and operations experience with hands-on construction and project management — the rare blend that means Troy doesn\'t just set up your software, Troy understands how your business actually runs.',
         ],
         bulletHeading: 'What Troy does for you:',
         bullets: [
             'Tech stack setup, integration, and ongoing support',
             'Job management systems and workflow automation',
-            'Site operations coordination and project oversight',
             'Systems documentation and team training',
             'ICT troubleshooting and process improvement',
         ],
         closings: [
             'Your systems should work as hard as you do. Troy makes sure they do.',
         ],
-        aiAgent: 'Troy is a TradeWise AI agent — built from the combined expertise of trusted industry professionals to deliver expert-level systems and operations support every day.',
+        aiAgent: true,
     },
     {
         name: 'Alex Mercer',
         role: 'Head of Sales & Marketing',
         paragraphs: [
-            'Alex combines 15+ years of national account management with cutting-edge AI-driven marketing — all focused on one thing: getting trade businesses more work, without more chaos.',
-            'From managing multi-million dollar commercial portfolios to building automated lead generation systems that get businesses found on Google, ChatGPT, and beyond, Alex brings the full picture. Sales strategy, brand positioning, pipeline automation, and follow-up — handled.',
+            'Alex combines 15+ years of national account management with AI-driven marketing — focused on one outcome: getting trade businesses more work, without more chaos. Sales strategy, brand positioning, pipeline automation, and follow-up — handled.',
         ],
         bulletHeading: 'What Alex does for you:',
         bullets: [
             'Builds your sales pipeline and keeps it moving',
-            'Gets you found online — on search engines and AI platforms',
-            'Automates lead follow-up so no opportunity slips through',
-            'Positions your brand to attract the right clients',
+            'Gets you found online — search engines and AI platforms',
+            'Automates follow-up so no opportunity slips through',
             'Turns marketing spend into measurable, real-world results',
         ],
         closings: [
             'No guesswork. No wasted budget. Just a smarter way to grow.',
         ],
-        aiAgent: 'Alex is a TradeWise AI agent — built from the combined expertise of trusted industry professionals to deliver expert-level sales and marketing support to every client, every day.',
+        aiAgent: true,
     },
     {
         name: 'Coming Soon',
@@ -284,12 +274,14 @@ const team = [
                                 ))}
                             </div>
                         )}
-                        {member.aiAgent && (
-                            <p class="text-forge-black/35 text-xs leading-relaxed mt-4 italic border-t border-forge-black/10 pt-4">{member.aiAgent}</p>
-                        )}
                     </div>
                 ))}
             </div>
+
+            <!-- AI Agent disclosure -->
+            <p class="mt-12 text-forge-black/30 text-xs leading-relaxed max-w-3xl">
+                * Jordan Blake, Brooke Rhodes, Troy Callahan, and Alex Mercer are TradeWise AI agents — built from the combined expertise of trusted industry professionals to deliver consistent, expert-level support to every client, every day. See our <a href="/disclaimer#ai" class="underline hover:text-forge-black/50 transition-colors duration-200">Disclaimer</a> for details.
+            </p>
         </div>
     </section>
 
