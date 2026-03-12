@@ -22,30 +22,91 @@ const values = [
 
 const team = [
     {
-        name: 'Team Member Name',
-        role: 'Founder & CEO',
-        bio: 'Bio coming soon. This placeholder will be replaced with the founder\'s story, background, and what drove them to build Tradewise Group.',
+        name: 'Kate Lynch',
+        role: 'Founder & Head of Operations',
+        paragraphs: [
+            'Kate Lynch founded TradeWise with a single belief: that trade business owners deserve the same quality of back-end support as any large corporation — without the corporate price tag or the corporate runaround.',
+            'With a Masters in Project Management, over 15 years of senior leadership experience, and a background spanning construction, hospitality, and operations, Kate has spent her career building the systems, teams, and strategies that make businesses run better. She has managed multi-million dollar projects, led teams of 60+, and turned underperforming operations into lean, high-performing businesses.',
+            'But what sets Kate apart is not just the credentials — it is the conviction. TradeWise exists because Kate saw first-hand how many talented tradies were being held back not by their craft, but by the chaos behind it. So she built the engine room they never had.',
+        ],
+        bulletHeading: 'What Kate leads at TradeWise:',
+        bullets: [
+            'Overall business strategy and client outcomes',
+            'Operational frameworks and service delivery standards',
+            'Strategic partnerships and network growth',
+            'Quality, accountability, and continuous improvement',
+        ],
+        closings: [
+            'Every service TradeWise delivers — finance, people, marketing, systems — is built on the foundations Kate designed. When you partner with TradeWise, you are backed by her vision, her standards, and her team.',
+            'TradeWise is Kate\'s accumulation of over 20 years of lived experience. Your success is the measure of it.',
+        ],
     },
     {
-        name: 'Team Member Name',
+        name: 'Jordan Blake',
         role: 'Head of Finance',
-        bio: 'Bio coming soon. Background in trade business finance, management accounting, and helping owners understand their numbers for the first time.',
+        paragraphs: [
+            'Jordan brings 20+ years of CFO-level experience and a modern, tech-forward approach to numbers — giving trade business owners real clarity over their cashflow without the jargon.',
+            'From cleaning up messy books to building full financial reporting systems, Jordan has helped 40+ SMEs across construction, hospitality, and manufacturing take control of their finances. Xero, payroll, BAS, job costing — all handled, all integrated, all working in the background while you are on the tools.',
+        ],
+        bulletHeading: 'What Jordan does for you:',
+        bullets: [
+            'Bookkeeping, payroll, and month-end close',
+            'Cashflow forecasting and real-time reporting',
+            'BAS preparation and tax time support',
+            'Job costing and margin tracking across every project',
+        ],
+        closings: [
+            'No more guessing your numbers. Just clean financials and a partner who knows your industry.',
+        ],
+        aiAgent: 'Jordan is a TradeWise AI agent — built from the expertise of trusted industry professionals to deliver expert-level financial support every day.',
     },
     {
-        name: 'Team Member Name',
+        name: 'Brooke Rhodes',
         role: 'Head of People & HR',
-        bio: 'Bio coming soon. Specialist in trade workforce management, award interpretation, and building high-performance teams in blue-collar environments.',
+        paragraphs: [
+            'Brooke brings 15+ years of senior HR leadership and employment law expertise — giving trade business owners the people systems and compliance frameworks they need to hire well, manage fairly, and grow without the legal headaches.',
+            'From Fair Work obligations to performance frameworks, Brooke turns reactive people management into confident, structured leadership. Whether you are taking on your first employee or managing a full crew, the right foundations make all the difference.',
+        ],
+        bulletHeading: 'What Brooke does for you:',
+        bullets: [
+            'Employment contracts, onboarding, and offboarding',
+            'Fair Work compliance and workplace risk management',
+            'Performance and accountability frameworks',
+            'Recruitment support to find and keep the right people',
+        ],
+        closings: [
+            'Your crew is your business. Brooke makes sure they are set up to perform.',
+        ],
+        aiAgent: 'Brooke is a TradeWise AI agent — built from the expertise of trusted industry professionals to deliver expert-level people and HR support every day.',
     },
     {
-        name: 'Team Member Name',
+        name: 'Troy Callahan',
         role: 'Head of Systems & Operations',
-        bio: 'Bio coming soon. Expert in operational process design, job management platforms, and building businesses that run without the owner as the bottleneck.',
+        paragraphs: [
+            'Troy brings together 14+ years of ICT, operations, and administration experience with hands-on construction and project management expertise — the rare combination that trade businesses actually need when it comes to getting their systems and job sites working together.',
+            'On the tech side, Troy has spent over a decade coordinating ICT infrastructure, operations, and finance systems for large organisations — building the kind of integrated, reliable back-end that keeps businesses running smoothly. On the ground, Troy has delivered construction and landscape projects from site supervision through to completion, managing contractors, timelines, and budgets with precision.',
+            'That blend of digital systems thinking and real-world trade experience means Troy does not just set up your software — Troy understands how your business actually works.',
+        ],
+        bulletHeading: 'What Troy does for you:',
+        bullets: [
+            'Tech stack setup, integration, and ongoing support',
+            'Job management systems and workflow automation',
+            'Site operations coordination and project oversight',
+            'Systems documentation and team training',
+            'ICT troubleshooting and process improvement',
+        ],
+        closings: [
+            'Your systems should work as hard as you do. Troy makes sure they do.',
+        ],
+        aiAgent: 'Troy is a TradeWise AI agent — built from the combined expertise of trusted industry professionals to deliver expert-level systems and operations support every day.',
     },
     {
         name: 'Alex Mercer',
         role: 'Head of Sales & Marketing',
-        bio: 'Alex combines 15+ years of national account management with cutting-edge AI-driven marketing — all focused on one thing: getting trade businesses more work, without more chaos.',
-        bioPart2: 'From managing multi-million dollar commercial portfolios to building automated lead generation systems that get businesses found on Google, ChatGPT, and beyond, Alex brings the full picture. Sales strategy, brand positioning, pipeline automation, and follow-up — handled.',
+        paragraphs: [
+            'Alex combines 15+ years of national account management with cutting-edge AI-driven marketing — all focused on one thing: getting trade businesses more work, without more chaos.',
+            'From managing multi-million dollar commercial portfolios to building automated lead generation systems that get businesses found on Google, ChatGPT, and beyond, Alex brings the full picture. Sales strategy, brand positioning, pipeline automation, and follow-up — handled.',
+        ],
         bulletHeading: 'What Alex does for you:',
         bullets: [
             'Builds your sales pipeline and keeps it moving',
@@ -54,13 +115,17 @@ const team = [
             'Positions your brand to attract the right clients',
             'Turns marketing spend into measurable, real-world results',
         ],
-        closing: 'No guesswork. No wasted budget. Just a smarter way to grow.',
+        closings: [
+            'No guesswork. No wasted budget. Just a smarter way to grow.',
+        ],
         aiAgent: 'Alex is a TradeWise AI agent — built from the combined expertise of trusted industry professionals to deliver expert-level sales and marketing support to every client, every day.',
     },
     {
         name: 'Coming Soon',
         role: 'Head of Admin',
-        bio: 'This role is coming soon. Our Admin function will handle inbound calls, job logging, scheduling, and invoicing — so trade business owners never have to.',
+        paragraphs: [
+            'This role is coming soon. Our Admin function will handle inbound calls, job logging, scheduling, and invoicing — so trade business owners never have to.',
+        ],
         comingSoon: true,
     },
 ];
@@ -176,9 +241,6 @@ const team = [
                 <h2 class="font-heading text-3xl font-bold text-forge-black">
                     The people behind the work.
                 </h2>
-                <p class="text-forge-black/50 mt-3 text-[15px]">
-                    Team bios and photos coming soon.
-                </p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -197,10 +259,11 @@ const team = [
                             )}
                         </div>
                         <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mb-3">{member.role}</p>
-                        <p class="text-forge-black/50 text-sm leading-relaxed">{member.bio}</p>
-                        {member.bioPart2 && (
-                            <p class="text-forge-black/50 text-sm leading-relaxed mt-3">{member.bioPart2}</p>
-                        )}
+                        <div class="flex flex-col gap-3">
+                            {member.paragraphs.map((p: string) => (
+                                <p class="text-forge-black/50 text-sm leading-relaxed">{p}</p>
+                            ))}
+                        </div>
                         {member.bullets && (
                             <div class="mt-4">
                                 <p class="text-forge-black text-xs font-semibold mb-2">{member.bulletHeading}</p>
@@ -214,8 +277,12 @@ const team = [
                                 </ul>
                             </div>
                         )}
-                        {member.closing && (
-                            <p class="text-forge-black/70 text-sm font-medium mt-4">{member.closing}</p>
+                        {member.closings && (
+                            <div class="flex flex-col gap-3 mt-4">
+                                {member.closings.map((c: string) => (
+                                    <p class="text-forge-black/70 text-sm font-medium">{c}</p>
+                                ))}
+                            </div>
                         )}
                         {member.aiAgent && (
                             <p class="text-forge-black/35 text-xs leading-relaxed mt-4 italic border-t border-forge-black/10 pt-4">{member.aiAgent}</p>
