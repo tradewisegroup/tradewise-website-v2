@@ -191,34 +191,183 @@ import MainLayout from '../layouts/MainLayout.astro';
     <!-- =========================================================
          HOW IT WORKS
     ========================================================= -->
-    <section class="bg-concrete">
+    <section class="bg-white">
         <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
-            <div class="max-w-2xl mb-16">
-                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">
-                    How It Works
-                </p>
-                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal">
-                    Your Tradewise Journey
-                </h2>
+
+            <!-- Section header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div class="max-w-2xl">
+                    <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">The Process</p>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">Two paths. One starting point.</h2>
+                    <p class="text-forge-black/60 text-lg leading-relaxed">Every engagement starts with a free 30-minute Discovery Call. We listen, we assess, and we prescribe the right path — no obligation, no pressure.</p>
+                </div>
+                <a href="/how-it-works" class="shrink-0 inline-flex items-center gap-2 text-sm font-semibold text-growth-teal hover:text-growth-teal/70 transition-colors duration-200 group">
+                    See the full process
+                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4">
-
-                {[
-                    { num: '1', title: 'Discovery Call', body: 'A no-obligation conversation to understand where you are and where you want to go.', amber: false },
-                    { num: '2', title: 'Business Audit', body: 'We deep-dive into your numbers, operations, and team to identify the gaps and the opportunities.', amber: false },
-                    { num: '3', title: 'Strategy Session', body: 'Together we map your 90-day plan — clear priorities, measurable goals, and a roadmap to results.', amber: false },
-                    { num: '4', title: 'Embed & Execute', body: 'Our team integrates with yours and gets to work — handling the business functions so you don\'t have to.', amber: false },
-                    { num: '5', title: 'Review & Scale', body: 'Monthly performance reviews to track progress, refine strategy, and accelerate growth toward your goals.', amber: true },
-                ].map(step => (
-                    <div class="flex flex-col items-start md:items-center text-left md:text-center">
-                        <div class={`w-12 h-12 rounded-full flex items-center justify-center mb-5 font-heading font-bold text-lg text-white ${step.amber ? 'bg-momentum-amber' : 'bg-tradewise-navy'}`}>
-                            {step.num}
-                        </div>
-                        <h3 class="font-heading font-bold text-forge-black text-lg mb-2">{step.title}</h3>
-                        <p class="text-forge-black/60 text-sm leading-relaxed">{step.body}</p>
+            <!-- Step 1 & 2 — always the same -->
+            <div class="bg-concrete rounded-xl p-6 mb-10 flex flex-col sm:flex-row sm:items-center gap-6">
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="w-10 h-10 bg-tradewise-navy rounded-full flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
                     </div>
-                ))}
+                    <div>
+                        <p class="font-semibold text-forge-black text-sm">Step 1 — Discovery Call <span class="text-forge-black/40 font-normal text-xs">30 min · Free · No obligation</span></p>
+                        <p class="text-forge-black/55 text-xs mt-0.5">We understand where you are, where you want to go, and what's in the way.</p>
+                    </div>
+                </div>
+                <div class="hidden sm:block text-forge-black/20 text-lg shrink-0">→</div>
+                <div class="flex items-center gap-4 flex-1">
+                    <div class="w-10 h-10 bg-tradewise-navy rounded-full flex items-center justify-center shrink-0">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-forge-black text-sm">Step 2 — The Proposal</p>
+                        <p class="text-forge-black/55 text-xs mt-0.5">We come back with a clear, tailored roadmap — then your path begins.</p>
+                    </div>
+                </div>
+                <div class="hidden sm:block text-forge-black/20 text-lg shrink-0">→</div>
+                <div class="flex items-center gap-3 shrink-0">
+                    <div class="w-10 h-10 bg-momentum-amber rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <p class="font-semibold text-forge-black text-sm">Your path begins</p>
+                </div>
+            </div>
+
+            <!-- Two paths -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- Business Engine -->
+                <div class="rounded-2xl overflow-hidden border border-growth-teal/20 shadow-sm">
+                    <div class="bg-growth-teal px-8 py-7 text-white">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <h3 class="font-heading text-xl font-bold">Business Engine</h3>
+                        </div>
+                        <p class="text-white/75 text-sm">We build the back-end so you can build the business.</p>
+                    </div>
+                    <div class="bg-white p-8">
+                        <p class="font-semibold text-forge-black text-sm mb-1">Which of these sounds like you?</p>
+                        <p class="text-forge-black/50 text-xs mb-5">We'll align you to the right starting point.</p>
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <div class="flex items-center gap-3 border border-forge-black/10 rounded-lg p-3 hover:border-growth-teal hover:bg-growth-teal/5 transition-all duration-200 cursor-pointer group">
+                                <img src="/images/TWG%20Website%20Growth%20Ready%20Boss.png" alt="" class="w-10 h-10 rounded-full object-cover shrink-0"/>
+                                <div>
+                                    <p class="text-xs font-semibold text-forge-black group-hover:text-growth-teal transition-colors">Growth-Ready Boss</p>
+                                    <p class="text-xs text-forge-black/40">Scaling feels messy</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 border border-forge-black/10 rounded-lg p-3 hover:border-growth-teal hover:bg-growth-teal/5 transition-all duration-200 cursor-pointer group">
+                                <img src="/images/TWG%20website%20Burnt%20out.png" alt="" class="w-10 h-10 rounded-full object-cover shrink-0"/>
+                                <div>
+                                    <p class="text-xs font-semibold text-forge-black group-hover:text-growth-teal transition-colors">Burned-Out Tradie</p>
+                                    <p class="text-xs text-forge-black/40">Running on empty</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 border border-forge-black/10 rounded-lg p-3 hover:border-growth-teal hover:bg-growth-teal/5 transition-all duration-200 cursor-pointer group">
+                                <img src="/images/TWG%20website%20Handson%20owner.png" alt="" class="w-10 h-10 rounded-full object-cover shrink-0"/>
+                                <div>
+                                    <p class="text-xs font-semibold text-forge-black group-hover:text-growth-teal transition-colors">Hands-On Owner</p>
+                                    <p class="text-xs text-forge-black/40">Stuck in the tools</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 border border-forge-black/10 rounded-lg p-3 hover:border-growth-teal hover:bg-growth-teal/5 transition-all duration-200 cursor-pointer group">
+                                <div class="w-10 h-10 rounded-full bg-growth-teal/10 flex items-center justify-center shrink-0">
+                                    <svg class="w-4 h-4 text-growth-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-forge-black group-hover:text-growth-teal transition-colors">Not sure yet</p>
+                                    <p class="text-xs text-forge-black/40">Let's find out together</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://meetings.hubspot.com/tradewise" class="flex items-center justify-center gap-2 w-full bg-growth-teal text-white font-semibold text-sm px-6 py-3.5 rounded-lg hover:brightness-110 transition-all duration-200 group">
+                            Book a Discovery Call
+                            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Exit Planning -->
+                <div class="rounded-2xl overflow-hidden border border-tradewise-navy/20 shadow-sm">
+                    <div class="bg-tradewise-navy px-8 py-7 text-white">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                            <h3 class="font-heading text-xl font-bold">Exit Planning</h3>
+                        </div>
+                        <p class="text-white/75 text-sm">Maximise value and plan your transition out — on your terms.</p>
+                    </div>
+                    <div class="bg-white p-8">
+                        <p class="font-semibold text-forge-black text-sm mb-1">Quick exit readiness check</p>
+                        <p class="text-forge-black/50 text-xs mb-5">Three questions to see where you stand.</p>
+                        <div class="flex flex-col gap-3 mb-6">
+                            <div class="border border-forge-black/10 rounded-lg p-4">
+                                <p class="text-sm font-semibold text-forge-black mb-3">Are you looking to exit in the next 1–5 years?</p>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q1" class="accent-tradewise-navy"/> Yes
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q1" class="accent-tradewise-navy"/> Not yet
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q1" class="accent-tradewise-navy"/> Unsure
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="border border-forge-black/10 rounded-lg p-4">
+                                <p class="text-sm font-semibold text-forge-black mb-3">Do you know what your business is worth today?</p>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q2" class="accent-tradewise-navy"/> Yes
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q2" class="accent-tradewise-navy"/> No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="border border-forge-black/10 rounded-lg p-4">
+                                <p class="text-sm font-semibold text-forge-black mb-3">Do you have an exit strategy in place?</p>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q3" class="accent-tradewise-navy"/> Yes
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q3" class="accent-tradewise-navy"/> No
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm text-forge-black/70 hover:text-forge-black">
+                                        <input type="radio" name="q3" class="accent-tradewise-navy"/> Working on it
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://meetings.hubspot.com/tradewise" class="flex items-center justify-center gap-2 w-full bg-tradewise-navy text-white font-semibold text-sm px-6 py-3.5 rounded-lg hover:brightness-125 transition-all duration-200 group">
+                            Book an Exit Readiness Call
+                            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
 
             </div>
         </div>
