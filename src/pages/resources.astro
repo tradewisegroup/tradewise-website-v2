@@ -88,19 +88,34 @@ const categoryColours: Record<string, string> = {
     <section class="bg-concrete py-16 md:py-24">
         <div class="max-w-7xl mx-auto px-6">
 
-            <!-- Free tool callout -->
-            <div class="bg-white border border-momentum-amber/30 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-14">
-                <div>
-                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Free Tool</p>
-                    <h2 class="font-heading text-xl font-bold text-forge-black mb-1">What Could You Sell Your Business For?</h2>
-                    <p class="text-forge-black/55 text-sm">Answer 9 quick questions and get a free estimated valuation range — calculated using the same methodology used by trade business brokers and buyers.</p>
+            <!-- Free tools callouts -->
+            <div class="flex flex-col gap-4 mb-14">
+                <div class="bg-white border border-momentum-amber/30 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Free Tool</p>
+                        <h2 class="font-heading text-xl font-bold text-forge-black mb-1">What Could You Sell Your Business For?</h2>
+                        <p class="text-forge-black/55 text-sm">Answer 9 quick questions and get a free estimated valuation range — calculated using the same methodology used by trade business brokers and buyers.</p>
+                    </div>
+                    <a
+                        href="/scorecard"
+                        class="shrink-0 bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                    >
+                        Calculate My Value →
+                    </a>
                 </div>
-                <a
-                    href="/scorecard"
-                    class="shrink-0 bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
-                >
-                    Calculate My Value →
-                </a>
+                <div class="bg-white border border-growth-teal/30 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div>
+                        <p class="text-growth-teal text-xs font-semibold tracking-widest uppercase mb-2">Free Tool</p>
+                        <h2 class="font-heading text-xl font-bold text-forge-black mb-1">Are You Charging Enough?</h2>
+                        <p class="text-forge-black/55 text-sm">Enter your costs, team size, and profit goal — and get your minimum viable charge-out rate in under 3 minutes. Built specifically for Australian trade businesses.</p>
+                    </div>
+                    <a
+                        href="/charge-out-rate-calculator"
+                        class="shrink-0 bg-growth-teal text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
+                    >
+                        Calculate My Rate →
+                    </a>
+                </div>
             </div>
 
             <!-- Articles -->
