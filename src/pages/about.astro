@@ -42,9 +42,20 @@ const team = [
         bio: 'Bio coming soon. Expert in operational process design, job management platforms, and building businesses that run without the owner as the bottleneck.',
     },
     {
-        name: 'Team Member Name',
+        name: 'Alex Mercer',
         role: 'Head of Sales & Marketing',
-        bio: 'Bio coming soon. Specialist in trade business growth, lead generation, brand positioning, and building the marketing engine that keeps the pipeline full.',
+        bio: 'Alex combines 15+ years of national account management with cutting-edge AI-driven marketing — all focused on one thing: getting trade businesses more work, without more chaos.',
+        bioPart2: 'From managing multi-million dollar commercial portfolios to building automated lead generation systems that get businesses found on Google, ChatGPT, and beyond, Alex brings the full picture. Sales strategy, brand positioning, pipeline automation, and follow-up — handled.',
+        bulletHeading: 'What Alex does for you:',
+        bullets: [
+            'Builds your sales pipeline and keeps it moving',
+            'Gets you found online — on search engines and AI platforms',
+            'Automates lead follow-up so no opportunity slips through',
+            'Positions your brand to attract the right clients',
+            'Turns marketing spend into measurable, real-world results',
+        ],
+        closing: 'No guesswork. No wasted budget. Just a smarter way to grow.',
+        aiAgent: 'Alex is a TradeWise AI agent — built from the combined expertise of trusted industry professionals to deliver expert-level sales and marketing support to every client, every day.',
     },
     {
         name: 'Coming Soon',
@@ -187,6 +198,28 @@ const team = [
                         </div>
                         <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mb-3">{member.role}</p>
                         <p class="text-forge-black/50 text-sm leading-relaxed">{member.bio}</p>
+                        {member.bioPart2 && (
+                            <p class="text-forge-black/50 text-sm leading-relaxed mt-3">{member.bioPart2}</p>
+                        )}
+                        {member.bullets && (
+                            <div class="mt-4">
+                                <p class="text-forge-black text-xs font-semibold mb-2">{member.bulletHeading}</p>
+                                <ul class="flex flex-col gap-1.5">
+                                    {member.bullets.map((b: string) => (
+                                        <li class="flex items-start gap-2 text-sm text-forge-black/60">
+                                            <span class="text-growth-teal mt-0.5 shrink-0">✓</span>
+                                            {b}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {member.closing && (
+                            <p class="text-forge-black/70 text-sm font-medium mt-4">{member.closing}</p>
+                        )}
+                        {member.aiAgent && (
+                            <p class="text-forge-black/35 text-xs leading-relaxed mt-4 italic border-t border-forge-black/10 pt-4">{member.aiAgent}</p>
+                        )}
                     </div>
                 ))}
             </div>
