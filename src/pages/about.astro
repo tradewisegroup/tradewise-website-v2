@@ -41,6 +41,17 @@ const team = [
         role: 'Head of Systems & Operations',
         bio: 'Bio coming soon. Expert in operational process design, job management platforms, and building businesses that run without the owner as the bottleneck.',
     },
+    {
+        name: 'Team Member Name',
+        role: 'Head of Sales & Marketing',
+        bio: 'Bio coming soon. Specialist in trade business growth, lead generation, brand positioning, and building the marketing engine that keeps the pipeline full.',
+    },
+    {
+        name: 'Coming Soon',
+        role: 'Head of Admin',
+        bio: 'This role is coming soon. Our Admin function will handle inbound calls, job logging, scheduling, and invoicing — so trade business owners never have to.',
+        comingSoon: true,
+    },
 ];
 ---
 
@@ -159,17 +170,22 @@ const team = [
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {team.map(member => (
-                    <div class="flex flex-col">
+                    <div class={`flex flex-col ${member.comingSoon ? 'opacity-60' : ''}`}>
                         <!-- Avatar placeholder -->
                         <div class="w-full aspect-square bg-concrete rounded-lg mb-5 flex items-center justify-center">
                             <div class="w-16 h-16 rounded-full bg-tradewise-navy/20 flex items-center justify-center">
                                 <span class="font-heading font-bold text-tradewise-navy/40 text-xl">?</span>
                             </div>
                         </div>
-                        <h3 class="font-heading font-bold text-forge-black">{member.name}</h3>
-                        <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mt-1 mb-3">{member.role}</p>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="font-heading font-bold text-forge-black">{member.name}</h3>
+                            {member.comingSoon && (
+                                <span class="text-xs bg-forge-black/10 text-forge-black/40 px-2 py-0.5 rounded font-medium">Coming Soon</span>
+                            )}
+                        </div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mb-3">{member.role}</p>
                         <p class="text-forge-black/50 text-sm leading-relaxed">{member.bio}</p>
                     </div>
                 ))}
