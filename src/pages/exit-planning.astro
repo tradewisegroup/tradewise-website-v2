@@ -1,0 +1,145 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const pathways = [
+    {
+        num: '01',
+        title: 'The Value Maximiser',
+        href: '/value-maximiser',
+        tag: 'Best for: Owners planning to exit in 1–3 years',
+        body: 'A structured 12–24 month pre-sale engagement where we embed into your business, fix the gaps that buyers use to negotiate you down, and take you to market at peak value — not market value.',
+        highlight: false,
+    },
+    {
+        num: '02',
+        title: 'The Staged Buyout',
+        href: '/staged-buyout',
+        tag: 'Best for: Owners who want liquidity now and upside later',
+        body: 'Tradewise acquires a minority stake at today\'s agreed valuation — giving you an immediate cash event. Then we grow the business together and complete the buyout at a higher future valuation. Two paydays. One business.',
+        highlight: true,
+    },
+    {
+        num: '03',
+        title: 'The Equity Partnership',
+        href: '/equity-partnership',
+        tag: 'Best for: Owners who want relief now and a long-term exit',
+        body: 'We take an equity stake in exchange for ongoing management services — finance, HR, systems, and marketing — at effectively no monthly cash cost. You keep control, we handle the back-end, and we exit together when the time is right.',
+        highlight: false,
+    },
+];
+
+const problems = [
+    { title: 'Sold Too Cheap', body: 'Most trade businesses sell for 1–2x earnings on the open market. Buyers know how to negotiate down, and first-time sellers rarely have the leverage to push back.' },
+    { title: 'High Broker Fees', body: 'Business brokers charge 5–10% of the sale price. Add legal, accounting, and due diligence costs and a significant chunk of the proceeds disappears before you see a dollar.' },
+    { title: 'Legacy Destroyed', body: 'New owners cut staff, change suppliers, and rebrand. The culture, team, and reputation you spent years building gets dismantled for short-term gain.' },
+];
+---
+
+<MainLayout
+    title="Exit Planning | Tradewise Group"
+    description="Three structured exit pathways for trade business owners — the Value Maximiser, Staged Buyout, and Equity Partnership. Exit on your terms, at maximum value."
+>
+
+    <!-- Hero -->
+    <section class="bg-tradewise-navy text-white py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-6">Exit Planning</p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    You Built Something Real.<br />
+                    <span class="text-growth-teal">Exit on Your Terms.</span>
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl">
+                    Most trade business owners exit for far less than their business is worth — using brokers who take a cut,
+                    accepting lowball offers, and watching their legacy dismantled. Tradewise offers a better way.
+                    Three structured pathways. Maximum value. Minimum friction.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/scorecard" class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200">
+                        Get Your Free Valuation →
+                    </a>
+                    <a href="https://meetings.hubspot.com/tradewise" class="inline-block border border-white/30 text-white font-semibold px-8 py-4 rounded hover:border-white/60 hover:bg-white/5 transition-all duration-200">
+                        Book a Strategy Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">The Problem</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">The Traditional Exit is Broken.</h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">
+                    For most trade business owners, selling means stress, compromise, and a payout that doesn't reflect the years of work behind it.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {problems.map(p => (
+                    <div class="bg-white rounded-xl p-8 shadow-sm border-t-4 border-momentum-amber">
+                        <h3 class="font-heading text-xl font-bold text-forge-black mb-4">{p.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{p.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Pathways -->
+    <section class="bg-tradewise-navy py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">Choose Your Path</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">Three Pathways. One Goal.</h2>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Every exit is different. We offer three structured models — each designed around a different timeline,
+                    financial need, and definition of a great outcome.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {pathways.map(p => (
+                    <div class={`flex flex-col rounded-2xl overflow-hidden border ${p.highlight ? 'border-momentum-amber' : 'border-white/15'}`}>
+                        <div class={`px-8 py-6 ${p.highlight ? 'bg-momentum-amber' : 'bg-white/5'}`}>
+                            <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-2">Pathway {p.num}</p>
+                            <h3 class="font-heading text-xl font-bold text-white">{p.title}</h3>
+                        </div>
+                        <div class="bg-white/5 p-8 flex flex-col flex-1">
+                            <p class="text-white/70 text-sm leading-relaxed mb-5 flex-1">{p.body}</p>
+                            <p class="text-momentum-amber text-xs italic mb-6">{p.tag}</p>
+                            <a href={p.href} class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-momentum-amber transition-colors duration-200 group">
+                                Explore this pathway
+                                <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">Your First Step</p>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-5">
+                Find Out What Your Business is Worth — Before You Decide Anything.
+            </h2>
+            <p class="text-forge-black/60 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+                The right exit decision starts with knowing your real number. Complete the free Business Valuation Scorecard
+                and get an estimated range in under 5 minutes.
+            </p>
+            <a href="/scorecard" class="inline-block bg-momentum-amber text-white font-semibold text-lg px-10 py-4 rounded-lg hover:brightness-110 transition-all duration-200 mb-6">
+                Complete the Free Valuation Scorecard →
+            </a>
+            <p class="text-forge-black/40 text-sm">
+                Or if you'd prefer to talk first —
+                <a href="https://meetings.hubspot.com/tradewise" class="text-growth-teal hover:underline font-medium">book a free Strategy Call</a>.
+            </p>
+        </div>
+    </section>
+
+</MainLayout>

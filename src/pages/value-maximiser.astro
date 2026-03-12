@@ -1,0 +1,122 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const features = [
+    { title: 'Business Systemisation', body: 'SOPs, job management, and operational frameworks that reduce owner dependency and increase buyer confidence.' },
+    { title: 'Financial Optimisation', body: 'Clean books, monthly reporting, and profitability tracking that demonstrate a well-run, investable business.' },
+    { title: 'Team & Leadership', body: 'Build the management layer that lets the business run without the owner — the single biggest value driver in any trade business.' },
+    { title: 'Sale Process Management', body: 'We manage the sale process — including information memorandum, buyer negotiations, and due diligence — on your behalf.' },
+];
+
+const steps = [
+    { num: '01', title: 'Discovery & Valuation', body: 'We assess your business — financials, operations, team, systems, and market position — and establish a baseline value.' },
+    { num: '02', title: 'Gap Analysis', body: 'We identify every factor a buyer would use to negotiate you down and build a prioritised plan to address each one.' },
+    { num: '03', title: 'Embed & Improve', body: 'Our team integrates into your business and executes the improvement plan — systematically increasing value over 12–24 months.' },
+    { num: '04', title: 'Go to Market', body: 'We prepare your information memorandum, manage buyer outreach, and run the negotiation — so you deal from strength, not desperation.' },
+    { num: '05', title: 'Due Diligence', body: 'We coordinate the due diligence process and support your advisers — protecting the agreed price through to settlement.' },
+    { num: '06', title: 'Settlement & Exit', body: 'You exit at the agreed price. Maximum value. No broker commission. Legacy intact.' },
+];
+---
+
+<MainLayout
+    title="The Value Maximiser | Tradewise Exit Planning"
+    description="A structured 12–24 month pre-sale engagement that builds your business value before you go to market. Sell at peak value, not market value."
+>
+
+    <!-- Hero -->
+    <section class="bg-tradewise-navy text-white py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    Exit Planning · Pathway 01
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    Sell at Peak Value.<br />
+                    <span class="text-growth-teal">Not Market Value.</span>
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl">
+                    Most businesses go to market before they're ready. The Value Maximiser is a structured 12–24 month
+                    pre-sale engagement where Tradewise embeds into your business to systematically increase its value
+                    — before a single buyer is approached.
+                </p>
+                <p class="text-white/70 leading-relaxed mb-10 max-w-2xl">
+                    We fix the gaps that buyers use to negotiate you down: owner dependency, weak financials, informal
+                    processes, and customer concentration. By the time we go to market, your business commands a premium
+                    multiple — and you have the data to justify it.
+                </p>
+                <div class="border-l-2 border-momentum-amber pl-5 mb-10">
+                    <p class="text-white/60 text-sm italic">Best for: Owners planning to exit in 1–3 years who want to maximise their sale price without giving up equity during the process.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/scorecard" class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200">
+                        Get Your Free Valuation →
+                    </a>
+                    <a href="https://meetings.hubspot.com/tradewise" class="inline-block border border-white/30 text-white font-semibold px-8 py-4 rounded hover:border-white/60 hover:bg-white/5 transition-all duration-200">
+                        Book a Strategy Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">What We Do</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">Building Value From the Inside Out.</h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">Four focus areas that directly impact what a buyer will pay.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {features.map(f => (
+                    <div class="bg-white rounded-xl p-8 shadow-sm border-t-4 border-growth-teal">
+                        <h3 class="font-heading text-xl font-bold text-forge-black mb-4">{f.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{f.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">The Process</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">How It Works — Step by Step.</h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">A structured, transparent process from baseline to settlement.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {steps.map(step => (
+                    <div class="bg-concrete rounded-xl p-8">
+                        <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-5 font-heading font-bold text-sm text-white shrink-0">
+                            {step.num}
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-forge-black mb-3">{step.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{step.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Other pathways -->
+    <section class="bg-tradewise-navy py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-6">Also in Exit Planning</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="/staged-buyout" class="flex-1 bg-white/5 border border-white/15 rounded-xl p-6 hover:border-momentum-amber/50 transition-colors duration-200 group">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Pathway 02</p>
+                    <p class="font-heading font-bold text-white group-hover:text-momentum-amber transition-colors">The Staged Buyout →</p>
+                    <p class="text-white/50 text-sm mt-2">Two paydays. Immediate liquidity now, larger payout later.</p>
+                </a>
+                <a href="/equity-partnership" class="flex-1 bg-white/5 border border-white/15 rounded-xl p-6 hover:border-momentum-amber/50 transition-colors duration-200 group">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Pathway 03</p>
+                    <p class="font-heading font-bold text-white group-hover:text-momentum-amber transition-colors">The Equity Partnership →</p>
+                    <p class="text-white/50 text-sm mt-2">Services for equity. Long-term partner. Exit when you're ready.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</MainLayout>

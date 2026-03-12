@@ -1,0 +1,122 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const features = [
+    { title: 'Immediate Liquidity', body: 'A cash payment for the acquired equity stake at completion of the agreement — no waiting years for a buyer.' },
+    { title: 'Retained Control', body: 'The owner remains in the business as majority shareholder and continues to draw income throughout the partnership.' },
+    { title: 'Upside Participation', body: 'The second payout is based on the grown valuation — you share directly in the value Tradewise creates.' },
+    { title: 'Pre-agreed Formula', body: 'The second buyout price is calculated using a formula agreed at the outset — no renegotiation, no surprises.' },
+];
+
+const steps = [
+    { num: '01', title: 'Discovery & Valuation', body: 'We assess your business and agree on the current valuation — the basis for the first payout.' },
+    { num: '02', title: 'Equity Agreement', body: 'Tradewise acquires a minority stake (typically 30–49%) at the agreed valuation. Legal documentation is prepared by independent solicitors.' },
+    { num: '03', title: 'First Payout', body: 'You receive cash for the acquired stake. The owner retains majority control and continues to run the business.' },
+    { num: '04', title: 'Embed & Grow', body: 'Our team integrates into your business and drives measurable improvements across every value driver over the agreed period.' },
+    { num: '05', title: 'Trigger Point', body: 'At the agreed milestone — typically 2–4 years — Tradewise acquires the remaining equity using the pre-agreed formula.' },
+    { num: '06', title: 'Second Payout', body: 'You receive a second, larger payout based on the grown valuation. Two paydays. One business. Maximum outcome.' },
+];
+---
+
+<MainLayout
+    title="The Staged Buyout | Tradewise Exit Planning"
+    description="Get immediate liquidity now and a larger second payout when your business is worth significantly more. Two paydays. One business."
+>
+
+    <!-- Hero -->
+    <section class="bg-tradewise-navy text-white py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    Exit Planning · Pathway 02
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    Two Paydays.<br />
+                    <span class="text-growth-teal">One Business.</span>
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed mb-6 max-w-2xl">
+                    The Staged Buyout is designed for owners who want liquidity now, without selling everything at today's
+                    value. Tradewise acquires a minority stake — typically 30–49% — at the current agreed valuation,
+                    providing an immediate cash event while the owner retains control and continues to receive income.
+                </p>
+                <p class="text-white/70 leading-relaxed mb-10 max-w-2xl">
+                    Over an agreed period — typically 2–4 years — Tradewise drives growth and value improvement. At the
+                    agreed trigger point, Tradewise acquires the remaining equity using a pre-agreed formula. You get a
+                    first payout at today's value and a second, larger payout when the business is worth significantly more.
+                </p>
+                <div class="border-l-2 border-momentum-amber pl-5 mb-10">
+                    <p class="text-white/60 text-sm italic">Best for: Owners who want immediate partial liquidity but believe in the future value of their business and want to share in the upside.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/scorecard" class="inline-block bg-momentum-amber text-white font-semibold px-8 py-4 rounded hover:brightness-110 transition-all duration-200">
+                        Get Your Free Valuation →
+                    </a>
+                    <a href="https://meetings.hubspot.com/tradewise" class="inline-block border border-white/30 text-white font-semibold px-8 py-4 rounded hover:border-white/60 hover:bg-white/5 transition-all duration-200">
+                        Book a Strategy Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="bg-concrete py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">How It's Structured</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">Built Around Your Outcome.</h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">Four key features that define the Staged Buyout model.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {features.map(f => (
+                    <div class="bg-white rounded-xl p-8 shadow-sm border-t-4 border-tradewise-navy">
+                        <h3 class="font-heading text-xl font-bold text-forge-black mb-4">{f.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{f.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="bg-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-14">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">The Process</p>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-growth-teal mb-4">Step by Step — No Surprises.</h2>
+                <p class="text-forge-black/60 text-lg leading-relaxed">Every term is agreed upfront. No renegotiation under pressure.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {steps.map(step => (
+                    <div class="bg-concrete rounded-xl p-8">
+                        <div class="w-12 h-12 rounded-full bg-tradewise-navy flex items-center justify-center mb-5 font-heading font-bold text-sm text-white shrink-0">
+                            {step.num}
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-forge-black mb-3">{step.title}</h3>
+                        <p class="text-forge-black/60 text-sm leading-relaxed">{step.body}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- Other pathways -->
+    <section class="bg-tradewise-navy py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-6">Also in Exit Planning</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="/value-maximiser" class="flex-1 bg-white/5 border border-white/15 rounded-xl p-6 hover:border-momentum-amber/50 transition-colors duration-200 group">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Pathway 01</p>
+                    <p class="font-heading font-bold text-white group-hover:text-momentum-amber transition-colors">The Value Maximiser →</p>
+                    <p class="text-white/50 text-sm mt-2">Build value first. Sell at peak multiple.</p>
+                </a>
+                <a href="/equity-partnership" class="flex-1 bg-white/5 border border-white/15 rounded-xl p-6 hover:border-momentum-amber/50 transition-colors duration-200 group">
+                    <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">Pathway 03</p>
+                    <p class="font-heading font-bold text-white group-hover:text-momentum-amber transition-colors">The Equity Partnership →</p>
+                    <p class="text-white/50 text-sm mt-2">Services for equity. Long-term partner. Exit when you're ready.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</MainLayout>
