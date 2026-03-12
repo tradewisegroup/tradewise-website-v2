@@ -1,0 +1,802 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+    title="Free Charge Out Rate Calculator for Australian Trades | Tradewise Group"
+    description="Find out exactly what to charge per hour as an Australian trade business. This free calculator factors in labour costs, overheads, workers comp, super, leave, and your profit goal — and gives you a defensible rate in under 5 minutes."
+>
+
+    <!-- Hero -->
+    <section class="bg-tradewise-navy text-white py-16 md:py-20">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">Free Tool</p>
+            <h1 class="font-heading text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                Free Charge Out Rate Calculator<br class="hidden md:block" />
+                <span class="text-growth-teal">for Australian Trade Businesses</span>
+            </h1>
+            <p class="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
+                Most tradies are undercharging — and don't even know it. This calculator factors in every real cost
+                (super, workers comp, leave, overheads, productivity) and tells you exactly what you need to charge
+                to hit your profit goal.
+            </p>
+        </div>
+    </section>
+
+    <!-- Calculator -->
+    <section class="bg-concrete py-16 md:py-24">
+        <div class="max-w-3xl mx-auto px-6">
+
+            <!-- Progress Bar -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="step-label" class="text-xs font-semibold tracking-widest uppercase text-forge-black/50">Step 1 of 6</span>
+                    <span id="step-pct" class="text-xs font-semibold text-growth-teal">17%</span>
+                </div>
+                <div class="h-2 bg-forge-black/10 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-growth-teal rounded-full transition-all duration-500" style="width:17%"></div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 1: User Details ===== -->
+            <div id="step-1" class="calc-step">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Business</h2>
+                    <p class="text-forge-black/50 text-sm mb-8">Tell us a little about your business so we can tailor the results.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="sm:col-span-2">
+                            <label class="calc-label">Company Name</label>
+                            <input id="company-name" type="text" class="calc-input" placeholder="e.g. Smith Electrical Pty Ltd" />
+                        </div>
+                        <div>
+                            <label class="calc-label">Trade Type</label>
+                            <input id="trade-type" type="text" class="calc-input" placeholder="e.g. Electrician, Plumber, Builder" />
+                        </div>
+                        <div>
+                            <label class="calc-label">Number of Employees (incl. you)</label>
+                            <input id="num-employees" type="number" min="1" class="calc-input" placeholder="e.g. 5" value="1" />
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="calc-label">State / Territory</label>
+                            <select id="location" class="calc-input">
+                                <option value="">Select your state</option>
+                                <option value="QLD">Queensland (QLD)</option>
+                                <option value="NSW">New South Wales (NSW)</option>
+                                <option value="VIC">Victoria (VIC)</option>
+                                <option value="SA">South Australia (SA)</option>
+                                <option value="WA">Western Australia (WA)</option>
+                                <option value="TAS">Tasmania (TAS)</option>
+                                <option value="NT">Northern Territory (NT)</option>
+                                <option value="ACT">Australian Capital Territory (ACT)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="nextStep(1)" class="calc-btn-primary">Next: Employee Costs →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 2: Employee Costs ===== -->
+            <div id="step-2" class="calc-step hidden">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Employee Costs</h2>
+                    <p class="text-forge-black/50 text-sm mb-8">Enter the costs for the employee you are calculating the rate for.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="calc-label">Base Annual Salary ($)</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
+                                <input id="base-salary" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 75000" />
+                            </div>
+                            <p class="text-forge-black/35 text-xs mt-1.5">Gross salary before tax. Super, workers comp & leave are calculated automatically.</p>
+                        </div>
+                        <div>
+                            <label class="calc-label">Annual Vehicle & Tool Costs ($)</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
+                                <input id="vehicle-tools" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 18000" />
+                            </div>
+                            <p class="text-forge-black/35 text-xs mt-1.5">Vehicle lease/depreciation, fuel, tool replacement, and equipment costs.</p>
+                        </div>
+                    </div>
+                    <!-- Cost preview -->
+                    <div id="labour-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
+                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-3">Estimated Labour Cost Breakdown</p>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <span class="text-forge-black/60">Base Salary</span><span id="prev-salary" class="text-forge-black font-semibold text-right">—</span>
+                            <span class="text-forge-black/60">Superannuation (12%)</span><span id="prev-super" class="text-forge-black font-semibold text-right">—</span>
+                            <span class="text-forge-black/60">Workers Comp</span><span id="prev-wc" class="text-forge-black font-semibold text-right">—</span>
+                            <span class="text-forge-black/60">Leave Provisions (~10%)</span><span id="prev-leave" class="text-forge-black font-semibold text-right">—</span>
+                            <span class="text-forge-black/60">Vehicle & Tools</span><span id="prev-vt" class="text-forge-black font-semibold text-right">—</span>
+                            <span class="font-bold text-forge-black border-t border-forge-black/10 pt-2">Direct Cost Total</span><span id="prev-total" class="font-bold text-growth-teal text-right border-t border-forge-black/10 pt-2">—</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep(2)" class="calc-btn-secondary">← Back</button>
+                        <button onclick="nextStep(2)" class="calc-btn-primary">Next: Overheads →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 3: Business Overheads ===== -->
+            <div id="step-3" class="calc-step hidden">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Business Overheads</h2>
+                    <p class="text-forge-black/50 text-sm mb-2">Enter your total annual business overheads. These will be split across all employees.</p>
+                    <div class="bg-concrete rounded-lg p-4 mb-8">
+                        <p class="text-forge-black/60 text-xs leading-relaxed">
+                            <strong class="text-forge-black">What to include:</strong> Rent, utilities, insurance, accounting & legal fees, software subscriptions, marketing, admin wages, phone, internet, safety gear, uniforms, and any other fixed business costs not already captured above.
+                        </p>
+                    </div>
+                    <div>
+                        <label class="calc-label">Total Annual Business Overheads ($)</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
+                            <input id="overheads" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 120000" />
+                        </div>
+                        <p class="text-forge-black/35 text-xs mt-1.5">This will be divided by the number of employees to get the per-employee overhead allocation.</p>
+                    </div>
+                    <div id="overhead-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
+                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-2">Per-Employee Overhead Allocation</p>
+                        <p id="overhead-per-emp" class="text-2xl font-heading font-bold text-growth-teal">—</p>
+                        <p class="text-forge-black/40 text-xs mt-1">per employee per year</p>
+                    </div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep(3)" class="calc-btn-secondary">← Back</button>
+                        <button onclick="nextStep(3)" class="calc-btn-primary">Next: Productivity →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 4: Productivity ===== -->
+            <div id="step-4" class="calc-step hidden">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Productivity</h2>
+                    <p class="text-forge-black/50 text-sm mb-8">How many hours can actually be billed? This is where most businesses underestimate their real rate.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="calc-label">Hours Worked Per Day</label>
+                            <input id="hours-per-day" type="number" min="1" max="12" step="0.5" class="calc-input" placeholder="e.g. 8" value="8" />
+                        </div>
+                        <div>
+                            <label class="calc-label">Training / Conference Days Per Year</label>
+                            <input id="training-days" type="number" min="0" max="30" class="calc-input" placeholder="e.g. 5" value="5" />
+                        </div>
+                    </div>
+                    <!-- Productivity Slider -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="calc-label mb-0">Billable Productivity</label>
+                            <span id="productivity-display" class="text-2xl font-heading font-bold text-growth-teal">75%</span>
+                        </div>
+                        <input
+                            id="productivity"
+                            type="range"
+                            min="40"
+                            max="95"
+                            value="75"
+                            step="1"
+                            class="w-full h-2 rounded-full appearance-none cursor-pointer"
+                            style="accent-color:#1A7A6E"
+                            oninput="document.getElementById('productivity-display').textContent = this.value + '%'"
+                        />
+                        <div class="flex justify-between text-xs text-forge-black/35 mt-1">
+                            <span>40% (very low)</span>
+                            <span>75% (typical)</span>
+                            <span>95% (excellent)</span>
+                        </div>
+                        <div class="mt-4 bg-concrete rounded-lg p-4">
+                            <p class="text-forge-black/60 text-xs leading-relaxed">
+                                <strong class="text-forge-black">What is billable productivity?</strong> The percentage of your working time that can actually be invoiced to a client. Time spent quoting, travelling between jobs, admin, and team meetings is typically non-billable. Most trade businesses run at 65–80%.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Hours preview -->
+                    <div id="hours-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
+                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-3">Estimated Annual Billable Hours</p>
+                        <p id="billable-hours-display" class="text-3xl font-heading font-bold text-growth-teal">—</p>
+                        <p class="text-forge-black/40 text-xs mt-1">billable hours per year</p>
+                    </div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep(4)" class="calc-btn-secondary">← Back</button>
+                        <button onclick="nextStep(4)" class="calc-btn-primary">Next: Profit Goal →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 5: Profit Goal ===== -->
+            <div id="step-5" class="calc-step hidden">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Profit Goal</h2>
+                    <p class="text-forge-black/50 text-sm mb-8">What net profit margin do you want the business to achieve?</p>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="calc-label mb-0">Target Net Profit Margin</label>
+                            <span id="profit-display" class="text-2xl font-heading font-bold text-momentum-amber">15%</span>
+                        </div>
+                        <input
+                            id="profit-margin"
+                            type="range"
+                            min="5"
+                            max="40"
+                            value="15"
+                            step="1"
+                            class="w-full h-2 rounded-full appearance-none cursor-pointer"
+                            style="accent-color:#D4820A"
+                            oninput="document.getElementById('profit-display').textContent = this.value + '%'"
+                        />
+                        <div class="flex justify-between text-xs text-forge-black/35 mt-1">
+                            <span>5% (thin)</span>
+                            <span>15–20% (healthy)</span>
+                            <span>40% (excellent)</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 grid grid-cols-3 gap-4">
+                        {[
+                            { label: 'Survival', pct: '5–10%', desc: 'Covering costs. No buffer for growth or reinvestment.' },
+                            { label: 'Healthy', pct: '15–20%', desc: 'Industry benchmark. Room for growth and owner drawings.' },
+                            { label: 'Strong', pct: '25%+', desc: 'Well-run business. Attractive to buyers and investors.' },
+                        ].map(t => (
+                            <div class="bg-concrete rounded-lg p-4 text-center">
+                                <p class="font-heading font-bold text-forge-black text-sm mb-1">{t.label}</p>
+                                <p class="text-momentum-amber font-semibold text-lg mb-2">{t.pct}</p>
+                                <p class="text-forge-black/45 text-xs leading-relaxed">{t.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep(5)" class="calc-btn-secondary">← Back</button>
+                        <button onclick="nextStep(5)" class="calc-btn-primary">Get My Rate →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STEP 6: Lead Capture ===== -->
+            <div id="step-6" class="calc-step hidden">
+                <div class="bg-white rounded-2xl p-8 shadow-sm">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-growth-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-growth-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Rate is Ready</h2>
+                        <p class="text-forge-black/50 text-sm max-w-sm mx-auto">Enter your details below to reveal your personalised charge out rate and action plan.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="calc-label">First Name</label>
+                            <input id="lead-name" type="text" class="calc-input" placeholder="Your first name" />
+                        </div>
+                        <div>
+                            <label class="calc-label">Email Address</label>
+                            <input id="lead-email" type="email" class="calc-input" placeholder="you@yourbusiness.com.au" />
+                        </div>
+                    </div>
+                    <p class="text-forge-black/35 text-xs text-center mb-6">
+                        We'll send your results to this email. No spam — ever. See our
+                        <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
+                    </p>
+                    <button onclick="submitLead()" class="calc-btn-primary w-full text-center">
+                        Reveal My Charge Out Rate →
+                    </button>
+                    <p id="lead-error" class="hidden text-red-500 text-xs text-center mt-3">Please enter your name and a valid email address.</p>
+                </div>
+            </div>
+
+            <!-- ===== RESULTS ===== -->
+            <div id="step-results" class="calc-step hidden">
+
+                <!-- Main rate card -->
+                <div class="bg-tradewise-navy rounded-2xl p-8 text-white text-center mb-6 shadow-lg">
+                    <p class="text-white/50 text-xs font-semibold tracking-widest uppercase mb-2">Your Charge Out Rate</p>
+                    <div class="flex items-baseline justify-center gap-1 mb-2">
+                        <span class="text-white/60 font-heading text-2xl">$</span>
+                        <span id="result-rate" class="font-heading text-6xl md:text-7xl font-bold text-white">—</span>
+                        <span class="text-white/60 font-heading text-2xl">/hr</span>
+                    </div>
+                    <p id="result-name" class="text-momentum-amber text-sm font-semibold mb-1"></p>
+                    <p id="result-trade" class="text-white/50 text-xs"></p>
+                </div>
+
+                <!-- Breakdown -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                    <h3 class="font-heading font-bold text-forge-black text-lg mb-6">How Your Rate is Built</h3>
+                    <div id="breakdown-bars" class="flex flex-col gap-4 mb-6"></div>
+                    <div class="border-t border-forge-black/10 pt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div>
+                            <p class="text-forge-black/40 text-xs mb-1">Annual Labour Cost</p>
+                            <p id="res-labour" class="font-heading font-bold text-forge-black text-base">—</p>
+                        </div>
+                        <div>
+                            <p class="text-forge-black/40 text-xs mb-1">Overhead Allocation</p>
+                            <p id="res-overhead" class="font-heading font-bold text-forge-black text-base">—</p>
+                        </div>
+                        <div>
+                            <p class="text-forge-black/40 text-xs mb-1">Billable Hours/Year</p>
+                            <p id="res-hours" class="font-heading font-bold text-forge-black text-base">—</p>
+                        </div>
+                        <div>
+                            <p class="text-forge-black/40 text-xs mb-1">Profit Margin</p>
+                            <p id="res-margin" class="font-heading font-bold text-momentum-amber text-base">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live productivity slider -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                    <h3 class="font-heading font-bold text-forge-black text-lg mb-2">See How Productivity Changes Your Rate</h3>
+                    <p class="text-forge-black/50 text-sm mb-6">Move the slider to see the real-time impact of improving your team's billable productivity.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-forge-black/60">Productivity</span>
+                        <span id="live-prod-display" class="font-heading font-bold text-growth-teal text-xl">75%</span>
+                    </div>
+                    <input
+                        id="live-productivity"
+                        type="range"
+                        min="40"
+                        max="95"
+                        value="75"
+                        step="1"
+                        class="w-full h-2 rounded-full appearance-none cursor-pointer mb-4"
+                        style="accent-color:#1A7A6E"
+                    />
+                    <div class="flex items-center justify-between bg-concrete rounded-xl p-5">
+                        <div>
+                            <p class="text-forge-black/50 text-xs mb-1">At this productivity your rate would be</p>
+                            <div class="flex items-baseline gap-1">
+                                <span class="font-heading text-3xl font-bold text-growth-teal">$<span id="live-rate">—</span></span>
+                                <span class="text-forge-black/40 text-sm">/hr</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-forge-black/50 text-xs mb-1">Billable hours/year</p>
+                            <p id="live-hours" class="font-heading font-bold text-forge-black text-xl">—</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Plan -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-momentum-amber/10 rounded-full flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-momentum-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-heading font-bold text-forge-black text-lg">Your Action Plan</h3>
+                    </div>
+                    <div id="action-plan" class="flex flex-col gap-4"></div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="bg-growth-teal rounded-2xl p-8 text-white text-center mb-6">
+                    <h3 class="font-heading text-2xl font-bold mb-3">Want Help Hitting This Rate?</h3>
+                    <p class="text-white/75 text-sm leading-relaxed mb-6 max-w-lg mx-auto">
+                        Knowing your rate is step one. Making sure your business is set up to actually bill it — and collect it —
+                        is where Tradewise comes in. Book a free Rate Review Session with our team.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a
+                            href="https://meetings.hubspot.com/tradewise"
+                            class="inline-block bg-white text-growth-teal font-semibold px-8 py-4 rounded-lg hover:bg-concrete transition-all duration-200"
+                        >
+                            Book a Free Rate Review Session
+                        </a>
+                        <a
+                            href="/business-engine"
+                            class="inline-block border border-white/40 text-white font-semibold px-8 py-4 rounded-lg hover:border-white hover:bg-white/10 transition-all duration-200"
+                        >
+                            Explore Business Engine →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recalculate -->
+                <div class="text-center">
+                    <button onclick="restartCalc()" class="text-sm text-forge-black/40 hover:text-growth-teal transition-colors duration-200 underline">
+                        Start over with different numbers
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Why This Matters -->
+    <section class="bg-tradewise-navy text-white py-16">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                {[
+                    { stat: '68%', label: 'of trade businesses are undercharging', sub: 'Based on industry benchmarking data' },
+                    { stat: '$22/hr', label: 'average gap between charged and required rate', sub: 'That\'s $44,000/year per employee left on the table' },
+                    { stat: '5 min', label: 'to find out your real number', sub: 'Then book a free session to act on it' },
+                ].map(s => (
+                    <div>
+                        <p class="font-heading text-4xl font-bold text-momentum-amber mb-2">{s.stat}</p>
+                        <p class="text-white font-semibold text-sm mb-1">{s.label}</p>
+                        <p class="text-white/40 text-xs">{s.sub}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+</MainLayout>
+
+<style>
+    .calc-label {
+        display: block;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: rgba(20,28,36,0.7);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.01em;
+    }
+    .calc-input {
+        width: 100%;
+        border: 1.5px solid rgba(20,28,36,0.12);
+        border-radius: 0.625rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9375rem;
+        color: #141C24;
+        background: #fff;
+        transition: border-color 0.15s;
+        outline: none;
+    }
+    .calc-input:focus {
+        border-color: #1A7A6E;
+        box-shadow: 0 0 0 3px rgba(26,122,110,0.1);
+    }
+    .calc-input.error {
+        border-color: #ef4444;
+    }
+    .calc-btn-primary {
+        background: #1A7A6E;
+        color: white;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        padding: 0.875rem 2rem;
+        border-radius: 0.625rem;
+        border: none;
+        cursor: pointer;
+        transition: filter 0.2s;
+    }
+    .calc-btn-primary:hover { filter: brightness(1.1); }
+    .calc-btn-secondary {
+        background: transparent;
+        color: rgba(20,28,36,0.5);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        padding: 0.875rem 1.5rem;
+        border-radius: 0.625rem;
+        border: 1.5px solid rgba(20,28,36,0.12);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .calc-btn-secondary:hover {
+        border-color: rgba(20,28,36,0.3);
+        color: #141C24;
+    }
+    .hidden { display: none !important; }
+</style>
+
+<script is:inline>
+
+// ─── State ───────────────────────────────────────────────────────────────────
+var WORKERS_COMP = { QLD:0.045, NSW:0.055, VIC:0.040, SA:0.045, WA:0.045, TAS:0.040, NT:0.045, ACT:0.040 };
+var SUPER_RATE   = 0.12;
+var LEAVE_RATE   = 0.10;   // Annual Leave + Sick Leave provisions
+var TOTAL_WEEKS  = 52;
+var WORK_DAYS_PW = 5;
+var ANNUAL_LEAVE_DAYS = 20;
+var SICK_DAYS    = 10;
+var PUBLIC_HOLS  = 10;
+var calcData     = {};
+var currentStep  = 1;
+var TOTAL_STEPS  = 6;
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+function showStep(n) {
+    document.querySelectorAll('.calc-step').forEach(function(el){ el.classList.add('hidden'); });
+    var target = n === 'results' ? document.getElementById('step-results') : document.getElementById('step-' + n);
+    if (target) target.classList.remove('hidden');
+
+    var pct = n === 'results' ? 100 : Math.round((n / TOTAL_STEPS) * 100);
+    var label = n === 'results' ? 'Results' : 'Step ' + n + ' of ' + TOTAL_STEPS;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('step-label').textContent  = label;
+    document.getElementById('step-pct').textContent    = pct + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep(from) {
+    if (!validateStep(from)) return;
+    collectStep(from);
+    currentStep = from + 1;
+    if (from === 5) { showStep(6); return; }
+    showStep(from + 1);
+    if (from === 2) updateLabourPreview();
+    if (from === 3) updateOverheadPreview();
+    if (from === 4) updateHoursPreview();
+}
+
+function prevStep(from) {
+    currentStep = from - 1;
+    showStep(from - 1);
+}
+
+// ─── Validation ──────────────────────────────────────────────────────────────
+function validateStep(n) {
+    var ok = true;
+    if (n === 1) {
+        ok = checkRequired('company-name') & checkRequired('trade-type') & checkRequired('num-employees') & checkRequired('location');
+    } else if (n === 2) {
+        ok = checkRequired('base-salary') & checkRequired('vehicle-tools');
+    } else if (n === 3) {
+        ok = checkRequired('overheads');
+    } else if (n === 4) {
+        ok = checkRequired('hours-per-day') & checkRequired('training-days');
+    }
+    return ok;
+}
+
+function checkRequired(id) {
+    var el = document.getElementById(id);
+    var val = el ? el.value.trim() : '';
+    if (!val) { if(el) el.classList.add('error'); return false; }
+    if(el) el.classList.remove('error');
+    return true;
+}
+
+// ─── Collect ─────────────────────────────────────────────────────────────────
+function collectStep(n) {
+    if (n === 1) {
+        calcData.companyName   = document.getElementById('company-name').value.trim();
+        calcData.tradeType     = document.getElementById('trade-type').value.trim();
+        calcData.numEmployees  = parseFloat(document.getElementById('num-employees').value) || 1;
+        calcData.location      = document.getElementById('location').value;
+    } else if (n === 2) {
+        calcData.baseSalary    = parseFloat(document.getElementById('base-salary').value) || 0;
+        calcData.vehicleTools  = parseFloat(document.getElementById('vehicle-tools').value) || 0;
+    } else if (n === 3) {
+        calcData.overheads     = parseFloat(document.getElementById('overheads').value) || 0;
+    } else if (n === 4) {
+        calcData.hoursPerDay   = parseFloat(document.getElementById('hours-per-day').value) || 8;
+        calcData.trainingDays  = parseFloat(document.getElementById('training-days').value) || 5;
+        calcData.productivity  = parseFloat(document.getElementById('productivity').value) / 100;
+    } else if (n === 5) {
+        calcData.profitMargin  = parseFloat(document.getElementById('profit-margin').value) / 100;
+    }
+}
+
+// ─── Previews ─────────────────────────────────────────────────────────────────
+function updateLabourPreview() {
+    var s   = calcData.baseSalary || 0;
+    var sup = s * SUPER_RATE;
+    var wc  = s * (WORKERS_COMP[calcData.location] || 0.045);
+    var lv  = s * LEAVE_RATE;
+    var vt  = calcData.vehicleTools || 0;
+    var tot = s + sup + wc + lv + vt;
+    document.getElementById('prev-salary').textContent = fmt(s);
+    document.getElementById('prev-super').textContent  = fmt(sup);
+    document.getElementById('prev-wc').textContent     = fmt(wc);
+    document.getElementById('prev-leave').textContent  = fmt(lv);
+    document.getElementById('prev-vt').textContent     = fmt(vt);
+    document.getElementById('prev-total').textContent  = fmt(tot);
+    document.getElementById('labour-preview').classList.remove('hidden');
+}
+
+function updateOverheadPreview() {
+    var perEmp = (calcData.overheads || 0) / (calcData.numEmployees || 1);
+    document.getElementById('overhead-per-emp').textContent = fmt(perEmp);
+    document.getElementById('overhead-preview').classList.remove('hidden');
+}
+
+function updateHoursPreview() {
+    var hours = calcBillableHours(calcData.hoursPerDay, calcData.trainingDays, calcData.productivity);
+    document.getElementById('billable-hours-display').textContent = Math.round(hours).toLocaleString();
+    document.getElementById('hours-preview').classList.remove('hidden');
+}
+
+// ─── Calculation ─────────────────────────────────────────────────────────────
+function calcBillableHours(hoursPerDay, trainingDays, productivity) {
+    var workingDays = (TOTAL_WEEKS * WORK_DAYS_PW) - ANNUAL_LEAVE_DAYS - SICK_DAYS - PUBLIC_HOLS - (trainingDays || 0);
+    return workingDays * hoursPerDay * productivity;
+}
+
+function calcRate(productivity) {
+    var s         = calcData.baseSalary || 0;
+    var sup       = s * SUPER_RATE;
+    var wc        = s * (WORKERS_COMP[calcData.location] || 0.045);
+    var lv        = s * LEAVE_RATE;
+    var labourCost= s + sup + wc + lv;
+    var overheadAlloc = (calcData.overheads || 0) / (calcData.numEmployees || 1);
+    var totalCost = labourCost + (calcData.vehicleTools || 0) + overheadAlloc;
+    var billable  = calcBillableHours(calcData.hoursPerDay, calcData.trainingDays, productivity);
+    var margin    = calcData.profitMargin || 0.15;
+    if (billable <= 0 || margin >= 1) return { rate: 0, hours: 0, labourCost, overheadAlloc, totalCost };
+    var rate = (totalCost / billable) / (1 - margin);
+    return { rate, hours: billable, labourCost, overheadAlloc, totalCost };
+}
+
+// ─── Lead Capture & HubSpot ──────────────────────────────────────────────────
+function submitLead() {
+    var name  = document.getElementById('lead-name').value.trim();
+    var email = document.getElementById('lead-email').value.trim();
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!name || !emailOk) {
+        document.getElementById('lead-error').classList.remove('hidden');
+        return;
+    }
+    document.getElementById('lead-error').classList.add('hidden');
+    calcData.leadName  = name;
+    calcData.leadEmail = email;
+
+    // HubSpot form submission
+    var PORTAL_ID = 'YOUR_PORTAL_ID';       // ← replace with HubSpot Portal ID
+    var FORM_GUID = 'YOUR_FORM_GUID';       // ← replace with HubSpot Form GUID
+    var hsUrl = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_GUID;
+    var payload = {
+        fields: [
+            { name: 'firstname',    value: name },
+            { name: 'email',        value: email },
+            { name: 'company',      value: calcData.companyName || '' },
+            { name: 'jobtitle',     value: calcData.tradeType || '' },
+            { name: 'state',        value: calcData.location || '' },
+        ],
+        context: { pageUri: window.location.href, pageName: document.title }
+    };
+    fetch(hsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(function(){});  // fail silently — still show results
+
+    showResults();
+}
+
+// ─── Results ─────────────────────────────────────────────────────────────────
+function showResults() {
+    var prod = calcData.productivity || 0.75;
+    var r    = calcRate(prod);
+
+    document.getElementById('result-rate').textContent  = Math.ceil(r.rate);
+    document.getElementById('result-name').textContent  = calcData.leadName + ' · ' + calcData.companyName;
+    document.getElementById('result-trade').textContent = calcData.tradeType + ' · ' + calcData.location;
+    document.getElementById('res-labour').textContent   = fmt(r.labourCost);
+    document.getElementById('res-overhead').textContent = fmt(r.overheadAlloc);
+    document.getElementById('res-hours').textContent    = Math.round(r.hours).toLocaleString() + ' hrs';
+    document.getElementById('res-margin').textContent   = Math.round((calcData.profitMargin || 0.15) * 100) + '%';
+
+    // Breakdown bars
+    var total = r.labourCost + r.overheadAlloc + (r.rate * r.hours * (calcData.profitMargin || 0.15));
+    var bars = [
+        { label: 'Labour & On-Costs', value: r.labourCost, color: '#1E3A5F' },
+        { label: 'Vehicle & Tools',   value: calcData.vehicleTools || 0, color: '#1A7A6E' },
+        { label: 'Overhead Allocation', value: r.overheadAlloc, color: '#D4820A' },
+    ];
+    var barsTotal = bars.reduce(function(a,b){ return a + b.value; }, 0);
+    var barsHtml = bars.map(function(b) {
+        var pct = barsTotal > 0 ? Math.round((b.value / barsTotal) * 100) : 0;
+        return '<div>' +
+            '<div class="flex justify-between text-sm mb-1"><span class="text-forge-black/60">' + b.label + '</span><span class="font-semibold text-forge-black">' + fmt(b.value) + ' (' + pct + '%)</span></div>' +
+            '<div class="h-3 bg-forge-black/8 rounded-full overflow-hidden"><div style="width:' + pct + '%;background:' + b.color + '" class="h-full rounded-full transition-all duration-700"></div></div>' +
+        '</div>';
+    }).join('');
+    document.getElementById('breakdown-bars').innerHTML = barsHtml;
+
+    // Live slider
+    var liveSlider = document.getElementById('live-productivity');
+    liveSlider.value = Math.round(prod * 100);
+    updateLiveRate();
+    liveSlider.addEventListener('input', function() {
+        document.getElementById('live-prod-display').textContent = this.value + '%';
+        updateLiveRate();
+    });
+
+    // Action plan
+    buildActionPlan(prod, r.rate);
+
+    showStep('results');
+}
+
+function updateLiveRate() {
+    var p = parseFloat(document.getElementById('live-productivity').value) / 100;
+    var r = calcRate(p);
+    document.getElementById('live-rate').textContent  = Math.ceil(r.rate);
+    document.getElementById('live-hours').textContent = Math.round(r.hours).toLocaleString() + ' hrs';
+}
+
+function buildActionPlan(prod, rate) {
+    var actions = [];
+
+    if (prod < 0.65) {
+        actions.push({
+            icon: '⚙️',
+            title: 'Boost Billable Productivity',
+            body: 'Your productivity is below 65% — meaning more than a third of your working time isn\'t being billed. Systems, job management software, and smarter scheduling can recover 10–20 hours of billable time per week.',
+            cta: 'Business Engine can help',
+            ctaHref: '/business-engine'
+        });
+    }
+    if ((calcData.overheads || 0) / (calcData.numEmployees || 1) > (calcData.baseSalary || 0) * 0.5) {
+        actions.push({
+            icon: '📊',
+            title: 'Review Your Overhead Structure',
+            body: 'Your overhead allocation per employee is high relative to labour cost. A Finance review can identify where overheads are creeping up and where savings can be made without impacting quality.',
+            cta: 'Explore Finance & Reporting',
+            ctaHref: '/services#finance'
+        });
+    }
+    if ((calcData.profitMargin || 0.15) < 0.15) {
+        actions.push({
+            icon: '💰',
+            title: 'Increase Your Target Margin',
+            body: 'A margin below 15% leaves little room for reinvestment, unexpected costs, or owner returns. Most well-run trade businesses target 15–20%. Tradewise can help you build toward this benchmark.',
+            cta: 'Book a Strategy Call',
+            ctaHref: 'https://meetings.hubspot.com/tradewise'
+        });
+    }
+    if (rate > 150) {
+        actions.push({
+            icon: '🎯',
+            title: 'Your Rate is Strong — Make Sure You\'re Charging It',
+            body: 'Your calculated rate is competitive. The next step is making sure your quoting, invoicing, and collections processes support actually billing and collecting at this rate every job.',
+            cta: 'Explore Business Engine',
+            ctaHref: '/business-engine'
+        });
+    }
+
+    // Default action always shown
+    actions.push({
+        icon: '📞',
+        title: 'Book a Free Rate Review Session',
+        body: 'Share these results with a Tradewise advisor. In 30 minutes we\'ll tell you exactly which levers will have the biggest impact on your charge out rate and your bottom line.',
+        cta: 'Book now — it\'s free',
+        ctaHref: 'https://meetings.hubspot.com/tradewise'
+    });
+
+    var html = actions.map(function(a) {
+        return '<div class="flex items-start gap-4 border border-forge-black/10 rounded-xl p-5">' +
+            '<div class="text-2xl shrink-0 mt-0.5">' + a.icon + '</div>' +
+            '<div class="flex-1">' +
+                '<p class="font-semibold text-forge-black text-sm mb-1">' + a.title + '</p>' +
+                '<p class="text-forge-black/55 text-xs leading-relaxed mb-3">' + a.body + '</p>' +
+                '<a href="' + a.ctaHref + '" class="text-xs font-semibold text-growth-teal hover:text-growth-teal/70 transition-colors duration-200">' + a.cta + ' →</a>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+    document.getElementById('action-plan').innerHTML = html;
+}
+
+function restartCalc() {
+    calcData    = {};
+    currentStep = 1;
+    document.querySelectorAll('.calc-input').forEach(function(el){
+        if (el.tagName === 'SELECT') { el.selectedIndex = 0; }
+        else if (el.type === 'range') { /* leave */ }
+        else { el.value = el.defaultValue || ''; }
+        el.classList.remove('error');
+    });
+    document.getElementById('labour-preview').classList.add('hidden');
+    document.getElementById('overhead-preview').classList.add('hidden');
+    document.getElementById('hours-preview').classList.add('hidden');
+    showStep(1);
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function fmt(n) {
+    return '$' + Math.round(n).toLocaleString('en-AU');
+}
+
+// Remove error class on input
+document.querySelectorAll('.calc-input').forEach(function(el) {
+    el.addEventListener('input', function(){ this.classList.remove('error'); });
+});
+
+</script>
+
+</MainLayout>
