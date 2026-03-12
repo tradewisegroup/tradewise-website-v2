@@ -7,7 +7,7 @@ const avatars = [
         trade: 'Electrical Contractor',
         tag: 'The Hands-On Owner',
         revenue: '$2.1M revenue · 8 staff · 14 years in business',
-        image: null,
+        image: '/images/TWG%20website%20Handson%20owner.png',
         situation: `Steve runs a successful residential and commercial electrical business he built from scratch. On paper, things look fine. In reality, Steve is the business — he quotes every job, handles every supplier dispute, signs every invoice, and gets called when anything goes wrong on site.
 
 He's tried to hire a site supervisor before. It didn't stick. He ended up doing the job himself anyway. His wife says he hasn't had a proper holiday in six years. He knows she's right.`,
@@ -26,7 +26,7 @@ He's tried to hire a site supervisor before. It didn't stick. He ended up doing 
         trade: 'Plumbing & Gas Services',
         tag: 'The Growth-Ready Boss',
         revenue: '$4.8M revenue · 22 staff · 3 depots',
-        image: null,
+        image: '/images/TWG%20Website%20Growth%20Ready%20Boss.png',
         situation: `Dave has momentum. His business has more than doubled in three years and he's just opened his third depot. The problem is that the growth feels fragile. Different depots run differently. Some jobs are profitable, some aren't — and he's not always sure which. Staff turnover at the newer depots is high.
 
 Dave is ambitious but knows he's operating above the systems he has. He's making decisions on gut feel that should be backed by data. He's hiring people into roles that aren't properly defined. And he's too busy to fix any of it.`,
@@ -45,7 +45,7 @@ Dave is ambitious but knows he's operating above the systems he has. He's making
         trade: 'Concreting & Civil',
         tag: 'The Burned-Out Tradie',
         revenue: '$1.4M revenue · 5 staff · 11 years in business',
-        image: null,
+        image: '/images/TWG%20website%20Burnt%20out.png',
         situation: `Brian built his business from a one-man band into a five-person operation. But somewhere in the last couple of years, the joy went out of it. He's tired all the time. He snaps at his crew. He's missed his kids' sport three weekends in a row because of a job that ran over.
 
 He's thought about selling. He's also thought about just shutting the doors. His accountant told him the business isn't in a great position to sell right now — the numbers aren't clean enough, too much depends on him personally, and there are no real systems in place.`,
@@ -92,16 +92,30 @@ He's thought about selling. He's also thought about just shutting the doors. His
             <div class="max-w-7xl mx-auto px-6 py-20 md:py-28">
 
                 <!-- Avatar Header -->
-                <div class="flex flex-col sm:flex-row sm:items-end gap-6 mb-12 pb-10 border-b border-forge-black/10">
-                    <div class="w-20 h-20 rounded-full bg-tradewise-navy flex items-center justify-center shrink-0">
-                        <span class="text-white font-heading font-bold text-2xl">{avatar.name[0]}</span>
-                    </div>
-                    <div>
-                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-1">
-                            {avatar.tag}
-                        </p>
-                        <h2 class="font-heading text-3xl font-bold text-forge-black">{avatar.name}</h2>
-                        <p class="text-forge-black/50 text-sm mt-1">{avatar.trade} · {avatar.revenue}</p>
+                <div class="relative rounded-xl overflow-hidden mb-12">
+                    {avatar.image && (
+                        <>
+                            <div
+                                class="absolute inset-0 bg-cover bg-center"
+                                style={`background-image: url('${avatar.image}')`}
+                            ></div>
+                            <div class="absolute inset-0 bg-tradewise-navy/70"></div>
+                        </>
+                    )}
+                    <div class="relative z-10 flex flex-col sm:flex-row sm:items-end gap-6 px-8 py-10 border-b border-white/10">
+                        <div class="w-20 h-20 rounded-full overflow-hidden shrink-0 border-2 border-white/30">
+                            {avatar.image
+                                ? <img src={avatar.image} alt={avatar.name} class="w-full h-full object-cover" />
+                                : <div class="w-full h-full bg-tradewise-navy flex items-center justify-center"><span class="text-white font-heading font-bold text-2xl">{avatar.name[0]}</span></div>
+                            }
+                        </div>
+                        <div>
+                            <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-1">
+                                {avatar.tag}
+                            </p>
+                            <h2 class="font-heading text-3xl font-bold text-white">{avatar.name}</h2>
+                            <p class="text-white/60 text-sm mt-1">{avatar.trade} · {avatar.revenue}</p>
+                        </div>
                     </div>
                 </div>
 
