@@ -1,0 +1,412 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+    title="Contact Tradewise Group | Get in Touch"
+    description="Reach out to the Tradewise Group team. Tell us about your trade business and we'll be in touch to discuss how we can help you grow, systemise, and exit on your terms."
+>
+
+    <!-- =========================================================
+         HERO
+    ========================================================= -->
+    <section class="bg-tradewise-navy text-white py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl">
+                <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">
+                    Get In Touch
+                </p>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6">
+                    Let's talk about your business
+                </h1>
+                <p class="text-white/70 text-lg leading-relaxed">
+                    Fill in the form below and our team will be in touch within one business day.
+                    Rather talk now? Call us on
+                    <a href="tel:0424454640" class="text-white hover:text-momentum-amber transition-colors duration-200 font-medium">0424 454 640</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         CONTACT FORM
+    ========================================================= -->
+    <section class="bg-concrete py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
+
+                <!-- Left: form -->
+                <div class="lg:col-span-3">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-10">
+
+                        <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Send us a message</h2>
+                        <p class="text-sm text-gray-500 mb-8">All fields are required unless marked optional.</p>
+
+                        <!-- Success state -->
+                        <div id="form-success" class="hidden bg-growth-teal/10 border border-growth-teal/30 rounded-xl p-6 text-center">
+                            <svg class="w-10 h-10 text-growth-teal mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 class="font-heading text-lg font-bold text-forge-black mb-1">Message received!</h3>
+                            <p class="text-sm text-gray-600">We'll be in touch within one business day.</p>
+                        </div>
+
+                        <!-- Error state -->
+                        <div id="form-error" class="hidden bg-red-50 border border-red-200 rounded-xl p-4 mb-6 text-sm text-red-700"></div>
+
+                        <form id="contact-form" novalidate>
+
+                            <!-- Full Name -->
+                            <div class="mb-5">
+                                <label for="cf-name" class="block text-sm font-semibold text-forge-black mb-1.5">Full Name</label>
+                                <input
+                                    type="text"
+                                    id="cf-name"
+                                    name="full_name"
+                                    placeholder="e.g. John Smith"
+                                    autocomplete="name"
+                                    class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-forge-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-growth-teal/40 focus:border-growth-teal transition-all duration-150"
+                                />
+                                <p class="field-error text-red-500 text-xs mt-1 hidden"></p>
+                            </div>
+
+                            <!-- Email + Mobile row -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label for="cf-email" class="block text-sm font-semibold text-forge-black mb-1.5">Email Address</label>
+                                    <input
+                                        type="email"
+                                        id="cf-email"
+                                        name="email"
+                                        placeholder="you@example.com"
+                                        autocomplete="email"
+                                        class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-forge-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-growth-teal/40 focus:border-growth-teal transition-all duration-150"
+                                    />
+                                    <p class="field-error text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+                                <div>
+                                    <label for="cf-mobile" class="block text-sm font-semibold text-forge-black mb-1.5">Mobile Number</label>
+                                    <input
+                                        type="tel"
+                                        id="cf-mobile"
+                                        name="phone"
+                                        placeholder="04xx xxx xxx"
+                                        autocomplete="tel"
+                                        class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-forge-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-growth-teal/40 focus:border-growth-teal transition-all duration-150"
+                                    />
+                                    <p class="field-error text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+                            </div>
+
+                            <!-- Trade Type + State row -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                                <div>
+                                    <label for="cf-trade" class="block text-sm font-semibold text-forge-black mb-1.5">Trade Type</label>
+                                    <select
+                                        id="cf-trade"
+                                        name="trade_type"
+                                        class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-forge-black bg-white focus:outline-none focus:ring-2 focus:ring-growth-teal/40 focus:border-growth-teal transition-all duration-150 appearance-none cursor-pointer"
+                                    >
+                                        <option value="" disabled selected>Select your trade…</option>
+                                        <option value="Plumber">Plumber</option>
+                                        <option value="Electrician">Electrician</option>
+                                        <option value="Builder / Carpenter">Builder / Carpenter</option>
+                                        <option value="HVAC / Air Conditioning">HVAC / Air Conditioning</option>
+                                        <option value="Painter">Painter</option>
+                                        <option value="Concreter">Concreter</option>
+                                        <option value="Tiler">Tiler</option>
+                                        <option value="Landscaper / Gardener">Landscaper / Gardener</option>
+                                        <option value="Roofer">Roofer</option>
+                                        <option value="Solar / Renewables">Solar / Renewables</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <p class="field-error text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+                                <div>
+                                    <label for="cf-state" class="block text-sm font-semibold text-forge-black mb-1.5">State</label>
+                                    <select
+                                        id="cf-state"
+                                        name="state"
+                                        class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-forge-black bg-white focus:outline-none focus:ring-2 focus:ring-growth-teal/40 focus:border-growth-teal transition-all duration-150 appearance-none cursor-pointer"
+                                    >
+                                        <option value="" disabled selected>Select your state…</option>
+                                        <option value="NSW">New South Wales</option>
+                                        <option value="VIC">Victoria</option>
+                                        <option value="QLD">Queensland</option>
+                                        <option value="SA">South Australia</option>
+                                        <option value="WA">Western Australia</option>
+                                        <option value="TAS">Tasmania</option>
+                                        <option value="NT">Northern Territory</option>
+                                        <option value="ACT">Australian Capital Territory</option>
+                                    </select>
+                                    <p class="field-error text-red-500 text-xs mt-1 hidden"></p>
+                                </div>
+                            </div>
+
+                            <!-- Meeting option -->
+                            <div class="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <p class="text-sm font-semibold text-forge-black mb-3">Would you like to book a strategy meeting? <span class="font-normal text-gray-500">(optional)</span></p>
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="radio" name="meeting_request" id="meeting-yes" value="Yes" class="w-4 h-4 accent-growth-teal cursor-pointer" />
+                                        <span class="text-sm text-gray-700 group-hover:text-forge-black transition-colors duration-150">Yes — I'd like to book a call</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="radio" name="meeting_request" id="meeting-no" value="No" class="w-4 h-4 accent-growth-teal cursor-pointer" checked />
+                                        <span class="text-sm text-gray-700 group-hover:text-forge-black transition-colors duration-150">No — just send a message</span>
+                                    </label>
+                                </div>
+
+                                <!-- Inline meeting embed (shown when "Yes" selected) -->
+                                <div id="meeting-embed-wrap" class="hidden mt-4 rounded-xl overflow-hidden border border-gray-200">
+                                    <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/tradewise?embed=true"></div>
+                                    <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+                                </div>
+                            </div>
+
+                            <!-- reCAPTCHA -->
+                            <!-- TODO: Replace YOUR_RECAPTCHA_SITE_KEY with your Google reCAPTCHA v2 site key -->
+                            <!-- Get a key at: https://www.google.com/recaptcha/admin -->
+                            <div class="mb-6">
+                                <div
+                                    id="recaptcha-widget"
+                                    class="g-recaptcha"
+                                    data-sitekey="YOUR_RECAPTCHA_SITE_KEY"
+                                    data-callback="onCaptchaVerified"
+                                    data-expired-callback="onCaptchaExpired"
+                                ></div>
+                                <p id="captcha-error" class="text-red-500 text-xs mt-1 hidden">Please complete the CAPTCHA.</p>
+                            </div>
+
+                            <!-- Submit -->
+                            <button
+                                id="submit-btn"
+                                type="submit"
+                                class="w-full bg-momentum-amber text-white font-semibold text-sm px-6 py-3.5 rounded-lg hover:brightness-110 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                <span id="btn-label">Send Message</span>
+                                <svg id="btn-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                </svg>
+                            </button>
+
+                            <p class="text-xs text-gray-400 mt-4 text-center">
+                                By submitting this form you agree to our
+                                <a href="/privacy-policy" class="underline hover:text-gray-600 transition-colors duration-150">Privacy Policy</a>.
+                            </p>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right: contact details + reassurance -->
+                <div class="lg:col-span-2 flex flex-col gap-8">
+
+                    <!-- Contact details -->
+                    <div>
+                        <h3 class="font-heading text-xl font-bold text-forge-black mb-5">Contact details</h3>
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-tradewise-navy/10 flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4 text-tradewise-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Phone</p>
+                                    <a href="tel:0424454640" class="text-sm font-medium text-forge-black hover:text-growth-teal transition-colors duration-200">0424 454 640</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-tradewise-navy/10 flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4 text-tradewise-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Email</p>
+                                    <a href="mailto:kate@tradewisegroup.au" class="text-sm font-medium text-forge-black hover:text-growth-teal transition-colors duration-200">kate@tradewisegroup.au</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-tradewise-navy/10 flex items-center justify-center shrink-0 mt-0.5">
+                                    <svg class="w-4 h-4 text-tradewise-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-0.5">Response time</p>
+                                    <p class="text-sm font-medium text-forge-black">Within one business day</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reassurance -->
+                    <div class="bg-tradewise-navy rounded-2xl p-6 text-white">
+                        <h3 class="font-heading text-lg font-bold mb-4">What happens next?</h3>
+                        <ol class="flex flex-col gap-4">
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-momentum-amber text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                                <p class="text-sm text-white/75">We review your details and identify the best way to help your business.</p>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-momentum-amber text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                                <p class="text-sm text-white/75">A member of our team calls you to understand where you're at and what you need.</p>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-momentum-amber text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                                <p class="text-sm text-white/75">We put together a tailored plan and walk you through exactly how Tradewise can help.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</MainLayout>
+
+<!-- reCAPTCHA API -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script is:inline>
+    // ─── Config ───────────────────────────────────────────────────────────────
+    // TODO: Replace with your HubSpot contact form GUID
+    // Create the form in HubSpot > Marketing > Forms with these fields:
+    //   full_name, email, phone, trade_type, state, meeting_request
+    var HS_PORTAL_ID = '442932388';
+    var HS_FORM_GUID = 'YOUR_CONTACT_FORM_GUID';
+
+    // ─── State ────────────────────────────────────────────────────────────────
+    var captchaToken = null;
+
+    function onCaptchaVerified(token) { captchaToken = token; }
+    function onCaptchaExpired()       { captchaToken = null; }
+
+    // ─── Meeting embed toggle ─────────────────────────────────────────────────
+    document.querySelectorAll('input[name="meeting_request"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var wrap = document.getElementById('meeting-embed-wrap');
+            if (this.value === 'Yes') {
+                wrap.classList.remove('hidden');
+            } else {
+                wrap.classList.add('hidden');
+            }
+        });
+    });
+
+    // ─── Validation ───────────────────────────────────────────────────────────
+    function validateField(input, message) {
+        var err = input.parentElement.querySelector('.field-error');
+        if (!input.value.trim()) {
+            if (err) { err.textContent = message; err.classList.remove('hidden'); }
+            input.classList.add('border-red-400');
+            return false;
+        }
+        if (err) { err.textContent = ''; err.classList.add('hidden'); }
+        input.classList.remove('border-red-400');
+        return true;
+    }
+
+    function validateEmail(input) {
+        var err = input.parentElement.querySelector('.field-error');
+        var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+        if (!ok) {
+            if (err) { err.textContent = 'Please enter a valid email address.'; err.classList.remove('hidden'); }
+            input.classList.add('border-red-400');
+            return false;
+        }
+        if (err) { err.textContent = ''; err.classList.add('hidden'); }
+        input.classList.remove('border-red-400');
+        return true;
+    }
+
+    // ─── Form submit ──────────────────────────────────────────────────────────
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var name    = document.getElementById('cf-name');
+        var email   = document.getElementById('cf-email');
+        var mobile  = document.getElementById('cf-mobile');
+        var trade   = document.getElementById('cf-trade');
+        var state   = document.getElementById('cf-state');
+        var captchaErr = document.getElementById('captcha-error');
+
+        var valid = true;
+        valid = validateField(name,   'Please enter your full name.')    && valid;
+        valid = validateField(email,  'Please enter your email address.') && valid;
+        valid = validateEmail(email)                                       && valid;
+        valid = validateField(mobile, 'Please enter your mobile number.') && valid;
+        valid = validateField(trade,  'Please select your trade type.')   && valid;
+        valid = validateField(state,  'Please select your state.')        && valid;
+
+        if (!captchaToken) {
+            captchaErr.classList.remove('hidden');
+            valid = false;
+        } else {
+            captchaErr.classList.add('hidden');
+        }
+
+        if (!valid) return;
+
+        var btn     = document.getElementById('submit-btn');
+        var label   = document.getElementById('btn-label');
+        var spinner = document.getElementById('btn-spinner');
+        var errBox  = document.getElementById('form-error');
+
+        btn.disabled = true;
+        label.textContent = 'Sending…';
+        spinner.classList.remove('hidden');
+        errBox.classList.add('hidden');
+
+        var meetingRequest = (document.querySelector('input[name="meeting_request"]:checked') || {}).value || 'No';
+
+        // Split full name into first / last for HubSpot
+        var nameParts = name.value.trim().split(/\s+/);
+        var firstName = nameParts[0] || '';
+        var lastName  = nameParts.slice(1).join(' ') || '';
+
+        var payload = {
+            fields: [
+                { name: 'firstname',       value: firstName },
+                { name: 'lastname',        value: lastName },
+                { name: 'email',           value: email.value.trim() },
+                { name: 'phone',           value: mobile.value.trim() },
+                { name: 'trade_type',      value: trade.value },
+                { name: 'state',           value: state.value },
+                { name: 'meeting_request', value: meetingRequest },
+            ],
+            context: {
+                pageUri:  window.location.href,
+                pageName: 'Contact Page',
+            },
+        };
+
+        try {
+            var res = await fetch(
+                'https://api-ap1.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID,
+                {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(payload),
+                }
+            );
+
+            if (!res.ok) throw new Error('Server returned ' + res.status);
+
+            // Show success
+            document.getElementById('contact-form').classList.add('hidden');
+            document.getElementById('form-success').classList.remove('hidden');
+
+        } catch (err) {
+            errBox.textContent = 'Something went wrong — please try again or email us directly at kate@tradewisegroup.au.';
+            errBox.classList.remove('hidden');
+            btn.disabled = false;
+            label.textContent = 'Send Message';
+            spinner.classList.add('hidden');
+        }
+    });
+</script>
