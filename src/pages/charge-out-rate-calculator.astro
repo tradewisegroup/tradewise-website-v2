@@ -284,6 +284,41 @@ import MainLayout from '../layouts/MainLayout.astro';
                             <label class="calc-label" for="lf-phone">Phone Number</label>
                             <input id="lf-phone" type="tel" name="phone" autocomplete="tel" class="calc-input" placeholder="0400 000 000" />
                         </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="calc-label" for="lf-trade">Trade Type</label>
+                                <select id="lf-trade" name="trade_type" class="calc-input">
+                                    <option value="">Select your trade…</option>
+                                    <option value="Plumber">Plumber</option>
+                                    <option value="Electrician">Electrician</option>
+                                    <option value="Builder / Carpenter">Builder / Carpenter</option>
+                                    <option value="HVAC / Air Conditioning">HVAC / Air Conditioning</option>
+                                    <option value="Painter">Painter</option>
+                                    <option value="Concreter">Concreter</option>
+                                    <option value="Tiler">Tiler</option>
+                                    <option value="Landscaper / Gardener">Landscaper / Gardener</option>
+                                    <option value="Roofer">Roofer</option>
+                                    <option value="Solar / Renewables">Solar / Renewables</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Please select your trade type.</p>
+                            </div>
+                            <div>
+                                <label class="calc-label" for="lf-state">State / Territory</label>
+                                <select id="lf-state" name="state" class="calc-input">
+                                    <option value="">Select your state…</option>
+                                    <option value="QLD">Queensland (QLD)</option>
+                                    <option value="NSW">New South Wales (NSW)</option>
+                                    <option value="VIC">Victoria (VIC)</option>
+                                    <option value="SA">South Australia (SA)</option>
+                                    <option value="WA">Western Australia (WA)</option>
+                                    <option value="TAS">Tasmania (TAS)</option>
+                                    <option value="NT">Northern Territory (NT)</option>
+                                    <option value="ACT">Australian Capital Territory (ACT)</option>
+                                </select>
+                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Please select your state.</p>
+                            </div>
+                        </div>
                         <p id="lf-submit-err" class="text-red-500 text-sm text-center hidden">Something went wrong — please try again.</p>
                         <button type="submit" id="btn-lead-submit" class="calc-btn-primary flex items-center justify-center gap-2">
                             <span id="lead-submit-label">Show My Rate →</span>
@@ -530,7 +565,22 @@ function nextStep(from) {
     if (!validateStep(from)) return;
     collectStep(from);
     currentStep = from + 1;
-    if (from === 5) { showStep(6); return; }
+    if (from === 5) {
+        showStep(6);
+        // Pre-fill trade type from Step 1 free-text (best-effort match)
+        var tradeEl = document.getElementById('lf-trade');
+        var tradeVal = (calcData.tradeType || '').toLowerCase();
+        for (var i = 0; i < tradeEl.options.length; i++) {
+            if (tradeEl.options[i].value.toLowerCase() === tradeVal) {
+                tradeEl.selectedIndex = i; break;
+            }
+        }
+        // Pre-fill state from Step 1
+        if (calcData.location) {
+            document.getElementById('lf-state').value = calcData.location;
+        }
+        return;
+    }
     showStep(from + 1);
     if (from === 2) updateLabourPreview();
     if (from === 3) updateOverheadPreview();
@@ -647,7 +697,7 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
 
     // Basic validation
     var valid = true;
-    ['lf-first','lf-last','lf-email','lf-phone'].forEach(function(id) {
+    ['lf-first','lf-last','lf-email','lf-phone','lf-trade','lf-state'].forEach(function(id) {
         var el = document.getElementById(id);
         if (!el.value.trim()) { el.classList.add('error'); valid = false; }
         else { el.classList.remove('error'); }
@@ -685,9 +735,9 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
                         { name: 'lastname',       value: last },
                         { name: 'email',          value: email },
                         { name: 'phone',          value: phone },
+                        { name: 'trade_type',     value: document.getElementById('lf-trade').value },
+                        { name: 'state',          value: document.getElementById('lf-state').value },
                         { name: 'company',        value: calcData.companyName || '' },
-                        { name: 'trade_type',     value: calcData.tradeType   || '' },
-                        { name: 'state',          value: calcData.location    || '' },
                         { name: 'num_employees',  value: String(calcData.numEmployees || '') },
                     ],
                     context: { pageUri: window.location.href, pageName: document.title }
@@ -839,7 +889,7 @@ function fmt(n) {
 }
 
 // Remove error class on input
-document.querySelectorAll('.calc-input, #lf-first, #lf-last, #lf-email, #lf-phone').forEach(function(el) {
+document.querySelectorAll('.calc-input, #lf-first, #lf-last, #lf-email, #lf-phone, #lf-trade, #lf-state').forEach(function(el) {
     el.addEventListener('input', function(){ this.classList.remove('error'); });
 });
 
