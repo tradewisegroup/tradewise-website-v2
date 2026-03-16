@@ -264,8 +264,35 @@ import MainLayout from '../layouts/MainLayout.astro';
                         <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Rate is Ready</h2>
                         <p class="text-forge-black/50 text-sm max-w-sm mx-auto">Enter your details below to reveal your personalised charge out rate and action plan.</p>
                     </div>
-                    <script src="https://js-ap1.hsforms.net/forms/embed/442932388.js" defer></script>
-                    <div class="hs-form-frame" data-region="ap1" data-form-id="457aa646-55f4-4da5-a868-6ab7aa3935bc" data-portal-id="442932388"></div>
+                    <form id="lead-form" novalidate class="flex flex-col gap-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="calc-label" for="lf-first">First Name</label>
+                                <input id="lf-first" type="text" name="firstname" autocomplete="given-name" class="calc-input" placeholder="Jane" />
+                            </div>
+                            <div>
+                                <label class="calc-label" for="lf-last">Last Name</label>
+                                <input id="lf-last" type="text" name="lastname" autocomplete="family-name" class="calc-input" placeholder="Smith" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="calc-label" for="lf-email">Email Address</label>
+                            <input id="lf-email" type="email" name="email" autocomplete="email" class="calc-input" placeholder="jane@smithelectrical.com.au" />
+                            <p class="lf-err text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
+                        </div>
+                        <div>
+                            <label class="calc-label" for="lf-phone">Phone Number</label>
+                            <input id="lf-phone" type="tel" name="phone" autocomplete="tel" class="calc-input" placeholder="0400 000 000" />
+                        </div>
+                        <p id="lf-submit-err" class="text-red-500 text-sm text-center hidden">Something went wrong — please try again.</p>
+                        <button type="submit" id="btn-lead-submit" class="calc-btn-primary flex items-center justify-center gap-2">
+                            <span id="lead-submit-label">Show My Rate →</span>
+                            <svg id="lead-submit-spinner" class="hidden animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                            </svg>
+                        </button>
+                    </form>
                     <p class="text-forge-black/35 text-xs text-center mt-4">
                         No spam — ever. See our <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
                     </p>
@@ -366,7 +393,7 @@ import MainLayout from '../layouts/MainLayout.astro';
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
-                            href="https://meetings.hubspot.com/tradewise"
+                            href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" rel="noopener noreferrer"
                             class="inline-block bg-white text-growth-teal font-semibold px-8 py-4 rounded-lg hover:bg-concrete transition-all duration-200"
                         >
                             Book a Free Rate Review Session
@@ -609,10 +636,71 @@ function calcRate(productivity) {
     return { rate, hours: billable, labourCost, overheadAlloc, totalCost };
 }
 
-// ─── Lead Capture — HubSpot form submission listener ─────────────────────────
-window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmit') {
+// ─── Lead Capture — form submit → HubSpot API → show results ─────────────────
+document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    var first = document.getElementById('lf-first').value.trim();
+    var last  = document.getElementById('lf-last').value.trim();
+    var email = document.getElementById('lf-email').value.trim();
+    var phone = document.getElementById('lf-phone').value.trim();
+
+    // Basic validation
+    var valid = true;
+    ['lf-first','lf-last','lf-email','lf-phone'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (!el.value.trim()) { el.classList.add('error'); valid = false; }
+        else { el.classList.remove('error'); }
+    });
+    var emailEl  = document.getElementById('lf-email');
+    var emailErr = emailEl.parentElement.querySelector('.lf-err');
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailEl.classList.add('error');
+        if (emailErr) emailErr.classList.remove('hidden');
+        valid = false;
+    } else {
+        if (emailErr) emailErr.classList.add('hidden');
+    }
+    if (!valid) return;
+
+    var btn     = document.getElementById('btn-lead-submit');
+    var label   = document.getElementById('lead-submit-label');
+    var spinner = document.getElementById('lead-submit-spinner');
+    var errMsg  = document.getElementById('lf-submit-err');
+
+    btn.disabled = true;
+    label.textContent = 'Submitting...';
+    spinner.classList.remove('hidden');
+    errMsg.classList.add('hidden');
+
+    try {
+        var res = await fetch(
+            'https://api-ap1.hsforms.com/submissions/v3/integration/submit/442932388/457aa646-55f4-4da5-a868-6ab7aa3935bc',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fields: [
+                        { name: 'firstname',      value: first },
+                        { name: 'lastname',       value: last },
+                        { name: 'email',          value: email },
+                        { name: 'phone',          value: phone },
+                        { name: 'company',        value: calcData.companyName || '' },
+                        { name: 'trade_type',     value: calcData.tradeType   || '' },
+                        { name: 'state',          value: calcData.location    || '' },
+                        { name: 'num_employees',  value: String(calcData.numEmployees || '') },
+                    ],
+                    context: { pageUri: window.location.href, pageName: document.title }
+                })
+            }
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         showResults();
+    } catch (err) {
+        errMsg.classList.remove('hidden');
+        btn.disabled = false;
+        label.textContent = 'Show My Rate →';
+        spinner.classList.add('hidden');
     }
 });
 
@@ -695,7 +783,7 @@ function buildActionPlan(prod, rate) {
             title: 'Increase Your Target Margin',
             body: 'A margin below 15% leaves little room for reinvestment, unexpected costs, or owner returns. Most well-run trade businesses target 15–20%. Tradewise can help you build toward this benchmark.',
             cta: 'Book a Strategy Call',
-            ctaHref: 'https://meetings.hubspot.com/tradewise'
+            ctaHref: 'https://meetings-ap1.hubspot.com/kate-walsh-rose'
         });
     }
     if (rate > 150) {
@@ -714,7 +802,7 @@ function buildActionPlan(prod, rate) {
         title: 'Book a Free Rate Review Session',
         body: 'Share these results with a Tradewise advisor. In 30 minutes we\'ll tell you exactly which levers will have the biggest impact on your charge out rate and your bottom line.',
         cta: 'Book now — it\'s free',
-        ctaHref: 'https://meetings.hubspot.com/tradewise'
+        ctaHref: 'https://meetings-ap1.hubspot.com/kate-walsh-rose'
     });
 
     var html = actions.map(function(a) {
@@ -723,7 +811,7 @@ function buildActionPlan(prod, rate) {
             '<div class="flex-1">' +
                 '<p class="font-semibold text-forge-black text-sm mb-1">' + a.title + '</p>' +
                 '<p class="text-forge-black/55 text-xs leading-relaxed mb-3">' + a.body + '</p>' +
-                '<a href="' + a.ctaHref + '" class="text-xs font-semibold text-growth-teal hover:text-growth-teal/70 transition-colors duration-200">' + a.cta + ' →</a>' +
+                '<a href="' + a.ctaHref + '" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-growth-teal hover:text-growth-teal/70 transition-colors duration-200">' + a.cta + ' →</a>' +
             '</div>' +
         '</div>';
     }).join('');
@@ -751,7 +839,7 @@ function fmt(n) {
 }
 
 // Remove error class on input
-document.querySelectorAll('.calc-input').forEach(function(el) {
+document.querySelectorAll('.calc-input, #lf-first, #lf-last, #lf-email, #lf-phone').forEach(function(el) {
     el.addEventListener('input', function(){ this.classList.remove('error'); });
 });
 

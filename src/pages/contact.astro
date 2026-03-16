@@ -157,25 +157,6 @@ import MainLayout from '../layouts/MainLayout.astro';
                                     </label>
                                 </div>
 
-                                <!-- Inline meeting embed (shown when "Yes" selected) -->
-                                <div id="meeting-embed-wrap" class="hidden mt-4 rounded-xl overflow-hidden border border-gray-200">
-                                    <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/tradewise?embed=true"></div>
-                                    <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
-                                </div>
-                            </div>
-
-                            <!-- reCAPTCHA -->
-                            <!-- TODO: Replace YOUR_RECAPTCHA_SITE_KEY with your Google reCAPTCHA v2 site key -->
-                            <!-- Get a key at: https://www.google.com/recaptcha/admin -->
-                            <div class="mb-6">
-                                <div
-                                    id="recaptcha-widget"
-                                    class="g-recaptcha"
-                                    data-sitekey="YOUR_RECAPTCHA_SITE_KEY"
-                                    data-callback="onCaptchaVerified"
-                                    data-expired-callback="onCaptchaExpired"
-                                ></div>
-                                <p id="captcha-error" class="text-red-500 text-xs mt-1 hidden">Please complete the CAPTCHA.</p>
                             </div>
 
                             <!-- Submit -->
@@ -269,34 +250,10 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 </MainLayout>
 
-<!-- reCAPTCHA API -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
 <script is:inline>
     // ─── Config ───────────────────────────────────────────────────────────────
-    // TODO: Replace with your HubSpot contact form GUID
-    // Create the form in HubSpot > Marketing > Forms with these fields:
-    //   full_name, email, phone, trade_type, state, meeting_request
     var HS_PORTAL_ID = '442932388';
-    var HS_FORM_GUID = 'YOUR_CONTACT_FORM_GUID';
-
-    // ─── State ────────────────────────────────────────────────────────────────
-    var captchaToken = null;
-
-    function onCaptchaVerified(token) { captchaToken = token; }
-    function onCaptchaExpired()       { captchaToken = null; }
-
-    // ─── Meeting embed toggle ─────────────────────────────────────────────────
-    document.querySelectorAll('input[name="meeting_request"]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            var wrap = document.getElementById('meeting-embed-wrap');
-            if (this.value === 'Yes') {
-                wrap.classList.remove('hidden');
-            } else {
-                wrap.classList.add('hidden');
-            }
-        });
-    });
+    var HS_FORM_GUID = 'c9af4a29-f4c3-4b08-9731-a60ad1b1ad18';
 
     // ─── Validation ───────────────────────────────────────────────────────────
     function validateField(input, message) {
@@ -333,22 +290,13 @@ import MainLayout from '../layouts/MainLayout.astro';
         var mobile  = document.getElementById('cf-mobile');
         var trade   = document.getElementById('cf-trade');
         var state   = document.getElementById('cf-state');
-        var captchaErr = document.getElementById('captcha-error');
-
         var valid = true;
-        valid = validateField(name,   'Please enter your full name.')    && valid;
-        valid = validateField(email,  'Please enter your email address.') && valid;
-        valid = validateEmail(email)                                       && valid;
-        valid = validateField(mobile, 'Please enter your mobile number.') && valid;
-        valid = validateField(trade,  'Please select your trade type.')   && valid;
-        valid = validateField(state,  'Please select your state.')        && valid;
-
-        if (!captchaToken) {
-            captchaErr.classList.remove('hidden');
-            valid = false;
-        } else {
-            captchaErr.classList.add('hidden');
-        }
+        valid = validateField(name,   'Please enter your full name.')     && valid;
+        valid = validateField(email,  'Please enter your email address.')  && valid;
+        valid = validateEmail(email)                                        && valid;
+        valid = validateField(mobile, 'Please enter your mobile number.')  && valid;
+        valid = validateField(trade,  'Please select your trade type.')    && valid;
+        valid = validateField(state,  'Please select your state.')         && valid;
 
         if (!valid) return;
 
@@ -363,6 +311,7 @@ import MainLayout from '../layouts/MainLayout.astro';
         errBox.classList.add('hidden');
 
         var meetingRequest = (document.querySelector('input[name="meeting_request"]:checked') || {}).value || 'No';
+        var wantsCall = meetingRequest === 'Yes';
 
         // Split full name into first / last for HubSpot
         var nameParts = name.value.trim().split(/\s+/);
@@ -397,9 +346,14 @@ import MainLayout from '../layouts/MainLayout.astro';
 
             if (!res.ok) throw new Error('Server returned ' + res.status);
 
-            // Show success
-            document.getElementById('contact-form').classList.add('hidden');
-            document.getElementById('form-success').classList.remove('hidden');
+            if (wantsCall) {
+                window.location.href = 'https://meetings-ap1.hubspot.com/kate-walsh-rose';
+            } else {
+                var successEl = document.getElementById('form-success');
+                successEl.querySelector('p').textContent = "Thanks for reaching out! We'll be in touch within one business day.";
+                document.getElementById('contact-form').classList.add('hidden');
+                successEl.classList.remove('hidden');
+            }
 
         } catch (err) {
             errBox.textContent = 'Something went wrong — please try again or email us directly at kate@tradewisegroup.au.';
