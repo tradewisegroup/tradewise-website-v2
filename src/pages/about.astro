@@ -250,6 +250,9 @@ const team = [
                             {member.comingSoon && (
                                 <span class="text-xs bg-forge-black/10 text-forge-black/40 px-2 py-0.5 rounded font-medium">Coming Soon</span>
                             )}
+                            {member.aiAgent && (
+                                <span class="text-xs italic text-forge-black/35">ai agent in action</span>
+                            )}
                         </div>
                         <p class="text-momentum-amber text-xs font-semibold tracking-wide uppercase mb-3">{member.role}</p>
                         <div class="flex flex-col gap-3">
