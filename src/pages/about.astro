@@ -229,7 +229,7 @@ const team = [
             <div class="max-w-2xl mb-14">
                 <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">The Team</p>
                 <h2 class="font-heading text-3xl font-bold text-forge-black">
-                    The people behind the work.
+                    The people (& ai agents) behind the work.
                 </h2>
             </div>
 
@@ -237,10 +237,13 @@ const team = [
                 {team.map(member => (
                     <div class={`flex flex-col ${member.comingSoon ? 'opacity-60' : ''}`}>
                         <!-- Avatar placeholder -->
-                        <div class="w-full aspect-square bg-concrete rounded-lg mb-5 flex items-center justify-center">
-                            <div class="w-16 h-16 rounded-full bg-tradewise-navy/20 flex items-center justify-center">
-                                <span class="font-heading font-bold text-tradewise-navy/40 text-xl">?</span>
+                        <div class="w-full aspect-square bg-concrete rounded-lg mb-5 flex flex-col items-center justify-center gap-2">
+                            <div class="w-16 h-16 rounded-full bg-tradewise-navy/10 flex items-center justify-center">
+                                <svg class="w-7 h-7 text-tradewise-navy/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
                             </div>
+                            <p class="text-xs font-semibold text-tradewise-navy/30 tracking-widest uppercase">Photo Coming Soon</p>
                         </div>
                         <div class="flex items-center gap-2 mb-1">
                             <h3 class="font-heading font-bold text-forge-black">{member.name}</h3>
