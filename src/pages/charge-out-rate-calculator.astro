@@ -2,897 +2,1561 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  DEVELOPER NOTES — TRADEWISE GROUP CHARGE-OUT RATE CALCULATOR   ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║                                                                  ║
+  ║  WHERE TO UPDATE BRANDING                                        ║
+  ║  All constants are at the very top of the <script is:inline>    ║
+  ║  block. Change BRAND_PRIMARY, BRAND_ACCENT, BUSINESS_NAME,      ║
+  ║  WEBSITE_URL and LOGO_URL there — nothing else needs touching.  ║
+  ║                                                                  ║
+  ║  HOW TO WIRE THE WEBHOOK                                         ║
+  ║  Set LEAD_WEBHOOK_URL to your POST endpoint. Payload shape:      ║
+  ║  { event: "lead_captured"|"cogs_report", leadData, resultsData } ║
+  ║  All fetch() calls are wrapped in try/catch — the tool works     ║
+  ║  even if the webhook is unreachable.                             ║
+  ║                                                                  ║
+  ║  HOW TO SWAP THE LOGO                                            ║
+  ║  Set LOGO_URL to your hosted image path (e.g. '/images/logo.png')║
+  ║  When non-empty an <img> is rendered; when empty the business    ║
+  ║  name text is shown instead.                                     ║
+  ║                                                                  ║
+  ║  HOW TO EMBED ON YOUR SITE (iframe)                              ║
+  ║  <iframe                                                         ║
+  ║    src="https://tradewisegroup.au/charge-out-rate-calculator"    ║
+  ║    width="100%" height="900" frameborder="0"                     ║
+  ║    style="border:none;border-radius:12px;"                       ║
+  ║    title="Charge-Out Rate Calculator | Tradewise Group"          ║
+  ║  ></iframe>                                                      ║
+  ║                                                                  ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+
 <MainLayout
     title="Free Charge Out Rate Calculator for Australian Trades | Tradewise Group"
-    description="Find out exactly what to charge per hour as an Australian trade business. This free calculator factors in labour costs, overheads, workers comp, super, leave, and your profit goal — and gives you a defensible rate in under 5 minutes."
+    description="Find out exactly what to charge per hour as an Australian trade business. Free calculator covering labour, on-costs, overheads and margin — personalised COGS report included."
 >
 
-    <!-- Hero -->
-    <section class="bg-tradewise-navy text-white py-16 md:py-20">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <p class="text-momentum-amber text-sm font-semibold tracking-widest uppercase mb-4">Free Tool</p>
-            <h1 class="font-heading text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                Free Charge Out Rate Calculator<br class="hidden md:block" />
-                <span class="text-growth-teal">for Australian Trade Businesses</span>
-            </h1>
-            <p class="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
-                Most tradies are undercharging — and don't even know it. This calculator factors in every real cost
-                (super, workers comp, leave, overheads, productivity) and tells you exactly what you need to charge
-                to hit your profit goal.
-            </p>
+<div id="calc-root">
+
+  <!-- ══════════════════════ SCREEN 0 — LEAD GATE ══════════════════════ -->
+  <div id="screen-0" class="cr-screen cr-active">
+    <div class="cr-lead-hero">
+      <div id="lead-logo-area"></div>
+      <h1 class="cr-lead-heading">See the true cost of your team</h1>
+      <p class="cr-lead-sub">Takes 3 minutes. Get a free personalised COGS report at the end.</p>
+    </div>
+    <div class="cr-card cr-lead-card">
+      <form id="lead-form" novalidate>
+        <div class="cr-grid-2">
+          <div class="cr-field">
+            <label class="cr-label" for="lf-first">First name <span class="cr-req">*</span></label>
+            <input class="cr-input" id="lf-first" type="text" autocomplete="given-name" placeholder="Kate" />
+            <span class="cr-err hidden">Required</span>
+          </div>
+          <div class="cr-field">
+            <label class="cr-label" for="lf-last">Last name <span class="cr-req">*</span></label>
+            <input class="cr-input" id="lf-last" type="text" autocomplete="family-name" placeholder="Walsh" />
+            <span class="cr-err hidden">Required</span>
+          </div>
         </div>
-    </section>
-
-    <!-- Calculator -->
-    <section class="bg-concrete py-16 md:py-24">
-        <div class="max-w-3xl mx-auto px-6">
-
-            <!-- Progress Bar -->
-            <div class="mb-10">
-                <div class="flex items-center justify-between mb-2">
-                    <span id="step-label" class="text-xs font-semibold tracking-widest uppercase text-forge-black/50">Step 1 of 6</span>
-                    <span id="step-pct" class="text-xs font-semibold text-growth-teal">17%</span>
-                </div>
-                <div class="h-2 bg-forge-black/10 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="h-full bg-growth-teal rounded-full transition-all duration-500" style="width:17%"></div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 1: User Details ===== -->
-            <div id="step-1" class="calc-step">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Business</h2>
-                    <p class="text-forge-black/50 text-sm mb-8">Tell us a little about your business so we can tailor the results.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="sm:col-span-2">
-                            <label class="calc-label">Company Name</label>
-                            <input id="company-name" type="text" class="calc-input" placeholder="e.g. Smith Electrical Pty Ltd" />
-                        </div>
-                        <div>
-                            <label class="calc-label">Trade Type</label>
-                            <input id="trade-type" type="text" class="calc-input" placeholder="e.g. Electrician, Plumber, Builder" />
-                        </div>
-                        <div>
-                            <label class="calc-label">Number of Employees (incl. you)</label>
-                            <input id="num-employees" type="number" min="1" class="calc-input" placeholder="e.g. 5" value="1" />
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="calc-label">State / Territory</label>
-                            <select id="location" class="calc-input">
-                                <option value="">Select your state</option>
-                                <option value="QLD">Queensland (QLD)</option>
-                                <option value="NSW">New South Wales (NSW)</option>
-                                <option value="VIC">Victoria (VIC)</option>
-                                <option value="SA">South Australia (SA)</option>
-                                <option value="WA">Western Australia (WA)</option>
-                                <option value="TAS">Tasmania (TAS)</option>
-                                <option value="NT">Northern Territory (NT)</option>
-                                <option value="ACT">Australian Capital Territory (ACT)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mt-8 flex justify-end">
-                        <button onclick="nextStep(1)" class="calc-btn-primary">Next: Employee Costs →</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 2: Employee Costs ===== -->
-            <div id="step-2" class="calc-step hidden">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Employee Costs</h2>
-                    <p class="text-forge-black/50 text-sm mb-8">Enter the costs for the employee you are calculating the rate for.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <label class="calc-label">Base Annual Salary ($)</label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
-                                <input id="base-salary" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 75000" />
-                            </div>
-                            <p class="text-forge-black/35 text-xs mt-1.5">Gross salary before tax. Super, workers comp & leave are calculated automatically.</p>
-                        </div>
-                        <div>
-                            <label class="calc-label">Annual Vehicle & Tool Costs ($)</label>
-                            <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
-                                <input id="vehicle-tools" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 18000" />
-                            </div>
-                            <p class="text-forge-black/35 text-xs mt-1.5">Vehicle lease/depreciation, fuel, tool replacement, and equipment costs.</p>
-                        </div>
-                    </div>
-                    <!-- Cost preview -->
-                    <div id="labour-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
-                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-3">Estimated Labour Cost Breakdown</p>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <span class="text-forge-black/60">Base Salary</span><span id="prev-salary" class="text-forge-black font-semibold text-right">—</span>
-                            <span class="text-forge-black/60">Superannuation (12%)</span><span id="prev-super" class="text-forge-black font-semibold text-right">—</span>
-                            <span class="text-forge-black/60">Workers Comp</span><span id="prev-wc" class="text-forge-black font-semibold text-right">—</span>
-                            <span class="text-forge-black/60">Leave Provisions (~10%)</span><span id="prev-leave" class="text-forge-black font-semibold text-right">—</span>
-                            <span class="text-forge-black/60">Vehicle & Tools</span><span id="prev-vt" class="text-forge-black font-semibold text-right">—</span>
-                            <span class="font-bold text-forge-black border-t border-forge-black/10 pt-2">Direct Cost Total</span><span id="prev-total" class="font-bold text-growth-teal text-right border-t border-forge-black/10 pt-2">—</span>
-                        </div>
-                    </div>
-                    <div class="mt-8 flex justify-between">
-                        <button onclick="prevStep(2)" class="calc-btn-secondary">← Back</button>
-                        <button onclick="nextStep(2)" class="calc-btn-primary">Next: Overheads →</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 3: Business Overheads ===== -->
-            <div id="step-3" class="calc-step hidden">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Business Overheads</h2>
-                    <p class="text-forge-black/50 text-sm mb-2">Enter your total annual business overheads. These will be split across all employees.</p>
-                    <div class="bg-concrete rounded-lg p-4 mb-8">
-                        <p class="text-forge-black/60 text-xs leading-relaxed">
-                            <strong class="text-forge-black">What to include:</strong> Rent, utilities, insurance, accounting & legal fees, software subscriptions, marketing, admin wages, phone, internet, safety gear, uniforms, and any other fixed business costs not already captured above.
-                        </p>
-                    </div>
-                    <div>
-                        <label class="calc-label">Total Annual Business Overheads ($)</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-forge-black/40 font-semibold">$</span>
-                            <input id="overheads" type="number" min="0" class="calc-input pl-8" placeholder="e.g. 120000" />
-                        </div>
-                        <p class="text-forge-black/35 text-xs mt-1.5">This will be divided by the number of employees to get the per-employee overhead allocation.</p>
-                    </div>
-                    <div id="overhead-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
-                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-2">Per-Employee Overhead Allocation</p>
-                        <p id="overhead-per-emp" class="text-2xl font-heading font-bold text-growth-teal">—</p>
-                        <p class="text-forge-black/40 text-xs mt-1">per employee per year</p>
-                    </div>
-                    <div class="mt-8 flex justify-between">
-                        <button onclick="prevStep(3)" class="calc-btn-secondary">← Back</button>
-                        <button onclick="nextStep(3)" class="calc-btn-primary">Next: Productivity →</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 4: Productivity ===== -->
-            <div id="step-4" class="calc-step hidden">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Productivity</h2>
-                    <p class="text-forge-black/50 text-sm mb-8">How many hours can actually be billed? This is where most businesses underestimate their real rate.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                        <div>
-                            <label class="calc-label">Hours Worked Per Day</label>
-                            <input id="hours-per-day" type="number" min="1" max="12" step="0.5" class="calc-input" placeholder="e.g. 8" value="8" />
-                        </div>
-                        <div>
-                            <label class="calc-label">Training / Conference Days Per Year</label>
-                            <input id="training-days" type="number" min="0" max="30" class="calc-input" placeholder="e.g. 5" value="5" />
-                        </div>
-                    </div>
-                    <!-- Productivity Slider -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="calc-label mb-0">Billable Productivity</label>
-                            <span id="productivity-display" class="text-2xl font-heading font-bold text-growth-teal">75%</span>
-                        </div>
-                        <input
-                            id="productivity"
-                            type="range"
-                            min="40"
-                            max="95"
-                            value="75"
-                            step="1"
-                            class="w-full h-2 rounded-full appearance-none cursor-pointer"
-                            style="accent-color:#1A7A6E"
-                            oninput="document.getElementById('productivity-display').textContent = this.value + '%'"
-                        />
-                        <div class="flex justify-between text-xs text-forge-black/35 mt-1">
-                            <span>40% (very low)</span>
-                            <span>75% (typical)</span>
-                            <span>95% (excellent)</span>
-                        </div>
-                        <div class="mt-4 bg-concrete rounded-lg p-4">
-                            <p class="text-forge-black/60 text-xs leading-relaxed">
-                                <strong class="text-forge-black">What is billable productivity?</strong> The percentage of your working time that can actually be invoiced to a client. Time spent quoting, travelling between jobs, admin, and team meetings is typically non-billable. Most trade businesses run at 65–80%.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Hours preview -->
-                    <div id="hours-preview" class="hidden mt-6 bg-concrete rounded-xl p-5">
-                        <p class="text-xs font-semibold tracking-widest uppercase text-forge-black/40 mb-3">Estimated Annual Billable Hours</p>
-                        <p id="billable-hours-display" class="text-3xl font-heading font-bold text-growth-teal">—</p>
-                        <p class="text-forge-black/40 text-xs mt-1">billable hours per year</p>
-                    </div>
-                    <div class="mt-8 flex justify-between">
-                        <button onclick="prevStep(4)" class="calc-btn-secondary">← Back</button>
-                        <button onclick="nextStep(4)" class="calc-btn-primary">Next: Profit Goal →</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 5: Profit Goal ===== -->
-            <div id="step-5" class="calc-step hidden">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Profit Goal</h2>
-                    <p class="text-forge-black/50 text-sm mb-8">What net profit margin do you want the business to achieve?</p>
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="calc-label mb-0">Target Net Profit Margin</label>
-                            <span id="profit-display" class="text-2xl font-heading font-bold text-momentum-amber">15%</span>
-                        </div>
-                        <input
-                            id="profit-margin"
-                            type="range"
-                            min="5"
-                            max="40"
-                            value="15"
-                            step="1"
-                            class="w-full h-2 rounded-full appearance-none cursor-pointer"
-                            style="accent-color:#D4820A"
-                            oninput="document.getElementById('profit-display').textContent = this.value + '%'"
-                        />
-                        <div class="flex justify-between text-xs text-forge-black/35 mt-1">
-                            <span>5% (thin)</span>
-                            <span>15–20% (healthy)</span>
-                            <span>40% (excellent)</span>
-                        </div>
-                    </div>
-                    <div class="mt-6 grid grid-cols-3 gap-4">
-                        {[
-                            { label: 'Survival', pct: '5–10%', desc: 'Covering costs. No buffer for growth or reinvestment.' },
-                            { label: 'Healthy', pct: '15–20%', desc: 'Industry benchmark. Room for growth and owner drawings.' },
-                            { label: 'Strong', pct: '25%+', desc: 'Well-run business. Attractive to buyers and investors.' },
-                        ].map(t => (
-                            <div class="bg-concrete rounded-lg p-4 text-center">
-                                <p class="font-heading font-bold text-forge-black text-sm mb-1">{t.label}</p>
-                                <p class="text-momentum-amber font-semibold text-lg mb-2">{t.pct}</p>
-                                <p class="text-forge-black/45 text-xs leading-relaxed">{t.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div class="mt-8 flex justify-between">
-                        <button onclick="prevStep(5)" class="calc-btn-secondary">← Back</button>
-                        <button onclick="nextStep(5)" class="calc-btn-primary">Get My Rate →</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== STEP 6: Lead Capture ===== -->
-            <div id="step-6" class="calc-step hidden">
-                <div class="bg-white rounded-2xl p-8 shadow-sm">
-                    <div class="text-center mb-8">
-                        <div class="w-16 h-16 bg-growth-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-growth-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="font-heading text-2xl font-bold text-forge-black mb-2">Your Rate is Ready</h2>
-                        <p class="text-forge-black/50 text-sm max-w-sm mx-auto">Enter your details below to reveal your personalised charge out rate and action plan.</p>
-                    </div>
-                    <form id="lead-form" novalidate class="flex flex-col gap-5">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div>
-                                <label class="calc-label" for="lf-first">First Name</label>
-                                <input id="lf-first" type="text" name="firstname" autocomplete="given-name" class="calc-input" placeholder="Jane" />
-                            </div>
-                            <div>
-                                <label class="calc-label" for="lf-last">Last Name</label>
-                                <input id="lf-last" type="text" name="lastname" autocomplete="family-name" class="calc-input" placeholder="Smith" />
-                            </div>
-                        </div>
-                        <div>
-                            <label class="calc-label" for="lf-email">Email Address</label>
-                            <input id="lf-email" type="email" name="email" autocomplete="email" class="calc-input" placeholder="jane@smithelectrical.com.au" />
-                            <p class="lf-err text-red-500 text-xs mt-1 hidden">Please enter a valid email address.</p>
-                        </div>
-                        <div>
-                            <label class="calc-label" for="lf-phone">Phone Number</label>
-                            <input id="lf-phone" type="tel" name="phone" autocomplete="tel" class="calc-input" placeholder="0400 000 000" />
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div>
-                                <label class="calc-label" for="lf-trade">Trade Type</label>
-                                <select id="lf-trade" name="trade_type" class="calc-input">
-                                    <option value="">Select your trade…</option>
-                                    <option value="Plumber">Plumber</option>
-                                    <option value="Electrician">Electrician</option>
-                                    <option value="Builder / Carpenter">Builder / Carpenter</option>
-                                    <option value="HVAC / Air Conditioning">HVAC / Air Conditioning</option>
-                                    <option value="Painter">Painter</option>
-                                    <option value="Concreter">Concreter</option>
-                                    <option value="Tiler">Tiler</option>
-                                    <option value="Landscaper / Gardener">Landscaper / Gardener</option>
-                                    <option value="Roofer">Roofer</option>
-                                    <option value="Solar / Renewables">Solar / Renewables</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Please select your trade type.</p>
-                            </div>
-                            <div>
-                                <label class="calc-label" for="lf-state">State / Territory</label>
-                                <select id="lf-state" name="state" class="calc-input">
-                                    <option value="">Select your state…</option>
-                                    <option value="QLD">Queensland (QLD)</option>
-                                    <option value="NSW">New South Wales (NSW)</option>
-                                    <option value="VIC">Victoria (VIC)</option>
-                                    <option value="SA">South Australia (SA)</option>
-                                    <option value="WA">Western Australia (WA)</option>
-                                    <option value="TAS">Tasmania (TAS)</option>
-                                    <option value="NT">Northern Territory (NT)</option>
-                                    <option value="ACT">Australian Capital Territory (ACT)</option>
-                                </select>
-                                <p class="lf-err text-red-500 text-xs mt-1 hidden">Please select your state.</p>
-                            </div>
-                        </div>
-                        <p id="lf-submit-err" class="text-red-500 text-sm text-center hidden">Something went wrong — please try again.</p>
-                        <button type="submit" id="btn-lead-submit" class="calc-btn-primary flex items-center justify-center gap-2">
-                            <span id="lead-submit-label">Show My Rate →</span>
-                            <svg id="lead-submit-spinner" class="hidden animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                            </svg>
-                        </button>
-                    </form>
-                    <p class="text-forge-black/35 text-xs text-center mt-4">
-                        No spam — ever. See our <a href="/privacy-policy" class="text-growth-teal hover:underline">Privacy Policy</a>.
-                    </p>
-                </div>
-            </div>
-
-            <!-- ===== RESULTS ===== -->
-            <div id="step-results" class="calc-step hidden">
-
-                <!-- Main rate card -->
-                <div class="bg-tradewise-navy rounded-2xl p-8 text-white text-center mb-6 shadow-lg">
-                    <p class="text-white/50 text-xs font-semibold tracking-widest uppercase mb-2">Your Charge Out Rate</p>
-                    <div class="flex items-baseline justify-center gap-1 mb-2">
-                        <span class="text-white/60 font-heading text-2xl">$</span>
-                        <span id="result-rate" class="font-heading text-6xl md:text-7xl font-bold text-white">—</span>
-                        <span class="text-white/60 font-heading text-2xl">/hr</span>
-                    </div>
-                    <p id="result-name" class="text-momentum-amber text-sm font-semibold mb-1"></p>
-                    <p id="result-trade" class="text-white/50 text-xs"></p>
-                </div>
-
-                <!-- Breakdown -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
-                    <h3 class="font-heading font-bold text-forge-black text-lg mb-6">How Your Rate is Built</h3>
-                    <div id="breakdown-bars" class="flex flex-col gap-4 mb-6"></div>
-                    <div class="border-t border-forge-black/10 pt-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                        <div>
-                            <p class="text-forge-black/40 text-xs mb-1">Annual Labour Cost</p>
-                            <p id="res-labour" class="font-heading font-bold text-forge-black text-base">—</p>
-                        </div>
-                        <div>
-                            <p class="text-forge-black/40 text-xs mb-1">Overhead Allocation</p>
-                            <p id="res-overhead" class="font-heading font-bold text-forge-black text-base">—</p>
-                        </div>
-                        <div>
-                            <p class="text-forge-black/40 text-xs mb-1">Billable Hours/Year</p>
-                            <p id="res-hours" class="font-heading font-bold text-forge-black text-base">—</p>
-                        </div>
-                        <div>
-                            <p class="text-forge-black/40 text-xs mb-1">Profit Margin</p>
-                            <p id="res-margin" class="font-heading font-bold text-momentum-amber text-base">—</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Live productivity slider -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
-                    <h3 class="font-heading font-bold text-forge-black text-lg mb-2">See How Productivity Changes Your Rate</h3>
-                    <p class="text-forge-black/50 text-sm mb-6">Move the slider to see the real-time impact of improving your team's billable productivity.</p>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-forge-black/60">Productivity</span>
-                        <span id="live-prod-display" class="font-heading font-bold text-growth-teal text-xl">75%</span>
-                    </div>
-                    <input
-                        id="live-productivity"
-                        type="range"
-                        min="40"
-                        max="95"
-                        value="75"
-                        step="1"
-                        class="w-full h-2 rounded-full appearance-none cursor-pointer mb-4"
-                        style="accent-color:#1A7A6E"
-                    />
-                    <div class="flex items-center justify-between bg-concrete rounded-xl p-5">
-                        <div>
-                            <p class="text-forge-black/50 text-xs mb-1">At this productivity your rate would be</p>
-                            <div class="flex items-baseline gap-1">
-                                <span class="font-heading text-3xl font-bold text-growth-teal">$<span id="live-rate">—</span></span>
-                                <span class="text-forge-black/40 text-sm">/hr</span>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-forge-black/50 text-xs mb-1">Billable hours/year</p>
-                            <p id="live-hours" class="font-heading font-bold text-forge-black text-xl">—</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Plan -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm mb-6">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-momentum-amber/10 rounded-full flex items-center justify-center shrink-0">
-                            <svg class="w-5 h-5 text-momentum-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                            </svg>
-                        </div>
-                        <h3 class="font-heading font-bold text-forge-black text-lg">Your Action Plan</h3>
-                    </div>
-                    <div id="action-plan" class="flex flex-col gap-4"></div>
-                </div>
-
-                <!-- CTAs -->
-                <div class="bg-growth-teal rounded-2xl p-8 text-white text-center mb-6">
-                    <h3 class="font-heading text-2xl font-bold mb-3">Want Help Hitting This Rate?</h3>
-                    <p class="text-white/75 text-sm leading-relaxed mb-6 max-w-lg mx-auto">
-                        Knowing your rate is step one. Making sure your business is set up to actually bill it — and collect it —
-                        is where Tradewise comes in. Book a free Rate Review Session with our team.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a
-                            href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" rel="noopener noreferrer"
-                            class="inline-block bg-white text-growth-teal font-semibold px-8 py-4 rounded-lg hover:bg-concrete transition-all duration-200"
-                        >
-                            Book a Free Rate Review Session
-                        </a>
-                        <a
-                            href="/business-engine"
-                            class="inline-block border border-white/40 text-white font-semibold px-8 py-4 rounded-lg hover:border-white hover:bg-white/10 transition-all duration-200"
-                        >
-                            Explore Business Engine →
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Recalculate -->
-                <div class="text-center">
-                    <button onclick="restartCalc()" class="text-sm text-forge-black/40 hover:text-growth-teal transition-colors duration-200 underline">
-                        Start over with different numbers
-                    </button>
-                </div>
-
-            </div>
-
+        <div class="cr-field">
+          <label class="cr-label" for="lf-business">Business name <span class="cr-req">*</span></label>
+          <input class="cr-input" id="lf-business" type="text" autocomplete="organization" placeholder="Smith Plumbing Pty Ltd" />
+          <span class="cr-err hidden">Required</span>
         </div>
-    </section>
-
-    <!-- Why This Matters -->
-    <section class="bg-tradewise-navy text-white py-16">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                {[
-                    { stat: '68%', label: 'of trade businesses are undercharging', sub: 'Based on industry benchmarking data' },
-                    { stat: '$22/hr', label: 'average gap between charged and required rate', sub: 'That\'s $44,000/year per employee left on the table' },
-                    { stat: '5 min', label: 'to find out your real number', sub: 'Then book a free session to act on it' },
-                ].map(s => (
-                    <div>
-                        <p class="font-heading text-4xl font-bold text-momentum-amber mb-2">{s.stat}</p>
-                        <p class="text-white font-semibold text-sm mb-1">{s.label}</p>
-                        <p class="text-white/40 text-xs">{s.sub}</p>
-                    </div>
-                ))}
-            </div>
+        <div class="cr-field">
+          <label class="cr-label" for="lf-email">Email address <span class="cr-req">*</span></label>
+          <input class="cr-input" id="lf-email" type="email" autocomplete="email" placeholder="kate@example.com.au" />
+          <span class="cr-err hidden">Enter a valid email address</span>
         </div>
-    </section>
+        <div class="cr-field">
+          <label class="cr-label" for="lf-phone">Phone number <span class="cr-req">*</span></label>
+          <input class="cr-input" id="lf-phone" type="tel" autocomplete="tel" placeholder="0400 000 000" />
+          <span class="cr-err hidden">Required</span>
+        </div>
+        <div class="cr-grid-2">
+          <div class="cr-field">
+            <label class="cr-label" for="lf-state">State <span class="cr-req">*</span></label>
+            <select class="cr-input cr-select" id="lf-state">
+              <option value="">Select state…</option>
+              <option>QLD</option><option>NSW</option><option>VIC</option><option>SA</option>
+              <option>WA</option><option>TAS</option><option>ACT</option><option>NT</option>
+            </select>
+            <span class="cr-err hidden">Required</span>
+          </div>
+          <div class="cr-field">
+            <label class="cr-label" for="lf-trade">Trade type</label>
+            <select class="cr-input cr-select" id="lf-trade">
+              <option value="">Select trade…</option>
+              <option>Plumbing</option><option>Electrical</option><option>HVAC</option>
+              <option>Carpentry</option><option>Concreting</option><option>Landscaping</option>
+              <option>Painting</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="cr-btn-primary cr-btn-full" id="lead-submit-btn">
+          <span id="lead-submit-label">Start calculating →</span>
+          <svg id="lead-spinner" class="cr-spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
+        </button>
+      </form>
+      <p class="cr-privacy">🔒 We don't spam. Your details are used only to send your free report.</p>
+    </div>
+  </div>
 
-</MainLayout>
+  <!-- ══════════════════════ PROGRESS BAR ══════════════════════ -->
+  <div id="cr-progress" class="hidden">
+    <div class="cr-prog-wrap">
+      <div class="cr-prog-track">
+        <div id="cr-prog-fill" class="cr-prog-fill" style="width:16.7%"></div>
+      </div>
+      <div class="cr-step-dots">
+        <span class="cr-dot cr-dot-active"></span>
+        <span class="cr-dot"></span>
+        <span class="cr-dot"></span>
+        <span class="cr-dot"></span>
+        <span class="cr-dot"></span>
+        <span class="cr-dot"></span>
+      </div>
+    </div>
+    <p id="cr-step-label" class="cr-step-label">Step 1 of 6 — Worker type</p>
+  </div>
 
-<style>
-    .calc-label {
-        display: block;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        color: rgba(20,28,36,0.7);
-        margin-bottom: 0.5rem;
-        letter-spacing: 0.01em;
-    }
-    .calc-input {
-        width: 100%;
-        border: 1.5px solid rgba(20,28,36,0.12);
-        border-radius: 0.625rem;
-        padding: 0.75rem 1rem;
-        font-size: 0.9375rem;
-        color: #141C24;
-        background: #fff;
-        transition: border-color 0.15s;
-        outline: none;
-    }
-    .calc-input:focus {
-        border-color: #1A7A6E;
-        box-shadow: 0 0 0 3px rgba(26,122,110,0.1);
-    }
-    .calc-input.error {
-        border-color: #ef4444;
-    }
-    .calc-btn-primary {
-        background: #1A7A6E;
-        color: white;
-        font-weight: 600;
-        font-size: 0.9375rem;
-        padding: 0.875rem 2rem;
-        border-radius: 0.625rem;
-        border: none;
-        cursor: pointer;
-        transition: filter 0.2s;
-    }
-    .calc-btn-primary:hover { filter: brightness(1.1); }
-    .calc-btn-secondary {
-        background: transparent;
-        color: rgba(20,28,36,0.5);
-        font-weight: 600;
-        font-size: 0.9375rem;
-        padding: 0.875rem 1.5rem;
-        border-radius: 0.625rem;
-        border: 1.5px solid rgba(20,28,36,0.12);
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .calc-btn-secondary:hover {
-        border-color: rgba(20,28,36,0.3);
-        color: #141C24;
-    }
-    .hidden { display: none !important; }
-</style>
+  <!-- ══════════════════════ SCREEN 1 — WORKER TYPE ══════════════════════ -->
+  <div id="screen-1" class="cr-screen hidden">
+    <div class="cr-card">
+      <h2 class="cr-card-h">Worker type</h2>
+      <p class="cr-card-sub">Are you calculating costs for an employee or a subcontractor?</p>
+
+      <div class="cr-toggle-group" id="worker-type-toggle">
+        <button type="button" class="cr-tog cr-tog-on" data-value="employee">Employee</button>
+        <button type="button" class="cr-tog" data-value="subcontractor">Subcontractor</button>
+      </div>
+
+      <div class="cr-field cr-mt-lg">
+        <label class="cr-label" for="s1-state">State <span class="cr-hint-inline">(pre-filled from your details — update if needed)</span></label>
+        <select class="cr-input cr-select" id="s1-state">
+          <option value="">Select state…</option>
+          <option>QLD</option><option>NSW</option><option>VIC</option><option>SA</option>
+          <option>WA</option><option>TAS</option><option>ACT</option><option>NT</option>
+        </select>
+      </div>
+
+      <div id="sub-flags" class="hidden cr-mt-lg">
+        <div class="cr-infobox cr-ib-amber cr-mb">
+          <p class="cr-ib-title">Subcontractor compliance flags</p>
+          <p class="cr-ib-body">Answer honestly — getting these wrong can trigger ATO audits and back-payment obligations.</p>
+        </div>
+
+        <div class="cr-flag-block cr-mb">
+          <p class="cr-label">Works more than 90 days per financial year with your business?</p>
+          <div class="cr-toggle-group" id="flag-90days">
+            <button type="button" class="cr-tog" data-value="yes">Yes</button>
+            <button type="button" class="cr-tog cr-tog-on" data-value="no">No</button>
+          </div>
+          <div id="alert-90days" class="cr-infobox cr-ib-red cr-mt hidden">
+            <p class="cr-ib-title">⚠ Payroll tax deeming may apply</p>
+            <p class="cr-ib-body" id="alert-90days-text"></p>
+          </div>
+        </div>
+
+        <div class="cr-flag-block">
+          <p class="cr-label">Earns 80%+ of their income from your business for 52 consecutive weeks?</p>
+          <div class="cr-toggle-group" id="flag-80pct">
+            <button type="button" class="cr-tog" data-value="yes">Yes</button>
+            <button type="button" class="cr-tog cr-tog-on" data-value="no">No</button>
+          </div>
+          <div id="alert-80pct" class="cr-infobox cr-ib-red cr-mt hidden">
+            <p class="cr-ib-title">⚠ Superannuation guarantee may apply</p>
+            <p class="cr-ib-body">If this contractor earns 80%+ of their income from you for 52+ consecutive weeks, you may be required to pay superannuation at 11.5% on their payments — regardless of their ABN or business structure.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cr-nav">
+        <div></div>
+        <button type="button" class="cr-btn-primary" onclick="goToScreen(2)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SCREEN 2 — BASE PAY ══════════════════════ -->
+  <div id="screen-2" class="cr-screen hidden">
+    <div class="cr-card">
+      <h2 class="cr-card-h">Base pay</h2>
+
+      <div id="s2-emp">
+        <div class="cr-field">
+          <label class="cr-label" for="s2-salary">Annual base salary ($)</label>
+          <input class="cr-input" id="s2-salary" type="number" min="0" value="80000" />
+        </div>
+        <div class="cr-field cr-mt">
+          <label class="cr-label" for="s2-hrs-wk">Billable hours per week</label>
+          <input class="cr-input" id="s2-hrs-wk" type="number" min="1" max="80" value="38" />
+        </div>
+        <div class="cr-infobox cr-ib-blue cr-mt">
+          <p class="cr-ib-title">ℹ Why 48 weeks?</p>
+          <p class="cr-ib-body">This tool uses 48 working weeks (52 minus 4 weeks annual leave). Dividing salary by 52 weeks significantly underestimates real cost — it ignores leave loading and the overhead of unproductive weeks.</p>
+        </div>
+      </div>
+
+      <div id="s2-sub" class="hidden">
+        <div class="cr-field">
+          <label class="cr-label" for="s2-sub-rate">Agreed hourly rate ex GST ($)</label>
+          <input class="cr-input" id="s2-sub-rate" type="number" min="0" value="80" />
+        </div>
+        <div class="cr-field cr-mt">
+          <label class="cr-label" for="s2-sub-hrs">Estimated hours per year</label>
+          <input class="cr-input" id="s2-sub-hrs" type="number" min="0" value="1500" />
+        </div>
+        <div class="cr-infobox cr-ib-blue cr-mt">
+          <p class="cr-ib-title">ℹ Full-time equivalent</p>
+          <p class="cr-ib-body">~1,750 hours = full time equivalent. Adjust down if this contractor works part-year or part-week.</p>
+        </div>
+      </div>
+
+      <div class="cr-nav">
+        <button type="button" class="cr-btn-sec" onclick="goToScreen(1)">← Back</button>
+        <button type="button" class="cr-btn-primary" onclick="goToScreen(3)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SCREEN 3 — ON-COSTS ══════════════════════ -->
+  <div id="screen-3" class="cr-screen hidden">
+    <div class="cr-card">
+      <h2 class="cr-card-h">Statutory on-costs</h2>
+
+      <!-- Employee view -->
+      <div id="s3-emp">
+        <div class="cr-toggle-row cr-mb">
+          <span class="cr-label" style="margin:0">Include payroll tax</span>
+          <label class="cr-switch">
+            <input type="checkbox" id="s3-pt-toggle" checked />
+            <span class="cr-slider"></span>
+          </label>
+        </div>
+        <div class="cr-table-wrap">
+          <table class="cr-table">
+            <thead><tr><th>Cost item</th><th>Annual $</th><th>% of salary</th></tr></thead>
+            <tbody>
+              <tr><td>Base salary</td><td id="s3-t-base">—</td><td>100%</td></tr>
+              <tr><td>Superannuation (11.5%)</td><td id="s3-t-super">—</td><td>11.5%</td></tr>
+              <tr id="s3-pt-row"><td id="s3-pt-label">Payroll tax</td><td id="s3-t-pt">—</td><td id="s3-t-pt-pct">—</td></tr>
+              <tr><td>Annual leave provision (4 wks)</td><td id="s3-t-al">—</td><td>7.7%</td></tr>
+              <tr><td>Long service leave (2.7%)</td><td id="s3-t-lsl">—</td><td>2.7%</td></tr>
+              <tr><td>Productivity allowance (2%)</td><td id="s3-t-prod">—</td><td>2.0%</td></tr>
+              <tr class="cr-tbl-total">
+                <td><strong>Total true cost</strong></td>
+                <td id="s3-t-total">—</td>
+                <td id="s3-t-total-pct">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cr-infobox cr-ib-amber cr-mt">
+          <p class="cr-ib-body" id="s3-callout-text">—</p>
+        </div>
+      </div>
+
+      <!-- Subcontractor view -->
+      <div id="s3-sub" class="hidden">
+        <div class="cr-infobox cr-ib-blue cr-mb">
+          <p class="cr-ib-title">Subcontractor obligations</p>
+          <p class="cr-ib-body">Contract payments always apply. Super and payroll tax obligations depend on the compliance flags from Step 1.</p>
+        </div>
+        <div class="cr-table-wrap">
+          <table class="cr-table">
+            <thead><tr><th>Obligation</th><th>Applies?</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Contract payments</td><td>✅ Always</td><td>Agreed rate × hours</td></tr>
+              <tr><td>Superannuation (11.5%)</td><td id="s3-sub-super">—</td><td>Triggered if 80%+ income rule applies</td></tr>
+              <tr><td>Payroll tax</td><td id="s3-sub-pt">—</td><td id="s3-sub-pt-note">Triggered if 90-day rule applies</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cr-mt">
+          <p class="cr-label cr-mb-sm">State payroll tax rates (FY2025)</p>
+          <div class="cr-table-wrap">
+            <table class="cr-table cr-table-sm">
+              <thead><tr><th>State</th><th>Rate</th><th>Annual threshold</th></tr></thead>
+              <tbody>
+                <tr><td>QLD</td><td>4.75%</td><td>$1,300,000</td></tr>
+                <tr><td>NSW</td><td>5.30%</td><td>$1,200,000</td></tr>
+                <tr><td>VIC</td><td>4.85%</td><td>$700,000</td></tr>
+                <tr><td>SA</td><td>5.00%</td><td>$1,500,000</td></tr>
+                <tr><td>WA</td><td>5.50%</td><td>$1,000,000</td></tr>
+                <tr><td>TAS</td><td>6.50%</td><td>$1,250,000</td></tr>
+                <tr><td>ACT</td><td>6.85%</td><td>$2,000,000</td></tr>
+                <tr><td>NT</td><td>5.50%</td><td>$1,500,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="cr-nav">
+        <button type="button" class="cr-btn-sec" onclick="goToScreen(2)">← Back</button>
+        <button type="button" class="cr-btn-primary" onclick="goToScreen(4)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SCREEN 4 — ALLOWANCES ══════════════════════ -->
+  <div id="screen-4" class="cr-screen hidden">
+    <div class="cr-card">
+      <h2 class="cr-card-h">Allowances &amp; benefits</h2>
+      <p class="cr-card-sub">Toggle on any that apply. Defaults are industry averages — adjust to your actual costs.</p>
+      <div id="allowance-list"></div>
+      <div class="cr-infobox cr-ib-blue cr-mt">
+        <p class="cr-ib-title">🚗 FBT exemption update</p>
+        <p class="cr-ib-body">Electric and eligible PHEV vehicles have been FBT-exempt since 1 April 2022. Talk to your accountant about whether your fleet qualifies — this can significantly reduce your effective fleet cost.</p>
+      </div>
+      <div class="cr-nav">
+        <button type="button" class="cr-btn-sec" onclick="goToScreen(3)">← Back</button>
+        <button type="button" class="cr-btn-primary" onclick="goToScreen(5)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SCREEN 5 — OVERHEAD ══════════════════════ -->
+  <div id="screen-5" class="cr-screen hidden">
+    <div class="cr-card">
+      <h2 class="cr-card-h">Business overhead</h2>
+
+      <div class="cr-formula-box cr-mb">
+        <div class="cr-formula-row">
+          <span>Total below-the-line costs</span>
+          <span id="f-costs">$0</span>
+        </div>
+        <div class="cr-formula-row cr-formula-div">
+          <span>÷ (N staff × H hrs/wk × 48 wks)</span>
+          <span id="f-hours">0 hrs</span>
+        </div>
+        <div class="cr-formula-row cr-formula-result">
+          <span>= Overhead rate per hour</span>
+          <strong id="f-rate">$0.00 / hr</strong>
+        </div>
+      </div>
+
+      <p class="cr-section-label">Below-the-line costs (annual $)</p>
+      <div id="overhead-inputs"></div>
+
+      <p class="cr-section-label cr-mt-lg">Billable workforce</p>
+      <div class="cr-grid-2">
+        <div class="cr-field">
+          <label class="cr-label" for="s5-staff">Number of billable staff</label>
+          <input class="cr-input" id="s5-staff" type="number" min="1" value="2" />
+        </div>
+        <div class="cr-field">
+          <label class="cr-label" for="s5-hrs">Billable hours per week each</label>
+          <input class="cr-input" id="s5-hrs" type="number" min="1" max="80" value="38" />
+        </div>
+      </div>
+
+      <p class="cr-section-label cr-mt-lg">Target margin</p>
+      <div class="cr-field">
+        <label class="cr-label" for="s5-margin">Target gross margin %</label>
+        <input class="cr-input" id="s5-margin" type="number" min="1" max="90" value="30" />
+        <p class="cr-hint">30% is typical for trades — covers SGA + net profit</p>
+      </div>
+
+      <div class="cr-infobox cr-ib-amber cr-mt">
+        <p class="cr-ib-body">💡 Don't forget depreciation on tools, vehicles and equipment — and a salary for yourself if you do any admin work.</p>
+      </div>
+
+      <div class="cr-nav">
+        <button type="button" class="cr-btn-sec" onclick="goToScreen(4)">← Back</button>
+        <button type="button" class="cr-btn-primary" onclick="calcAndShow()">Calculate my rate →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SCREEN 6 — RESULTS ══════════════════════ -->
+  <div id="screen-results" class="cr-screen hidden">
+    <div class="cr-card">
+      <div class="cr-res-header">
+        <h2 class="cr-card-h" style="margin-bottom:4px">Your results</h2>
+        <p class="cr-card-sub" id="res-subtitle"></p>
+      </div>
+
+      <!-- 4 metric cards -->
+      <div class="cr-metrics cr-mb">
+        <div class="cr-metric">
+          <p class="cr-metric-lbl">Annual salary / contract cost</p>
+          <p class="cr-metric-val" id="m-salary">—</p>
+        </div>
+        <div class="cr-metric cr-metric-alert">
+          <p class="cr-metric-lbl">True annual cost</p>
+          <p class="cr-metric-val" id="m-true-cost">—</p>
+          <p class="cr-metric-sub" id="m-true-pct">—</p>
+        </div>
+        <div class="cr-metric">
+          <p class="cr-metric-lbl">True labour cost per hour</p>
+          <p class="cr-metric-val" id="m-labour-hr">—</p>
+        </div>
+        <div class="cr-metric">
+          <p class="cr-metric-lbl">Overhead recovered per hour</p>
+          <p class="cr-metric-val" id="m-overhead-hr">—</p>
+        </div>
+      </div>
+
+      <!-- Cost breakdown bar chart -->
+      <div class="cr-chart-box cr-mb">
+        <p class="cr-section-label">Annual cost breakdown</p>
+        <canvas id="cost-chart"></canvas>
+      </div>
+
+      <!-- Rate build-up table -->
+      <div class="cr-mb">
+        <p class="cr-section-label">Charge-out rate build-up</p>
+        <div class="cr-table-wrap">
+          <table class="cr-table">
+            <tbody>
+              <tr><td>Labour cost per hour</td><td id="rt-labour">—</td></tr>
+              <tr><td>+ Overhead per hour</td><td id="rt-overhead">—</td></tr>
+              <tr><td>= Total cost per hour</td><td id="rt-cost">—</td></tr>
+              <tr><td id="rt-margin-lbl">÷ (1 − 30%)</td><td id="rt-margin-val">—</td></tr>
+              <tr class="cr-tbl-total"><td><strong>= Minimum charge-out rate</strong></td><td id="rt-rate"><strong>—</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cr-gst-box cr-mt">
+          <span>Including GST (×1.1)</span>
+          <span class="cr-gst-val" id="rt-gst">—</span>
+        </div>
+      </div>
+
+      <!-- Loss callout -->
+      <div class="cr-infobox cr-ib-amber cr-mb">
+        <p class="cr-ib-body" id="res-loss">—</p>
+      </div>
+
+      <!-- CTA 1: COGS report -->
+      <div class="cr-cta-card cr-mb">
+        <div class="cr-cta-icon">📊</div>
+        <div>
+          <h3 class="cr-cta-h">Get your free personalised COGS report</h3>
+          <p class="cr-cta-body" id="cta-cogs-body">We'll build out a full cost model for your business based on these numbers and send it to you.</p>
+          <button type="button" class="cr-btn-primary cr-mt-sm" id="cogs-btn" onclick="sendCogsReport()">
+            <span id="cogs-btn-lbl">Send my free COGS report</span>
+            <svg id="cogs-spinner" class="cr-spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
+          </button>
+          <div id="cogs-thanks" class="cr-infobox cr-ib-green cr-mt hidden">
+            <p class="cr-ib-body">✅ Done! We'll send your COGS report to <strong id="cogs-email-confirm"></strong> shortly.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA 2: Strategy call -->
+      <div class="cr-cta-card cr-cta-card-sec cr-mb">
+        <div class="cr-cta-icon">📞</div>
+        <div>
+          <h3 class="cr-cta-h">Want us to walk you through this?</h3>
+          <p class="cr-cta-body">Book a free 30-minute strategy call with a TradeWise advisor. We'll show you exactly where your charge-out rates need to be.</p>
+          <a id="booking-link" href="#" target="_blank" rel="noopener noreferrer" class="cr-btn-sec cr-btn-inline cr-mt-sm">Book a strategy call →</a>
+        </div>
+      </div>
+
+      <div class="cr-text-center cr-mb">
+        <button type="button" class="cr-link-btn" onclick="restartCalc()">← Start over with different numbers</button>
+      </div>
+
+      <p class="cr-calc-footer">© TradeWise Group · tradewisegroup.au · This tool is for indicative purposes only. Speak to your advisor before making pricing decisions.</p>
+    </div>
+  </div>
+
+</div><!-- /calc-root -->
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script is:inline>
+// ─── BRANDING CONSTANTS (update these to rebrand) ─────────────────────────────
+var BUSINESS_NAME    = 'Tradewise Group';
+var WEBSITE_URL      = 'https://tradewisegroup.au';
+var LOGO_URL         = ''; // developer: set to image path e.g. '/images/logo.png'
+var BRAND_PRIMARY    = '#1E3A5F';
+var BRAND_ACCENT     = '#D4820A';
+var CONTACT_PAGE_URL = 'https://tradewisegroup.au/contact';
+var BOOKING_URL      = 'https://calendly.com/tradewisegroup';
+var LEAD_WEBHOOK_URL = ''; // developer: wire up POST endpoint
+var LEAD_EMAIL       = ''; // developer: wire up fallback email
 
-// ─── State ───────────────────────────────────────────────────────────────────
-var WORKERS_COMP = { QLD:0.045, NSW:0.055, VIC:0.040, SA:0.045, WA:0.045, TAS:0.040, NT:0.045, ACT:0.040 };
-var SUPER_RATE   = 0.12;
-var LEAVE_RATE   = 0.10;   // Annual Leave + Sick Leave provisions
-var TOTAL_WEEKS  = 52;
-var WORK_DAYS_PW = 5;
-var ANNUAL_LEAVE_DAYS = 20;
-var SICK_DAYS    = 10;
-var PUBLIC_HOLS  = 10;
-var calcData     = {};
-var currentStep  = 1;
-var TOTAL_STEPS  = 6;
+// ─── CALCULATOR CONSTANTS ─────────────────────────────────────────────────────
+var SUPER_RATE        = 0.115;
+var AL_WEEKS          = 4;
+var WORK_WEEKS        = 48;
+var LSL_RATE          = 0.027;
+var PRODUCTIVITY_RATE = 0.02;
 
-// ─── Navigation ──────────────────────────────────────────────────────────────
-function showStep(n) {
-    document.querySelectorAll('.calc-step').forEach(function(el){ el.classList.add('hidden'); });
-    var target = n === 'results' ? document.getElementById('step-results') : document.getElementById('step-' + n);
-    if (target) target.classList.remove('hidden');
+var PAYROLL_TAX = {
+  QLD: { rate: 0.0475, threshold: 1300000 },
+  NSW: { rate: 0.0530, threshold: 1200000 },
+  VIC: { rate: 0.0485, threshold:  700000 },
+  SA:  { rate: 0.0500, threshold: 1500000 },
+  WA:  { rate: 0.0550, threshold: 1000000 },
+  TAS: { rate: 0.0650, threshold: 1250000 },
+  ACT: { rate: 0.0685, threshold: 2000000 },
+  NT:  { rate: 0.0550, threshold: 1500000 },
+};
 
-    var pct = n === 'results' ? 100 : Math.round((n / TOTAL_STEPS) * 100);
-    var label = n === 'results' ? 'Results' : 'Step ' + n + ' of ' + TOTAL_STEPS;
-    document.getElementById('progress-bar').style.width = pct + '%';
-    document.getElementById('step-label').textContent  = label;
-    document.getElementById('step-pct').textContent    = pct + '%';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+var ALLOWANCE_DEFS = [
+  { key: 'vehicle',  label: 'Vehicle / ute / fleet',        def: 20000, hint: 'Fuel, rego, insurance, maintenance, depreciation' },
+  { key: 'phone',    label: 'Phone / mobile plan',           def: 1200,  hint: '~$100/month plan + handset amortised' },
+  { key: 'uniform',  label: 'Uniforms / PPE',                def: 600,   hint: '2–3 sets workwear + PPE replacement' },
+  { key: 'travel',   label: 'Travel allowance',              def: 2000,  hint: 'Overnight stays, remote site travel' },
+  { key: 'other_mv', label: 'Other / motor vehicle benefit', def: 0,     hint: 'Novated lease FBT value, on-call allowance, tool of trade' },
+];
+
+var OVERHEAD_DEFS = [
+  { key: 'rent',      label: 'Office rent',               def: 0     },
+  { key: 'util',      label: 'Outgoings / utilities',     def: 1211  },
+  { key: 'vehicles',  label: 'Business vehicles / fleet', def: 27669 },
+  { key: 'phones',    label: 'Phones & internet',         def: 4244  },
+  { key: 'insurance', label: 'Insurance',                 def: 0     },
+  { key: 'software',  label: 'Software & subscriptions',  def: 0     },
+  { key: 'marketing', label: 'Marketing & advertising',   def: 0     },
+  { key: 'other',     label: 'Other overheads',           def: 17957 },
+  { key: 'adminwage', label: 'Admin / office wages',      def: 60000 },
+];
+
+var STEP_NAMES = ['','Worker type','Base pay','On-costs','Allowances','Overhead','Results'];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+var leadData    = {};
+var calcData    = { workerType: 'employee', flag90: false, flag80: false, inclPt: true };
+var resultsData = {};
+var currentScreen = 0;
+var costChart   = null;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  // Logo
+  var logoArea = document.getElementById('lead-logo-area');
+  if (LOGO_URL) {
+    logoArea.innerHTML = '<img src="' + LOGO_URL + '" alt="' + BUSINESS_NAME + '" style="max-height:48px;margin-bottom:12px;" />';
+  }
+
+  // Booking link href
+  document.getElementById('booking-link').href = BOOKING_URL;
+
+  // Build dynamic sections
+  buildAllowanceList();
+  buildOverheadInputs();
+
+  // Worker type toggle
+  initToggleGroup('worker-type-toggle', function(val) {
+    calcData.workerType = val;
+    showEl('sub-flags', val === 'subcontractor');
+  });
+
+  // Subcontractor flags
+  initToggleGroup('flag-90days', function(val) {
+    calcData.flag90 = (val === 'yes');
+    refreshSubFlags();
+  });
+  initToggleGroup('flag-80pct', function(val) {
+    calcData.flag80 = (val === 'yes');
+    refreshSubFlags();
+  });
+
+  // State change in screen 1
+  el('s1-state').addEventListener('change', function() {
+    calcData.state = this.value;
+    refreshSubFlags();
+    refreshOnCosts();
+  });
+
+  // PT toggle
+  el('s3-pt-toggle').addEventListener('change', function() {
+    calcData.inclPt = this.checked;
+    refreshOnCosts();
+  });
+
+  // Live overhead formula
+  el('overhead-inputs').addEventListener('input', refreshOverheadFormula);
+  el('s5-staff').addEventListener('input', refreshOverheadFormula);
+  el('s5-hrs').addEventListener('input', refreshOverheadFormula);
+
+  // Lead form
+  el('lead-form').addEventListener('submit', handleLeadSubmit);
+});
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function el(id) { return document.getElementById(id); }
+
+function showEl(id, visible) {
+  var e = el(id);
+  if (!e) return;
+  if (visible) e.classList.remove('hidden'); else e.classList.add('hidden');
 }
 
-function nextStep(from) {
-    if (!validateStep(from)) return;
-    collectStep(from);
-    currentStep = from + 1;
-    if (from === 5) {
-        showStep(6);
-        // Pre-fill trade type from Step 1 free-text (best-effort match)
-        var tradeEl = document.getElementById('lf-trade');
-        var tradeVal = (calcData.tradeType || '').toLowerCase();
-        for (var i = 0; i < tradeEl.options.length; i++) {
-            if (tradeEl.options[i].value.toLowerCase() === tradeVal) {
-                tradeEl.selectedIndex = i; break;
-            }
-        }
-        // Pre-fill state from Step 1
-        if (calcData.location) {
-            document.getElementById('lf-state').value = calcData.location;
-        }
-        return;
-    }
-    showStep(from + 1);
-    if (from === 2) updateLabourPreview();
-    if (from === 3) updateOverheadPreview();
-    if (from === 4) updateHoursPreview();
-}
+function fmtD(n) { return '$' + Math.round(n).toLocaleString('en-AU'); }
+function fmtHr(n) { return '$' + n.toFixed(2) + '/hr'; }
+function pct(n)  { return Math.round(n * 100) + '%'; }
 
-function prevStep(from) {
-    currentStep = from - 1;
-    showStep(from - 1);
-}
-
-// ─── Validation ──────────────────────────────────────────────────────────────
-function validateStep(n) {
-    var ok = true;
-    if (n === 1) {
-        ok = checkRequired('company-name') & checkRequired('trade-type') & checkRequired('num-employees') & checkRequired('location');
-    } else if (n === 2) {
-        ok = checkRequired('base-salary') & checkRequired('vehicle-tools');
-    } else if (n === 3) {
-        ok = checkRequired('overheads');
-    } else if (n === 4) {
-        ok = checkRequired('hours-per-day') & checkRequired('training-days');
-    }
-    return ok;
-}
-
-function checkRequired(id) {
-    var el = document.getElementById(id);
-    var val = el ? el.value.trim() : '';
-    if (!val) { if(el) el.classList.add('error'); return false; }
-    if(el) el.classList.remove('error');
-    return true;
-}
-
-// ─── Collect ─────────────────────────────────────────────────────────────────
-function collectStep(n) {
-    if (n === 1) {
-        calcData.companyName   = document.getElementById('company-name').value.trim();
-        calcData.tradeType     = document.getElementById('trade-type').value.trim();
-        calcData.numEmployees  = parseFloat(document.getElementById('num-employees').value) || 1;
-        calcData.location      = document.getElementById('location').value;
-    } else if (n === 2) {
-        calcData.baseSalary    = parseFloat(document.getElementById('base-salary').value) || 0;
-        calcData.vehicleTools  = parseFloat(document.getElementById('vehicle-tools').value) || 0;
-    } else if (n === 3) {
-        calcData.overheads     = parseFloat(document.getElementById('overheads').value) || 0;
-    } else if (n === 4) {
-        calcData.hoursPerDay   = parseFloat(document.getElementById('hours-per-day').value) || 8;
-        calcData.trainingDays  = parseFloat(document.getElementById('training-days').value) || 5;
-        calcData.productivity  = parseFloat(document.getElementById('productivity').value) / 100;
-    } else if (n === 5) {
-        calcData.profitMargin  = parseFloat(document.getElementById('profit-margin').value) / 100;
-    }
-}
-
-// ─── Previews ─────────────────────────────────────────────────────────────────
-function updateLabourPreview() {
-    var s   = calcData.baseSalary || 0;
-    var sup = s * SUPER_RATE;
-    var wc  = s * (WORKERS_COMP[calcData.location] || 0.045);
-    var lv  = s * LEAVE_RATE;
-    var vt  = calcData.vehicleTools || 0;
-    var tot = s + sup + wc + lv + vt;
-    document.getElementById('prev-salary').textContent = fmt(s);
-    document.getElementById('prev-super').textContent  = fmt(sup);
-    document.getElementById('prev-wc').textContent     = fmt(wc);
-    document.getElementById('prev-leave').textContent  = fmt(lv);
-    document.getElementById('prev-vt').textContent     = fmt(vt);
-    document.getElementById('prev-total').textContent  = fmt(tot);
-    document.getElementById('labour-preview').classList.remove('hidden');
-}
-
-function updateOverheadPreview() {
-    var perEmp = (calcData.overheads || 0) / (calcData.numEmployees || 1);
-    document.getElementById('overhead-per-emp').textContent = fmt(perEmp);
-    document.getElementById('overhead-preview').classList.remove('hidden');
-}
-
-function updateHoursPreview() {
-    var hours = calcBillableHours(calcData.hoursPerDay, calcData.trainingDays, calcData.productivity);
-    document.getElementById('billable-hours-display').textContent = Math.round(hours).toLocaleString();
-    document.getElementById('hours-preview').classList.remove('hidden');
-}
-
-// ─── Calculation ─────────────────────────────────────────────────────────────
-function calcBillableHours(hoursPerDay, trainingDays, productivity) {
-    var workingDays = (TOTAL_WEEKS * WORK_DAYS_PW) - ANNUAL_LEAVE_DAYS - SICK_DAYS - PUBLIC_HOLS - (trainingDays || 0);
-    return workingDays * hoursPerDay * productivity;
-}
-
-function calcRate(productivity) {
-    var s         = calcData.baseSalary || 0;
-    var sup       = s * SUPER_RATE;
-    var wc        = s * (WORKERS_COMP[calcData.location] || 0.045);
-    var lv        = s * LEAVE_RATE;
-    var labourCost= s + sup + wc + lv;
-    var overheadAlloc = (calcData.overheads || 0) / (calcData.numEmployees || 1);
-    var totalCost = labourCost + (calcData.vehicleTools || 0) + overheadAlloc;
-    var billable  = calcBillableHours(calcData.hoursPerDay, calcData.trainingDays, productivity);
-    var margin    = calcData.profitMargin || 0.15;
-    if (billable <= 0 || margin >= 1) return { rate: 0, hours: 0, labourCost, overheadAlloc, totalCost };
-    var rate = (totalCost / billable) / (1 - margin);
-    return { rate, hours: billable, labourCost, overheadAlloc, totalCost };
-}
-
-// ─── Lead Capture — form submit → HubSpot API → show results ─────────────────
-document.getElementById('lead-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    var first = document.getElementById('lf-first').value.trim();
-    var last  = document.getElementById('lf-last').value.trim();
-    var email = document.getElementById('lf-email').value.trim();
-    var phone = document.getElementById('lf-phone').value.trim();
-
-    // Basic validation
-    var valid = true;
-    ['lf-first','lf-last','lf-email','lf-phone','lf-trade','lf-state'].forEach(function(id) {
-        var el = document.getElementById(id);
-        if (!el.value.trim()) { el.classList.add('error'); valid = false; }
-        else { el.classList.remove('error'); }
+// ─── TOGGLE GROUPS ────────────────────────────────────────────────────────────
+function initToggleGroup(groupId, onChange) {
+  var btns = document.querySelectorAll('#' + groupId + ' .cr-tog');
+  btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btns.forEach(function(b){ b.classList.remove('cr-tog-on'); });
+      this.classList.add('cr-tog-on');
+      onChange(this.dataset.value);
     });
-    var emailEl  = document.getElementById('lf-email');
-    var emailErr = emailEl.parentElement.querySelector('.lf-err');
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        emailEl.classList.add('error');
-        if (emailErr) emailErr.classList.remove('hidden');
-        valid = false;
-    } else {
-        if (emailErr) emailErr.classList.add('hidden');
-    }
-    if (!valid) return;
+  });
+}
 
-    var btn     = document.getElementById('btn-lead-submit');
-    var label   = document.getElementById('lead-submit-label');
-    var spinner = document.getElementById('lead-submit-spinner');
-    var errMsg  = document.getElementById('lf-submit-err');
+function getToggleValue(groupId) {
+  var active = document.querySelector('#' + groupId + ' .cr-tog-on');
+  return active ? active.dataset.value : null;
+}
 
-    btn.disabled = true;
-    label.textContent = 'Submitting...';
-    spinner.classList.remove('hidden');
-    errMsg.classList.add('hidden');
+// ─── LEAD FORM ────────────────────────────────────────────────────────────────
+async function handleLeadSubmit(e) {
+  e.preventDefault();
 
+  var fields = [
+    { id: 'lf-first',    req: true,  email: false },
+    { id: 'lf-last',     req: true,  email: false },
+    { id: 'lf-business', req: true,  email: false },
+    { id: 'lf-email',    req: true,  email: true  },
+    { id: 'lf-phone',    req: true,  email: false },
+    { id: 'lf-state',    req: true,  email: false },
+  ];
+
+  var valid = true;
+  fields.forEach(function(f) {
+    var input = el(f.id);
+    var errEl = input.parentElement.querySelector('.cr-err');
+    var val   = input.value.trim();
+    var ok    = f.req ? !!val : true;
+    if (ok && f.email && val) ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    input.classList.toggle('cr-input-err', !ok);
+    if (errEl) errEl.classList.toggle('hidden', ok);
+    if (!ok) valid = false;
+  });
+  if (!valid) return;
+
+  leadData = {
+    firstName:    el('lf-first').value.trim(),
+    lastName:     el('lf-last').value.trim(),
+    businessName: el('lf-business').value.trim(),
+    email:        el('lf-email').value.trim(),
+    phone:        el('lf-phone').value.trim(),
+    state:        el('lf-state').value,
+    tradeType:    el('lf-trade').value,
+  };
+
+  calcData.state = leadData.state;
+
+  var btn = el('lead-submit-btn');
+  el('lead-submit-label').textContent = 'Submitting…';
+  el('lead-spinner').classList.remove('hidden');
+  btn.disabled = true;
+
+  if (LEAD_WEBHOOK_URL) {
     try {
-        var res = await fetch(
-            'https://api-ap1.hsforms.com/submissions/v3/integration/submit/442932388/457aa646-55f4-4da5-a868-6ab7aa3935bc',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    fields: [
-                        { name: 'firstname',      value: first },
-                        { name: 'lastname',       value: last },
-                        { name: 'email',          value: email },
-                        { name: 'phone',          value: phone },
-                        { name: 'trade_type',     value: document.getElementById('lf-trade').value },
-                        { name: 'state',          value: document.getElementById('lf-state').value },
-                        { name: 'company',        value: calcData.companyName || '' },
-                        { name: 'num_employees',  value: String(calcData.numEmployees || '') },
-                    ],
-                    context: { pageUri: window.location.href, pageName: document.title }
-                })
-            }
-        );
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        showResults();
-    } catch (err) {
-        errMsg.classList.remove('hidden');
-        btn.disabled = false;
-        label.textContent = 'Show My Rate →';
-        spinner.classList.add('hidden');
-    }
-});
+      await fetch(LEAD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'lead_captured', leadData: leadData }),
+      });
+    } catch(_) {}
+  }
 
-// ─── Results ─────────────────────────────────────────────────────────────────
-function showResults() {
-    var prod = calcData.productivity || 0.75;
-    var r    = calcRate(prod);
+  el('lead-submit-label').textContent = 'Start calculating →';
+  el('lead-spinner').classList.add('hidden');
+  btn.disabled = false;
 
-    document.getElementById('result-rate').textContent  = Math.ceil(r.rate);
-    document.getElementById('result-name').textContent  = calcData.companyName || '';
-    document.getElementById('result-trade').textContent = calcData.tradeType + ' · ' + calcData.location;
-    document.getElementById('res-labour').textContent   = fmt(r.labourCost);
-    document.getElementById('res-overhead').textContent = fmt(r.overheadAlloc);
-    document.getElementById('res-hours').textContent    = Math.round(r.hours).toLocaleString() + ' hrs';
-    document.getElementById('res-margin').textContent   = Math.round((calcData.profitMargin || 0.15) * 100) + '%';
+  // Pre-fill state in screen 1
+  el('s1-state').value = leadData.state;
 
-    // Breakdown bars
-    var total = r.labourCost + r.overheadAlloc + (r.rate * r.hours * (calcData.profitMargin || 0.15));
-    var bars = [
-        { label: 'Labour & On-Costs', value: r.labourCost, color: '#1E3A5F' },
-        { label: 'Vehicle & Tools',   value: calcData.vehicleTools || 0, color: '#1A7A6E' },
-        { label: 'Overhead Allocation', value: r.overheadAlloc, color: '#D4820A' },
-    ];
-    var barsTotal = bars.reduce(function(a,b){ return a + b.value; }, 0);
-    var barsHtml = bars.map(function(b) {
-        var pct = barsTotal > 0 ? Math.round((b.value / barsTotal) * 100) : 0;
-        return '<div>' +
-            '<div class="flex justify-between text-sm mb-1"><span class="text-forge-black/60">' + b.label + '</span><span class="font-semibold text-forge-black">' + fmt(b.value) + ' (' + pct + '%)</span></div>' +
-            '<div class="h-3 bg-forge-black/8 rounded-full overflow-hidden"><div style="width:' + pct + '%;background:' + b.color + '" class="h-full rounded-full transition-all duration-700"></div></div>' +
-        '</div>';
-    }).join('');
-    document.getElementById('breakdown-bars').innerHTML = barsHtml;
+  // Update COGS email reference
+  el('cta-cogs-body').textContent =
+    "We'll build out a full cost model for your business based on these numbers and send it to " + leadData.email + ".";
 
-    // Live slider
-    var liveSlider = document.getElementById('live-productivity');
-    liveSlider.value = Math.round(prod * 100);
-    updateLiveRate();
-    liveSlider.addEventListener('input', function() {
-        document.getElementById('live-prod-display').textContent = this.value + '%';
-        updateLiveRate();
+  goToScreen(1);
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function goToScreen(n) {
+  if (typeof n === 'number' && n > currentScreen) {
+    if (!validateScreen(currentScreen)) return;
+  }
+  collectData(currentScreen);
+
+  document.querySelectorAll('.cr-screen').forEach(function(s) {
+    s.classList.add('hidden');
+    s.classList.remove('cr-active');
+  });
+
+  var isResults = (n === 'results');
+  var target = isResults ? el('screen-results') : el('screen-' + n);
+  if (!target) return;
+  target.classList.remove('hidden');
+  target.classList.add('cr-active');
+  currentScreen = n;
+
+  // Progress bar
+  var progStep = isResults ? 6 : n;
+  if (progStep >= 1 && progStep <= 6) {
+    showEl('cr-progress', true);
+    el('cr-prog-fill').style.width = Math.round((progStep / 6) * 100) + '%';
+    el('cr-step-label').textContent = 'Step ' + progStep + ' of 6' + (STEP_NAMES[progStep] ? ' — ' + STEP_NAMES[progStep] : '');
+    // Update dots
+    document.querySelectorAll('.cr-dot').forEach(function(dot, i) {
+      dot.classList.remove('cr-dot-active', 'cr-dot-done');
+      if (i + 1 < progStep) dot.classList.add('cr-dot-done');
+      else if (i + 1 === progStep) dot.classList.add('cr-dot-active');
     });
+  } else {
+    showEl('cr-progress', false);
+  }
 
-    // Action plan
-    buildActionPlan(prod, r.rate);
+  // Screen-specific refresh
+  if (n === 2) refreshPayFields();
+  if (n === 3) { refreshOnCostsUI(); refreshOnCosts(); }
+  if (n === 5) refreshOverheadFormula();
 
-    showStep('results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function updateLiveRate() {
-    var p = parseFloat(document.getElementById('live-productivity').value) / 100;
-    var r = calcRate(p);
-    document.getElementById('live-rate').textContent  = Math.ceil(r.rate);
-    document.getElementById('live-hours').textContent = Math.round(r.hours).toLocaleString() + ' hrs';
+function validateScreen(n) {
+  if (n === 1 && !el('s1-state').value) {
+    alert('Please select a state before continuing.');
+    return false;
+  }
+  return true;
 }
 
-function buildActionPlan(prod, rate) {
-    var actions = [];
-
-    if (prod < 0.65) {
-        actions.push({
-            icon: '⚙️',
-            title: 'Boost Billable Productivity',
-            body: 'Your productivity is below 65% — meaning more than a third of your working time isn\'t being billed. Systems, job management software, and smarter scheduling can recover 10–20 hours of billable time per week.',
-            cta: 'Business Engine can help',
-            ctaHref: '/business-engine'
-        });
+function collectData(n) {
+  if (n === 1) {
+    calcData.state = el('s1-state').value;
+  }
+  if (n === 2) {
+    if (calcData.workerType === 'employee') {
+      calcData.salary  = parseFloat(el('s2-salary').value)  || 80000;
+      calcData.hrsWeek = parseFloat(el('s2-hrs-wk').value)  || 38;
+    } else {
+      calcData.subRate = parseFloat(el('s2-sub-rate').value) || 80;
+      calcData.subHrs  = parseFloat(el('s2-sub-hrs').value)  || 1500;
     }
-    if ((calcData.overheads || 0) / (calcData.numEmployees || 1) > (calcData.baseSalary || 0) * 0.5) {
-        actions.push({
-            icon: '📊',
-            title: 'Review Your Overhead Structure',
-            body: 'Your overhead allocation per employee is high relative to labour cost. A Finance review can identify where overheads are creeping up and where savings can be made without impacting quality.',
-            cta: 'Explore Finance & Reporting',
-            ctaHref: '/services#finance'
-        });
-    }
-    if ((calcData.profitMargin || 0.15) < 0.15) {
-        actions.push({
-            icon: '💰',
-            title: 'Increase Your Target Margin',
-            body: 'A margin below 15% leaves little room for reinvestment, unexpected costs, or owner returns. Most well-run trade businesses target 15–20%. Tradewise can help you build toward this benchmark.',
-            cta: 'Book a Strategy Call',
-            ctaHref: 'https://meetings-ap1.hubspot.com/kate-walsh-rose'
-        });
-    }
-    if (rate > 150) {
-        actions.push({
-            icon: '🎯',
-            title: 'Your Rate is Strong — Make Sure You\'re Charging It',
-            body: 'Your calculated rate is competitive. The next step is making sure your quoting, invoicing, and collections processes support actually billing and collecting at this rate every job.',
-            cta: 'Explore Business Engine',
-            ctaHref: '/business-engine'
-        });
-    }
-
-    // Default action always shown
-    actions.push({
-        icon: '📞',
-        title: 'Book a Free Rate Review Session',
-        body: 'Share these results with a Tradewise advisor. In 30 minutes we\'ll tell you exactly which levers will have the biggest impact on your charge out rate and your bottom line.',
-        cta: 'Book now — it\'s free',
-        ctaHref: 'https://meetings-ap1.hubspot.com/kate-walsh-rose'
+  }
+  if (n === 4) {
+    calcData.allowances = {};
+    ALLOWANCE_DEFS.forEach(function(a) {
+      var tog = el('atog-' + a.key);
+      var inp = el('aval-' + a.key);
+      calcData.allowances[a.key] = (tog && tog.checked) ? (parseFloat(inp.value) || 0) : 0;
     });
-
-    var html = actions.map(function(a) {
-        return '<div class="flex items-start gap-4 border border-forge-black/10 rounded-xl p-5">' +
-            '<div class="text-2xl shrink-0 mt-0.5">' + a.icon + '</div>' +
-            '<div class="flex-1">' +
-                '<p class="font-semibold text-forge-black text-sm mb-1">' + a.title + '</p>' +
-                '<p class="text-forge-black/55 text-xs leading-relaxed mb-3">' + a.body + '</p>' +
-                '<a href="' + a.ctaHref + '" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-growth-teal hover:text-growth-teal/70 transition-colors duration-200">' + a.cta + ' →</a>' +
-            '</div>' +
-        '</div>';
-    }).join('');
-    document.getElementById('action-plan').innerHTML = html;
+  }
+  if (n === 5) {
+    calcData.overheads = {};
+    OVERHEAD_DEFS.forEach(function(o) {
+      var inp = el('oh-' + o.key);
+      calcData.overheads[o.key] = inp ? (parseFloat(inp.value) || 0) : 0;
+    });
+    calcData.numStaff  = parseInt(el('s5-staff').value)  || 2;
+    calcData.billHrsWk = parseFloat(el('s5-hrs').value)  || 38;
+    calcData.margin    = (parseFloat(el('s5-margin').value) || 30) / 100;
+  }
 }
 
+function calcAndShow() {
+  if (!validateScreen(5)) return;
+  collectData(5);
+  buildResults();
+  goToScreen('results');
+}
+
+// ─── SCREEN 1: SUB FLAGS ──────────────────────────────────────────────────────
+function refreshSubFlags() {
+  var state = calcData.state || '';
+  var pt    = PAYROLL_TAX[state];
+
+  showEl('alert-90days', calcData.flag90 && !!pt);
+  if (calcData.flag90 && pt) {
+    el('alert-90days-text').textContent =
+      'In ' + state + ', payroll tax applies at ' + (pt.rate * 100).toFixed(2) +
+      '% on annual payroll above the $' + pt.threshold.toLocaleString('en-AU') +
+      ' threshold. Contractors who exceed the 90-day rule may be deemed employees for payroll tax purposes.';
+  }
+  showEl('alert-80pct', calcData.flag80);
+}
+
+// ─── SCREEN 2: PAY FIELDS ─────────────────────────────────────────────────────
+function refreshPayFields() {
+  var isSub = calcData.workerType === 'subcontractor';
+  showEl('s2-emp', !isSub);
+  showEl('s2-sub', isSub);
+}
+
+// ─── SCREEN 3: ON-COSTS ───────────────────────────────────────────────────────
+function refreshOnCostsUI() {
+  var isSub = calcData.workerType === 'subcontractor';
+  showEl('s3-emp', !isSub);
+  showEl('s3-sub', isSub);
+  if (isSub) {
+    el('s3-sub-super').textContent = calcData.flag80 ? '⚠ May apply' : '✅ Not required';
+    el('s3-sub-pt').textContent    = calcData.flag90 ? '⚠ May apply' : '✅ Not required';
+    var state = calcData.state || '';
+    var pt    = PAYROLL_TAX[state];
+    el('s3-sub-pt-note').textContent = (calcData.flag90 && pt)
+      ? state + ': ' + (pt.rate * 100).toFixed(2) + '% above $' + pt.threshold.toLocaleString('en-AU')
+      : 'Triggered if 90-day rule applies';
+  }
+}
+
+function refreshOnCosts() {
+  var salary = parseFloat(el('s2-salary').value) || 80000;
+  var state  = calcData.state || '';
+  var pt     = PAYROLL_TAX[state];
+  var inclPt = el('s3-pt-toggle').checked;
+
+  var superAmt = salary * SUPER_RATE;
+  var ptRate   = (pt && inclPt) ? pt.rate : 0;
+  var ptAmt    = salary * ptRate;
+  var alAmt    = salary * (AL_WEEKS / 52);
+  var lslAmt   = salary * LSL_RATE;
+  var prodAmt  = salary * PRODUCTIVITY_RATE;
+  var total    = salary + superAmt + ptAmt + alAmt + lslAmt + prodAmt;
+  var pctAbove = Math.round(((total / salary) - 1) * 100);
+
+  el('s3-t-base').textContent  = fmtD(salary);
+  el('s3-t-super').textContent = fmtD(superAmt);
+  el('s3-t-al').textContent    = fmtD(alAmt);
+  el('s3-t-lsl').textContent   = fmtD(lslAmt);
+  el('s3-t-prod').textContent  = fmtD(prodAmt);
+  el('s3-t-total').innerHTML   = '<strong>' + fmtD(total) + '</strong>';
+  el('s3-t-total-pct').innerHTML = '<strong>' + Math.round((total / salary) * 100) + '%</strong>';
+
+  var ptRow = el('s3-pt-row');
+  if (inclPt && pt) {
+    ptRow.style.display = '';
+    el('s3-pt-label').textContent = 'Payroll tax (' + state + ' ' + (ptRate * 100).toFixed(2) + '%)';
+    el('s3-t-pt').textContent     = fmtD(ptAmt);
+    el('s3-t-pt-pct').textContent = (ptRate * 100).toFixed(2) + '%';
+  } else {
+    ptRow.style.display = 'none';
+  }
+
+  el('s3-callout-text').textContent =
+    'Before allowances or overhead, this employee already costs ' + fmtD(total) +
+    ' — ' + pctAbove + '% more than their salary.';
+}
+
+// ─── SCREEN 4: ALLOWANCES ─────────────────────────────────────────────────────
+function buildAllowanceList() {
+  var html = '';
+  ALLOWANCE_DEFS.forEach(function(a) {
+    html +=
+      '<div class="cr-allow-row">' +
+        '<label class="cr-switch">' +
+          '<input type="checkbox" id="atog-' + a.key + '" onchange="toggleAllow(\'' + a.key + '\')" />' +
+          '<span class="cr-slider"></span>' +
+        '</label>' +
+        '<div class="cr-allow-body">' +
+          '<p class="cr-allow-label">' + a.label + '</p>' +
+          '<p class="cr-hint">' + a.hint + '</p>' +
+          '<div id="ainp-' + a.key + '" class="cr-allow-inp hidden">' +
+            '<label class="cr-hint" style="display:block;margin-bottom:4px">Annual amount ($)</label>' +
+            '<input class="cr-input cr-input-sm" id="aval-' + a.key + '" type="number" min="0" value="' + a.def + '" />' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  });
+  el('allowance-list').innerHTML = html;
+}
+
+function toggleAllow(key) {
+  var on = el('atog-' + key).checked;
+  showEl('ainp-' + key, on);
+}
+
+// ─── SCREEN 5: OVERHEAD ───────────────────────────────────────────────────────
+function buildOverheadInputs() {
+  var html = '';
+  OVERHEAD_DEFS.forEach(function(o) {
+    html +=
+      '<div class="cr-oh-row">' +
+        '<label class="cr-label cr-oh-label" for="oh-' + o.key + '">' + o.label + '</label>' +
+        '<div class="cr-oh-input">' +
+          '<span class="cr-dollar-pre">$</span>' +
+          '<input class="cr-input cr-input-right" id="oh-' + o.key + '" type="number" min="0" value="' + o.def + '" />' +
+        '</div>' +
+      '</div>';
+  });
+  el('overhead-inputs').innerHTML = html;
+}
+
+function refreshOverheadFormula() {
+  var total = 0;
+  OVERHEAD_DEFS.forEach(function(o) {
+    var inp = el('oh-' + o.key);
+    total += inp ? (parseFloat(inp.value) || 0) : 0;
+  });
+  var staff   = parseInt(el('s5-staff').value)  || 2;
+  var hrs     = parseFloat(el('s5-hrs').value)  || 38;
+  var totHrs  = staff * hrs * WORK_WEEKS;
+  var rate    = totHrs > 0 ? total / totHrs : 0;
+  el('f-costs').textContent = fmtD(total);
+  el('f-hours').textContent = totHrs.toLocaleString('en-AU') + ' hrs';
+  el('f-rate').textContent  = '$' + rate.toFixed(2) + '/hr';
+}
+
+// ─── CALCULATION ──────────────────────────────────────────────────────────────
+function buildResults() {
+  var isSub   = calcData.workerType === 'subcontractor';
+  var state   = calcData.state || '';
+  var pt      = PAYROLL_TAX[state];
+  var margin  = calcData.margin || 0.30;
+
+  // ---- Labour costs ----
+  var salary, superAmt, ptAmt, alAmt, lslAmt, prodAmt, allowTotal, trueCost, labourHrs;
+
+  if (!isSub) {
+    salary     = calcData.salary  || 80000;
+    labourHrs  = (calcData.hrsWeek || 38) * WORK_WEEKS;
+    var ptRate = (pt && calcData.inclPt) ? pt.rate : 0;
+    superAmt   = salary * SUPER_RATE;
+    ptAmt      = salary * ptRate;
+    alAmt      = salary * (AL_WEEKS / 52);
+    lslAmt     = salary * LSL_RATE;
+    prodAmt    = salary * PRODUCTIVITY_RATE;
+    allowTotal = 0;
+    if (calcData.allowances) {
+      ALLOWANCE_DEFS.forEach(function(a) { allowTotal += calcData.allowances[a.key] || 0; });
+    }
+    trueCost = salary + superAmt + ptAmt + alAmt + lslAmt + prodAmt + allowTotal;
+  } else {
+    salary    = (calcData.subRate || 80) * (calcData.subHrs || 1500);
+    labourHrs = calcData.subHrs || 1500;
+    superAmt  = calcData.flag80 ? salary * SUPER_RATE : 0;
+    ptAmt     = (calcData.flag90 && pt) ? salary * pt.rate : 0;
+    alAmt     = 0; lslAmt = 0; prodAmt = 0; allowTotal = 0;
+    trueCost  = salary + superAmt + ptAmt;
+  }
+
+  // ---- Overhead ----
+  var totalOverhead = 0;
+  if (calcData.overheads) {
+    OVERHEAD_DEFS.forEach(function(o) { totalOverhead += calcData.overheads[o.key] || 0; });
+  }
+  var numStaff    = calcData.numStaff  || 2;
+  var billHrsWk   = calcData.billHrsWk || 38;
+  var overheadHrs = numStaff * billHrsWk * WORK_WEEKS;
+  var overheadHr  = overheadHrs > 0 ? totalOverhead / overheadHrs : 0;
+  var labourHr    = labourHrs  > 0 ? trueCost      / labourHrs    : 0;
+  var totalHr     = labourHr + overheadHr;
+  var minRate     = margin < 1 ? totalHr / (1 - margin) : totalHr;
+  var gstRate     = minRate * 1.1;
+
+  // Base salary ÷ hours — what they'd recover if pricing on salary alone
+  var baseSalaryHr    = labourHrs > 0 ? salary / labourHrs : 0;
+  var shortfallHr     = minRate - baseSalaryHr;
+  var annualShortfall = shortfallHr * labourHrs;
+
+  // ---- Store results ----
+  resultsData = {
+    salary, superAmt, ptAmt, alAmt, lslAmt, prodAmt, allowTotal,
+    trueCost, labourHrs, labourHr, overheadHr, totalHr,
+    margin, minRate, gstRate, baseSalaryHr, shortfallHr, annualShortfall,
+    totalOverhead, workerType: calcData.workerType, state,
+  };
+
+  // ---- Render ----
+  var bizName = leadData.businessName || '';
+  el('res-subtitle').textContent = bizName
+    ? bizName + ' · ' + (leadData.tradeType || calcData.workerType) + ' · ' + state
+    : (leadData.tradeType || calcData.workerType) + ' · ' + state;
+
+  el('m-salary').textContent       = fmtD(salary);
+  el('m-true-cost').textContent    = fmtD(trueCost);
+  el('m-true-pct').textContent     = '+' + Math.round(((trueCost / salary) - 1) * 100) + '% above salary';
+  el('m-labour-hr').textContent    = fmtHr(labourHr);
+  el('m-overhead-hr').textContent  = fmtHr(overheadHr);
+
+  el('rt-labour').textContent    = fmtHr(labourHr);
+  el('rt-overhead').textContent  = fmtHr(overheadHr);
+  el('rt-cost').textContent      = fmtHr(totalHr);
+  el('rt-margin-lbl').textContent = '÷ (1 − ' + Math.round(margin * 100) + '%)';
+  el('rt-margin-val').textContent = '÷ ' + (1 - margin).toFixed(2);
+  el('rt-rate').innerHTML        = '<strong>' + fmtHr(minRate) + '</strong>';
+  el('rt-gst').textContent       = fmtHr(gstRate);
+
+  el('res-loss').textContent =
+    'If you\'re charging at base salary rate only (' + fmtHr(baseSalaryHr) + '), you\'re short ' +
+    fmtHr(shortfallHr) + ' per hour — that\'s ' + fmtD(annualShortfall) + '/year left on the table for this one worker.';
+
+  // ---- Chart ----
+  renderChart(salary, superAmt, ptAmt, alAmt + lslAmt, allowTotal, prodAmt);
+}
+
+function renderChart(base, sup, tax, leave, allowances, prod) {
+  var canvas = el('cost-chart');
+  if (costChart) { costChart.destroy(); costChart = null; }
+
+  var labels = ['Base salary','Superannuation','Payroll tax','Leave provisions','Allowances','Productivity'];
+  var values = [base, sup, tax, leave, allowances, prod];
+  var colors = ['#185FA5','#1D9E75','#BA7517','#D85A30','#7F77DD','#888780'];
+
+  // Filter zero items
+  var filteredLabels = [], filteredValues = [], filteredColors = [];
+  values.forEach(function(v, i) {
+    if (v > 0) {
+      filteredLabels.push(labels[i]);
+      filteredValues.push(v);
+      filteredColors.push(colors[i]);
+    }
+  });
+
+  costChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: filteredLabels,
+      datasets: [{
+        data: filteredValues,
+        backgroundColor: filteredColors,
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) { return ' ' + fmtD(ctx.raw); }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            callback: function(v) { return '$' + (v/1000).toFixed(0) + 'k'; },
+            font: { size: 11 },
+          },
+          grid: { color: 'rgba(0,0,0,0.06)' }
+        },
+        y: {
+          ticks: { font: { size: 12 } },
+          grid: { display: false }
+        }
+      }
+    }
+  });
+  // Set canvas height based on item count
+  canvas.style.height = Math.max(180, filteredLabels.length * 44) + 'px';
+}
+
+// ─── COGS REPORT ─────────────────────────────────────────────────────────────
+async function sendCogsReport() {
+  var btn  = el('cogs-btn');
+  var lbl  = el('cogs-btn-lbl');
+  var spin = el('cogs-spinner');
+  btn.disabled = true;
+  lbl.textContent = 'Sending…';
+  spin.classList.remove('hidden');
+
+  if (LEAD_WEBHOOK_URL) {
+    try {
+      await fetch(LEAD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'cogs_report', leadData: leadData, resultsData: resultsData }),
+      });
+    } catch(_) {}
+  }
+
+  // Open contact page in new tab
+  if (CONTACT_PAGE_URL) window.open(CONTACT_PAGE_URL, '_blank', 'noopener,noreferrer');
+
+  lbl.textContent = 'Sent!';
+  spin.classList.add('hidden');
+  showEl('cogs-thanks', true);
+  el('cogs-email-confirm').textContent = leadData.email || 'your email';
+  btn.disabled = true;
+}
+
+// ─── RESTART ─────────────────────────────────────────────────────────────────
 function restartCalc() {
-    calcData    = {};
-    currentStep = 1;
-    document.querySelectorAll('.calc-input').forEach(function(el){
-        if (el.tagName === 'SELECT') { el.selectedIndex = 0; }
-        else if (el.type === 'range') { /* leave */ }
-        else { el.value = el.defaultValue || ''; }
-        el.classList.remove('error');
-    });
-    document.getElementById('labour-preview').classList.add('hidden');
-    document.getElementById('overhead-preview').classList.add('hidden');
-    document.getElementById('hours-preview').classList.add('hidden');
-    showStep(1);
+  leadData = {}; calcData = { workerType: 'employee', flag90: false, flag80: false, inclPt: true }; resultsData = {};
+  currentScreen = 0;
+  el('lead-form').reset();
+  document.querySelectorAll('.cr-input-err').forEach(function(e){ e.classList.remove('cr-input-err'); });
+  document.querySelectorAll('.cr-err').forEach(function(e){ e.classList.add('hidden'); });
+  document.querySelectorAll('.cr-screen').forEach(function(s){ s.classList.add('hidden'); s.classList.remove('cr-active'); });
+  el('screen-0').classList.remove('hidden');
+  el('screen-0').classList.add('cr-active');
+  showEl('cr-progress', false);
+  showEl('cogs-thanks', false);
+  el('cogs-btn').disabled = false;
+  el('cogs-btn-lbl').textContent = 'Send my free COGS report';
+  if (costChart) { costChart.destroy(); costChart = null; }
+  window.scrollTo({ top: 0 });
 }
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-function fmt(n) {
-    return '$' + Math.round(n).toLocaleString('en-AU');
-}
-
-// Remove error class on input
-document.querySelectorAll('.calc-input, #lf-first, #lf-last, #lf-email, #lf-phone, #lf-trade, #lf-state').forEach(function(el) {
-    el.addEventListener('input', function(){ this.classList.remove('error'); });
-});
-
 </script>
+
+<style is:global>
+  #calc-root {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+    color: #1a1a1a;
+  }
+
+  /* ─── SCREENS ─── */
+  .cr-screen { display: none; }
+  .cr-screen.cr-active { display: block; }
+  .hidden { display: none !important; }
+
+  /* ─── LEAD GATE ─── */
+  .cr-lead-hero {
+    text-align: center;
+    padding: 40px 16px 32px;
+  }
+  .cr-lead-heading {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1E3A5F;
+    margin: 0 0 10px;
+    line-height: 1.3;
+  }
+  .cr-lead-sub {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .cr-lead-card { max-width: 480px; margin: 0 auto; }
+  .cr-privacy {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin: 12px 0 0;
+  }
+
+  /* ─── CARD ─── */
+  .cr-card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 32px 28px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 480px) {
+    .cr-card { padding: 24px 18px; }
+  }
+  .cr-card-h {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1E3A5F;
+    margin: 0 0 6px;
+  }
+  .cr-card-sub {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+
+  /* ─── PROGRESS BAR ─── */
+  #cr-progress {
+    max-width: 680px;
+    margin: 0 auto 20px;
+    padding: 0 16px;
+  }
+  .cr-prog-wrap { position: relative; margin-bottom: 10px; }
+  .cr-prog-track {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .cr-prog-fill {
+    height: 100%;
+    background: #1E3A5F;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .cr-step-dots {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .cr-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    transition: background 0.3s;
+  }
+  .cr-dot-active { background: #1E3A5F; }
+  .cr-dot-done   { background: #1D9E75; }
+  .cr-step-label {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    margin: 4px 0 0;
+  }
+
+  /* ─── FORM FIELDS ─── */
+  .cr-field { margin-bottom: 16px; }
+  .cr-label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .cr-hint-inline { font-weight: 400; color: #999; }
+  .cr-hint { font-size: 12px; color: #999; margin: 4px 0 0; }
+  .cr-req { color: #c0392b; }
+  .cr-err {
+    display: block;
+    font-size: 12px;
+    color: #c0392b;
+    margin-top: 4px;
+  }
+  .cr-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #1a1a1a;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .cr-input:focus { border-color: #1E3A5F; }
+  .cr-input-err  { border-color: #c0392b !important; }
+  .cr-select { cursor: pointer; padding-right: 32px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; }
+  .cr-input-sm  { padding: 8px 10px; font-size: 14px; }
+  .cr-input-right { text-align: right; }
+
+  .cr-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 420px) { .cr-grid-2 { grid-template-columns: 1fr; } }
+
+  /* ─── BUTTONS ─── */
+  .cr-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1E3A5F;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    text-decoration: none;
+  }
+  .cr-btn-primary:hover { opacity: 0.88; }
+  .cr-btn-primary:disabled { opacity: 0.55; cursor: default; }
+  .cr-btn-full { width: 100%; justify-content: center; }
+  .cr-btn-sec {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: #1E3A5F;
+    border: 1.5px solid #1E3A5F;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+  }
+  .cr-btn-sec:hover { background: rgba(30,58,95,0.06); }
+  .cr-btn-inline { display: inline-flex; }
+  .cr-link-btn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: inherit;
+    padding: 0;
+  }
+  .cr-link-btn:hover { color: #555; }
+
+  /* ─── TOGGLE GROUP ─── */
+  .cr-toggle-group {
+    display: flex;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .cr-tog {
+    padding: 9px 20px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 500;
+    background: #fff;
+    color: #555;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cr-tog + .cr-tog { border-left: 1.5px solid rgba(0,0,0,0.12); }
+  .cr-tog-on { background: #1E3A5F; color: #fff; }
+
+  /* ─── TOGGLE SWITCH ─── */
+  .cr-switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .cr-switch input { opacity: 0; width: 0; height: 0; }
+  .cr-slider {
+    position: absolute; inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cr-slider:before {
+    content: '';
+    position: absolute;
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+  .cr-switch input:checked + .cr-slider { background: #1E3A5F; }
+  .cr-switch input:checked + .cr-slider:before { transform: translateX(18px); }
+  .cr-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  /* ─── INFO BOXES ─── */
+  .cr-infobox {
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-left: 3px solid transparent;
+  }
+  .cr-ib-blue   { background: #EEF4FB; border-left-color: #3B82F6; }
+  .cr-ib-amber  { background: #FEF6E8; border-left-color: #D4820A; }
+  .cr-ib-red    { background: #FEF0F0; border-left-color: #DC2626; }
+  .cr-ib-green  { background: #F0FBF5; border-left-color: #1D9E75; }
+  .cr-ib-title  { font-weight: 600; font-size: 13px; margin: 0 0 4px; }
+  .cr-ib-body   { margin: 0; font-size: 14px; }
+
+  /* ─── TABLES ─── */
+  .cr-table-wrap { overflow-x: auto; }
+  .cr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .cr-table th {
+    text-align: left;
+    font-size: 12px;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 8px 10px;
+    border-bottom: 1.5px solid rgba(0,0,0,0.1);
+  }
+  .cr-table td {
+    padding: 9px 10px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.07);
+    vertical-align: middle;
+  }
+  .cr-table td:not(:first-child) { text-align: right; }
+  .cr-tbl-total td { border-top: 1.5px solid rgba(0,0,0,0.15); border-bottom: none; }
+  .cr-table-sm { font-size: 13px; }
+  .cr-table-sm td, .cr-table-sm th { padding: 7px 8px; }
+
+  /* ─── ALLOWANCES ─── */
+  .cr-allow-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  }
+  .cr-allow-row:last-child { border-bottom: none; }
+  .cr-allow-body { flex: 1; }
+  .cr-allow-label { font-size: 14px; font-weight: 500; margin: 0 0 2px; }
+  .cr-allow-inp   { margin-top: 10px; max-width: 180px; }
+
+  /* ─── OVERHEAD ─── */
+  .cr-oh-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid rgba(0,0,0,0.06);
+  }
+  .cr-oh-row:last-child { border-bottom: none; }
+  .cr-oh-label { margin: 0; flex: 1; }
+  .cr-oh-input { display: flex; align-items: center; gap: 4px; }
+  .cr-dollar-pre { font-size: 14px; color: #666; }
+  .cr-oh-input .cr-input { width: 110px; }
+
+  /* ─── FORMULA BOX ─── */
+  .cr-formula-box {
+    background: #f8f8f6;
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+  .cr-formula-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .cr-formula-div {
+    border-top: 0.5px solid rgba(0,0,0,0.12);
+    border-bottom: 1.5px solid rgba(0,0,0,0.15);
+    color: #555;
+  }
+  .cr-formula-result { padding-top: 10px; }
+  .cr-formula-result strong { font-size: 18px; color: #1E3A5F; }
+
+  /* ─── RESULTS: METRICS ─── */
+  .cr-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 420px) { .cr-metrics { grid-template-columns: 1fr; } }
+  .cr-metric {
+    background: #f8f8f6;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .cr-metric-alert { background: #FEF0F0; }
+  .cr-metric-lbl { font-size: 12px; color: #777; margin: 0 0 6px; }
+  .cr-metric-val { font-size: 22px; font-weight: 600; color: #1E3A5F; margin: 0; }
+  .cr-metric-alert .cr-metric-val { color: #B91C1C; }
+  .cr-metric-sub { font-size: 12px; color: #B91C1C; margin: 2px 0 0; }
+
+  /* ─── RESULTS: CHART ─── */
+  .cr-chart-box {
+    background: #f8f8f6;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  #cost-chart { display: block; }
+
+  /* ─── RESULTS: RATE TABLE ─── */
+  .cr-gst-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1E3A5F;
+    color: #fff;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  .cr-gst-val {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  /* ─── CTAs ─── */
+  .cr-cta-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 22px 20px;
+  }
+  .cr-cta-card-sec { background: #f8f8f6; }
+  .cr-cta-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+  .cr-cta-h {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1E3A5F;
+    margin: 0 0 6px;
+  }
+  .cr-cta-body {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─── SECTION LABEL ─── */
+  .cr-section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 10px;
+  }
+
+  /* ─── SPINNER ─── */
+  .cr-spinner {
+    width: 16px; height: 16px;
+    animation: cr-spin 0.8s linear infinite;
+  }
+  @keyframes cr-spin { to { transform: rotate(360deg); } }
+
+  /* ─── FOOTER ─── */
+  .cr-calc-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    margin: 24px 0 0;
+    line-height: 1.6;
+  }
+
+  /* ─── SPACING ─── */
+  .cr-mt    { margin-top: 16px; }
+  .cr-mt-sm { margin-top: 10px; }
+  .cr-mt-lg { margin-top: 24px; }
+  .cr-mb    { margin-bottom: 20px; }
+  .cr-mb-sm { margin-bottom: 8px; }
+  .cr-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+  }
+  .cr-text-center { text-align: center; }
+  .cr-flag-block { margin-bottom: 20px; }
+  .cr-flag-block .cr-label { margin-bottom: 8px; }
+  .cr-res-header { margin-bottom: 20px; }
+</style>
 
 </MainLayout>
