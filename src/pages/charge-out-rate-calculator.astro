@@ -406,7 +406,7 @@ import MainLayout from '../layouts/MainLayout.astro';
       <!-- Cost breakdown bar chart -->
       <div class="cr-chart-box cr-mb">
         <p class="cr-section-label">Annual cost breakdown</p>
-        <canvas id="cost-chart"></canvas>
+        <div class="cr-chart-wrap"><canvas id="cost-chart"></canvas></div>
       </div>
 
       <!-- Rate build-up table -->
@@ -1013,6 +1013,10 @@ function renderChart(base, sup, tax, leave, allowances, prod) {
     }
   });
 
+  // Set wrapper height before creating chart to avoid resize loop
+  var wrap = canvas.parentElement;
+  wrap.style.height = Math.max(180, filteredLabels.length * 44) + 'px';
+
   costChart = new Chart(canvas, {
     type: 'bar',
     data: {
@@ -1028,6 +1032,7 @@ function renderChart(base, sup, tax, leave, allowances, prod) {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
+      animation: false,
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -1051,8 +1056,6 @@ function renderChart(base, sup, tax, leave, allowances, prod) {
       }
     }
   });
-  // Set canvas height based on item count
-  canvas.style.height = Math.max(180, filteredLabels.length * 44) + 'px';
 }
 
 // ─── COGS REPORT ─────────────────────────────────────────────────────────────
@@ -1471,7 +1474,8 @@ function restartCalc() {
     border-radius: 8px;
     padding: 16px;
   }
-  #cost-chart { display: block; }
+  .cr-chart-wrap { position: relative; width: 100%; }
+  .cr-chart-wrap canvas { position: absolute; inset: 0; }
 
   /* ─── RESULTS: RATE TABLE ─── */
   .cr-gst-box {
