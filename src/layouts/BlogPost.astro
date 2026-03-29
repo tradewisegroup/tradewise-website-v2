@@ -7,42 +7,47 @@ interface Props {
     pubDate: string;
     author?: string;
     category?: string;
+    frontmatter?: {
+        title: string;
+        description: string;
+        pubDate: string;
+        author?: string;
+        category?: string;
+    };
 }
 
-const { title, description, pubDate, author = 'Tradewise Group', category = 'Resources' } = Astro.props;
+// Support both direct props (injected layouts) and frontmatter (markdown layouts)
+const fm = Astro.props.frontmatter ?? Astro.props;
+const title       = fm.title       ?? '';
+const description = fm.description ?? '';
+const pubDate     = fm.pubDate     ?? '';
+const author      = fm.author      ?? 'Tradewise Group';
+const category    = fm.category    ?? 'Resources';
 
-const formattedDate = new Date(pubDate).toLocaleDateString('en-AU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-});
+const formattedDate = pubDate
+    ? new Date(pubDate).toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
 ---
 
 <MainLayout title={`${title} | Tradewise Group`} description={description}>
 
-    <!-- Article Header -->
-    <section class="bg-tradewise-navy text-white py-16 md:py-24">
-        <div class="max-w-3xl mx-auto px-6">
-            <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-5">
-                {category}
-            </p>
-            <h1 class="font-heading text-3xl md:text-5xl font-bold leading-tight mb-6">
-                {title}
-            </h1>
-            <p class="text-white/60 text-lg leading-relaxed mb-8">
-                {description}
-            </p>
-            <div class="flex items-center gap-3 text-white/40 text-sm">
-                <span>{author}</span>
-                <span>·</span>
-                <time datetime={pubDate}>{formattedDate}</time>
-            </div>
-        </div>
-    </section>
-
     <!-- Article Body -->
     <section class="bg-concrete py-16 md:py-20">
         <div class="max-w-3xl mx-auto px-6">
+
+            <!-- Article title & meta -->
+            <div class="mb-10 pb-8 border-b border-forge-black/10">
+                <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-4">{category}</p>
+                <h1 class="font-heading text-3xl md:text-4xl font-bold text-forge-black leading-tight mb-4">
+                    {title}
+                </h1>
+                <p class="text-forge-black/55 text-lg leading-relaxed mb-5">{description}</p>
+                <div class="flex items-center gap-2 text-forge-black/40 text-sm">
+                    <span>{author}</span>
+                    <span>·</span>
+                    <time datetime={pubDate}>{formattedDate}</time>
+                </div>
+            </div>
 
             <!-- Prose content -->
             <div class="prose prose-lg max-w-none
