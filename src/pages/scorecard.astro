@@ -799,6 +799,8 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
     submitSpinner.classList.add('hidden');
 
     renderResults(results);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'scorecard_completion' });
     goToStep(4);
 });
 

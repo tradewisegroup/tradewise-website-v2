@@ -355,6 +355,8 @@ import MainLayout from '../layouts/MainLayout.astro';
                 successEl.querySelector('p').textContent = "Thanks for reaching out! We'll be in touch within one business day.";
                 document.getElementById('contact-form').classList.add('hidden');
                 successEl.classList.remove('hidden');
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({ event: 'generate_lead' });
             }
 
         } catch (err) {

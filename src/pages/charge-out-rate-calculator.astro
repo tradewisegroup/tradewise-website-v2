@@ -778,6 +778,8 @@ function calcAndShow() {
   collectData(5);
   buildResults();
   goToScreen('results');
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'calculator_completion' });
 }
 
 // ─── SCREEN 1: SUB FLAGS ──────────────────────────────────────────────────────
