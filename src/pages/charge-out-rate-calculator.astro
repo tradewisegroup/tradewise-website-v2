@@ -97,7 +97,7 @@ import MainLayout from '../layouts/MainLayout.astro';
             </select>
           </div>
         </div>
-        <button type="button" class="cr-btn-primary cr-btn-full" id="lead-submit-btn" onclick="handleLeadSubmit(event)">
+        <button type="button" class="cr-btn-primary cr-btn-full" id="lead-submit-btn" onclick="handleLeadSubmit()">
           <span id="lead-submit-label">Start calculating →</span>
           <svg id="lead-spinner" class="cr-spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
         </button>
@@ -588,8 +588,6 @@ document.addEventListener('DOMContentLoaded', function() {
   el('s5-staff').addEventListener('input', refreshOverheadFormula);
   el('s5-hrs').addEventListener('input', refreshOverheadFormula);
 
-  // Lead form
-  el('lead-form').addEventListener('submit', handleLeadSubmit);
 });
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -623,9 +621,7 @@ function getToggleValue(groupId) {
 }
 
 // ─── LEAD FORM ────────────────────────────────────────────────────────────────
-async function handleLeadSubmit(e) {
-  e.preventDefault();
-
+async function handleLeadSubmit() {
   var fields = [
     { id: 'lf-first',    req: true,  email: false },
     { id: 'lf-last',     req: true,  email: false },
