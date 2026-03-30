@@ -97,7 +97,7 @@ import MainLayout from '../layouts/MainLayout.astro';
             </select>
           </div>
         </div>
-        <button type="submit" class="cr-btn-primary cr-btn-full" id="lead-submit-btn">
+        <button type="button" class="cr-btn-primary cr-btn-full" id="lead-submit-btn" onclick="handleLeadSubmit(event)">
           <span id="lead-submit-label">Start calculating →</span>
           <svg id="lead-spinner" class="cr-spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
         </button>
@@ -434,18 +434,26 @@ import MainLayout from '../layouts/MainLayout.astro';
         <p class="cr-ib-body" id="res-loss">—</p>
       </div>
 
-      <!-- CTA 1: COGS report -->
-      <div class="cr-cta-card cr-mb">
-        <div class="cr-cta-icon">📊</div>
-        <div>
-          <h3 class="cr-cta-h">Get your free personalised COGS report</h3>
-          <p class="cr-cta-body" id="cta-cogs-body">We'll build out a full cost model for your business based on these numbers and send it to you.</p>
-          <button type="button" class="cr-btn-primary cr-mt-sm" id="cogs-btn" onclick="sendCogsReport()">
-            <span id="cogs-btn-lbl">Send my free COGS report</span>
-            <svg id="cogs-spinner" class="cr-spinner hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" stroke-opacity="0.25"/><path d="M12 3a9 9 0 0 1 9 9"/></svg>
-          </button>
-          <div id="cogs-thanks" class="cr-infobox cr-ib-green cr-mt hidden">
-            <p class="cr-ib-body">✅ Done! We'll send your COGS report to <strong id="cogs-email-confirm"></strong> shortly.</p>
+      <!-- Download buttons -->
+      <div class="cr-download-row cr-mb">
+        <div class="cr-download-card">
+          <div class="cr-cta-icon">📊</div>
+          <div>
+            <h3 class="cr-cta-h">COGS Report</h3>
+            <p class="cr-cta-body">Full cost breakdown — labour, on-costs, allowances, overhead and minimum charge-out rate.</p>
+            <button type="button" class="cr-btn-primary cr-mt-sm" onclick="downloadCogsReport()">
+              ↓ Download COGS Report
+            </button>
+          </div>
+        </div>
+        <div class="cr-download-card">
+          <div class="cr-cta-icon">📋</div>
+          <div>
+            <h3 class="cr-cta-h">Business Scorecard</h3>
+            <p class="cr-cta-body">See how your numbers score across pricing, compliance, margin and overhead allocation.</p>
+            <button type="button" class="cr-btn-primary cr-mt-sm" onclick="downloadScorecard()">
+              ↓ Download Scorecard
+            </button>
           </div>
         </div>
       </div>
@@ -1058,33 +1066,206 @@ function renderChart(base, sup, tax, leave, allowances, prod) {
   });
 }
 
-// ─── COGS REPORT ─────────────────────────────────────────────────────────────
-async function sendCogsReport() {
-  var btn  = el('cogs-btn');
-  var lbl  = el('cogs-btn-lbl');
-  var spin = el('cogs-spinner');
-  btn.disabled = true;
-  lbl.textContent = 'Sending…';
-  spin.classList.remove('hidden');
+// ─── PDF DOWNLOADS ────────────────────────────────────────────────────────────
+function printStyles() {
+  return '<style>' +
+    'body{font-family:system-ui,-apple-system,sans-serif;color:#1a1a1a;margin:0;padding:0}' +
+    '.rpt{max-width:720px;margin:0 auto;padding:40px 32px}' +
+    '.rpt-header{border-bottom:3px solid #1E3A5F;padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end}' +
+    '.rpt-logo{font-size:22px;font-weight:700;color:#1E3A5F}' +
+    '.rpt-meta{text-align:right;font-size:12px;color:#888;line-height:1.8}' +
+    'h1{font-size:26px;font-weight:700;color:#1E3A5F;margin:0 0 4px}' +
+    'h2{font-size:16px;font-weight:600;color:#1E3A5F;margin:28px 0 10px;text-transform:uppercase;letter-spacing:.05em;font-size:12px;border-bottom:1px solid #e0e0e0;padding-bottom:6px}' +
+    '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}' +
+    '.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px}' +
+    '.metric{background:#f8f8f6;border-radius:8px;padding:14px;text-align:center}' +
+    '.metric-lbl{font-size:11px;color:#888;margin:0 0 4px}' +
+    '.metric-val{font-size:20px;font-weight:700;color:#1E3A5F;margin:0}' +
+    '.metric-red .metric-val{color:#B91C1C}' +
+    'table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}' +
+    'th{text-align:left;font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.04em;padding:7px 8px;border-bottom:1.5px solid #ddd}' +
+    'td{padding:8px 8px;border-bottom:.5px solid #eee;vertical-align:middle}' +
+    'td:not(:first-child){text-align:right}' +
+    '.tbl-total td{border-top:2px solid #1E3A5F;font-weight:700;border-bottom:none}' +
+    '.callout{background:#FEF6E8;border-left:3px solid #D4820A;border-radius:6px;padding:12px 14px;font-size:13px;margin-bottom:16px}' +
+    '.callout-red{background:#FEF0F0;border-left-color:#DC2626}' +
+    '.callout-green{background:#F0FBF5;border-left-color:#1D9E75}' +
+    '.gst-box{background:#1E3A5F;color:#fff;border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}' +
+    '.gst-val{font-size:24px;font-weight:700}' +
+    '.sc-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:.5px solid #eee}' +
+    '.sc-label{flex:1;font-size:14px}' +
+    '.sc-bar-wrap{width:140px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden}' +
+    '.sc-bar{height:100%;border-radius:4px}' +
+    '.sc-score{width:48px;text-align:right;font-size:14px;font-weight:600}' +
+    '.sc-note{font-size:12px;color:#666;flex:1;text-align:right}' +
+    '.total-score{display:flex;align-items:center;justify-content:space-between;background:#1E3A5F;color:#fff;border-radius:10px;padding:18px 22px;margin:20px 0}' +
+    '.total-score-lbl{font-size:14px;opacity:.8}' +
+    '.total-score-val{font-size:36px;font-weight:700}' +
+    '.footer{text-align:center;font-size:11px;color:#bbb;margin-top:40px;padding-top:16px;border-top:1px solid #eee}' +
+    '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}' +
+    '</style>';
+}
 
-  if (LEAD_WEBHOOK_URL) {
-    try {
-      await fetch(LEAD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: 'cogs_report', leadData: leadData, resultsData: resultsData }),
-      });
-    } catch(_) {}
-  }
+function reportHeader(title) {
+  var d = new Date().toLocaleDateString('en-AU', { day:'numeric', month:'long', year:'numeric' });
+  return '<div class="rpt-header">' +
+    '<div><div class="rpt-logo">Tradewise Group</div><h1>' + title + '</h1></div>' +
+    '<div class="rpt-meta">' +
+      (leadData.businessName ? '<strong>' + leadData.businessName + '</strong><br>' : '') +
+      (leadData.firstName ? leadData.firstName + ' ' + leadData.lastName + '<br>' : '') +
+      (leadData.email ? leadData.email + '<br>' : '') +
+      (leadData.state ? leadData.state + (leadData.tradeType ? ' · ' + leadData.tradeType : '') + '<br>' : '') +
+      'Generated ' + d +
+    '</div>' +
+  '</div>';
+}
 
-  // Open contact page in new tab
-  if (CONTACT_PAGE_URL) window.open(CONTACT_PAGE_URL, '_blank', 'noopener,noreferrer');
+function downloadCogsReport() {
+  var r = resultsData;
+  if (!r.trueCost) { alert('Please complete the calculator first.'); return; }
 
-  lbl.textContent = 'Sent!';
-  spin.classList.add('hidden');
-  showEl('cogs-thanks', true);
-  el('cogs-email-confirm').textContent = leadData.email || 'your email';
-  btn.disabled = true;
+  var isSub = r.workerType === 'subcontractor';
+  var ptLabel = r.state ? 'Payroll tax (' + r.state + ')' : 'Payroll tax';
+
+  var costRows = '';
+  var items = [
+    { label: isSub ? 'Contract payments' : 'Base salary',   val: r.salary,    color: '#185FA5' },
+    { label: 'Superannuation (11.5%)',                        val: r.superAmt,  color: '#1D9E75' },
+    { label: ptLabel,                                         val: r.ptAmt,     color: '#BA7517' },
+    { label: 'Annual leave provision',                        val: r.alAmt,     color: '#D85A30' },
+    { label: 'Long service leave',                            val: r.lslAmt,    color: '#D85A30' },
+    { label: 'Allowances',                                    val: r.allowTotal,color: '#7F77DD' },
+    { label: 'Productivity allowance',                        val: r.prodAmt,   color: '#888780' },
+  ];
+  items.forEach(function(item) {
+    if (item.val > 0) {
+      costRows += '<tr><td>' + item.label + '</td>' +
+        '<td>' + fmtD(item.val) + '</td>' +
+        '<td>' + (r.salary > 0 ? Math.round((item.val / r.salary) * 100) + '%' : '—') + '</td></tr>';
+    }
+  });
+
+  var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>COGS Report — ' + (leadData.businessName || 'Tradewise') + '</title>' +
+    printStyles() + '</head><body><div class="rpt">' +
+    reportHeader('COGS &amp; Charge-Out Rate Report') +
+
+    '<h2>Key metrics</h2>' +
+    '<div class="grid4">' +
+      '<div class="metric"><p class="metric-lbl">Annual salary / contract</p><p class="metric-val">' + fmtD(r.salary) + '</p></div>' +
+      '<div class="metric metric-red"><p class="metric-lbl">True annual cost</p><p class="metric-val">' + fmtD(r.trueCost) + '</p></div>' +
+      '<div class="metric"><p class="metric-lbl">Labour cost / hour</p><p class="metric-val">' + fmtHr(r.labourHr) + '</p></div>' +
+      '<div class="metric"><p class="metric-lbl">Overhead / hour</p><p class="metric-val">' + fmtHr(r.overheadHr) + '</p></div>' +
+    '</div>' +
+
+    '<h2>Annual cost breakdown</h2>' +
+    '<table><thead><tr><th>Cost item</th><th>Annual $</th><th>% of salary</th></tr></thead><tbody>' +
+    costRows +
+    '<tr class="tbl-total"><td>Total true cost</td><td>' + fmtD(r.trueCost) + '</td><td>' +
+      (r.salary > 0 ? Math.round((r.trueCost / r.salary) * 100) + '%' : '—') + '</td></tr>' +
+    '</tbody></table>' +
+
+    '<h2>Charge-out rate build-up</h2>' +
+    '<table><tbody>' +
+      '<tr><td>Labour cost per hour</td><td>' + fmtHr(r.labourHr) + '</td></tr>' +
+      '<tr><td>+ Overhead per hour</td><td>' + fmtHr(r.overheadHr) + '</td></tr>' +
+      '<tr><td>= Total cost per hour</td><td>' + fmtHr(r.totalHr) + '</td></tr>' +
+      '<tr><td>÷ (1 − ' + Math.round(r.margin * 100) + '% margin)</td><td>÷ ' + (1 - r.margin).toFixed(2) + '</td></tr>' +
+      '<tr class="tbl-total"><td>Minimum charge-out rate</td><td>' + fmtHr(r.minRate) + '</td></tr>' +
+    '</tbody></table>' +
+    '<div class="gst-box"><span>Including GST (×1.1)</span><span class="gst-val">' + fmtHr(r.gstRate) + '</span></div>' +
+
+    '<div class="callout">If you\'re charging at base salary rate only (' + fmtHr(r.baseSalaryHr) + '), you\'re short ' +
+      fmtHr(r.shortfallHr) + ' per hour — that\'s <strong>' + fmtD(r.annualShortfall) + '/year</strong> left on the table for this one worker.</div>' +
+
+    '<p class="footer">© Tradewise Group · tradewisegroup.au · This report is for indicative purposes only. Speak to your advisor before making pricing decisions.</p>' +
+    '</div></body></html>';
+
+  var win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+  setTimeout(function() { win.print(); }, 600);
+}
+
+function downloadScorecard() {
+  var r = resultsData;
+  if (!r.trueCost) { alert('Please complete the calculator first.'); return; }
+
+  // ---- Scoring logic (each out of 10) ----
+  // 1. Rate adequacy — are they charging enough to cover costs + margin?
+  var rateScore = r.minRate > 0 ? Math.min(10, Math.round((r.minRate / (r.baseSalaryHr || 1)) * 5)) : 0;
+  // 2. Margin health — 30% = 10, 0% = 0
+  var marginScore = Math.min(10, Math.round((r.margin / 0.30) * 10));
+  // 3. Cost awareness — having more cost categories accounted for = better
+  var costItems = [r.superAmt, r.ptAmt, r.alAmt, r.lslAmt, r.prodAmt, r.allowTotal, r.overheadHr > 0 ? 1 : 0].filter(function(v){ return v > 0; }).length;
+  var costScore = Math.round((costItems / 7) * 10);
+  // 4. Overhead allocation — having overhead > 0 scored on reasonableness
+  var overheadScore = r.overheadHr > 0 ? (r.overheadHr < 80 ? 10 : r.overheadHr < 150 ? 7 : 5) : 3;
+  // 5. Compliance — flags lower the score
+  var complianceScore = 10 - (calcData.flag90 ? 3 : 0) - (calcData.flag80 ? 3 : 0);
+
+  var scores = [
+    { label: 'Rate adequacy',       score: rateScore,      note: rateScore >= 8 ? 'Rate covers all costs' : rateScore >= 5 ? 'Rate may be too low' : 'Rate is likely insufficient' },
+    { label: 'Margin health',       score: marginScore,    note: marginScore >= 8 ? 'Strong margin buffer' : marginScore >= 5 ? 'Margin is thin' : 'Margin is below industry norm' },
+    { label: 'Cost awareness',      score: costScore,      note: costScore >= 8 ? 'All cost categories covered' : 'Some cost categories may be missing' },
+    { label: 'Overhead allocation', score: overheadScore,  note: r.overheadHr > 0 ? fmtHr(r.overheadHr) + ' recovered per hour' : 'No overhead allocated — add in Step 5' },
+    { label: 'Compliance risk',     score: complianceScore,note: complianceScore === 10 ? 'No compliance flags' : 'Review subcontractor obligations' },
+  ];
+
+  var totalScore = Math.round(scores.reduce(function(s, x){ return s + x.score; }, 0) / scores.length);
+  var totalColor = totalScore >= 8 ? '#1D9E75' : totalScore >= 5 ? '#D4820A' : '#DC2626';
+  var totalLabel = totalScore >= 8 ? 'Strong' : totalScore >= 5 ? 'Needs attention' : 'At risk';
+
+  var scRows = '';
+  scores.forEach(function(s) {
+    var barColor = s.score >= 8 ? '#1D9E75' : s.score >= 5 ? '#D4820A' : '#DC2626';
+    scRows += '<div class="sc-row">' +
+      '<span class="sc-label">' + s.label + '</span>' +
+      '<div class="sc-bar-wrap"><div class="sc-bar" style="width:' + (s.score * 10) + '%;background:' + barColor + '"></div></div>' +
+      '<span class="sc-score" style="color:' + barColor + '">' + s.score + '/10</span>' +
+      '<span class="sc-note">' + s.note + '</span>' +
+    '</div>';
+  });
+
+  var recList = '';
+  if (rateScore < 7)       recList += '<li>Increase your charge-out rate to at least ' + fmtHr(r.minRate) + ' (ex GST) to cover all true costs.</li>';
+  if (marginScore < 7)     recList += '<li>Your target margin of ' + Math.round(r.margin * 100) + '% is below the 30% industry benchmark — consider increasing it.</li>';
+  if (r.overheadHr === 0)  recList += '<li>You have no overhead allocated. Add your business running costs in Step 5 for an accurate rate.</li>';
+  if (calcData.flag90 || calcData.flag80) recList += '<li>Review your subcontractor obligations — payroll tax or super may apply. Speak to your accountant.</li>';
+  if (r.allowTotal === 0)  recList += '<li>No allowances included — check if vehicles, phones or PPE should be factored in.</li>';
+  if (!recList) recList = '<li>Your numbers look solid. Book a strategy call to confirm your pricing is optimised for growth.</li>';
+
+  var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Business Scorecard — ' + (leadData.businessName || 'Tradewise') + '</title>' +
+    printStyles() + '</head><body><div class="rpt">' +
+    reportHeader('Business Pricing Scorecard') +
+
+    '<div class="total-score" style="background:' + totalColor + '">' +
+      '<div><p class="total-score-lbl">Overall score</p><p class="total-score-val">' + totalScore + '/10</p></div>' +
+      '<div style="text-align:right"><p class="total-score-lbl">Rating</p><p style="font-size:20px;font-weight:700">' + totalLabel + '</p></div>' +
+    '</div>' +
+
+    '<h2>Score breakdown</h2>' +
+    scRows +
+
+    '<h2>Recommendations</h2>' +
+    '<ul style="font-size:14px;line-height:1.8;padding-left:20px;color:#333">' + recList + '</ul>' +
+
+    '<h2>Your rate summary</h2>' +
+    '<table><tbody>' +
+      '<tr><td>Annual salary / contract cost</td><td>' + fmtD(r.salary) + '</td></tr>' +
+      '<tr><td>True annual cost (all on-costs)</td><td>' + fmtD(r.trueCost) + '</td></tr>' +
+      '<tr><td>Minimum charge-out rate (ex GST)</td><td>' + fmtHr(r.minRate) + '</td></tr>' +
+      '<tr class="tbl-total"><td>Minimum charge-out rate (inc GST)</td><td>' + fmtHr(r.gstRate) + '</td></tr>' +
+    '</tbody></table>' +
+
+    '<div class="callout callout-green" style="margin-top:24px">Want us to implement a proper pricing model in your business? Book a free 30-minute strategy call at <strong>tradewisegroup.au/contact</strong></div>' +
+
+    '<p class="footer">© Tradewise Group · tradewisegroup.au · This scorecard is for indicative purposes only. Speak to your advisor before making pricing decisions.</p>' +
+    '</div></body></html>';
+
+  var win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+  setTimeout(function() { win.print(); }, 600);
 }
 
 // ─── RESTART ─────────────────────────────────────────────────────────────────
@@ -1098,9 +1279,6 @@ function restartCalc() {
   el('screen-0').classList.remove('hidden');
   el('screen-0').classList.add('cr-active');
   showEl('cr-progress', false);
-  showEl('cogs-thanks', false);
-  el('cogs-btn').disabled = false;
-  el('cogs-btn-lbl').textContent = 'Send my free COGS report';
   if (costChart) { costChart.destroy(); costChart = null; }
   window.scrollTo({ top: 0 });
 }
@@ -1492,6 +1670,25 @@ function restartCalc() {
     font-size: 22px;
     font-weight: 700;
   }
+
+  /* ─── DOWNLOAD BUTTONS ─── */
+  .cr-download-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 520px) { .cr-download-row { grid-template-columns: 1fr; } }
+  .cr-download-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 20px 16px;
+    background: #f8f8f6;
+  }
+  .cr-download-card .cr-cta-icon { font-size: 24px; flex-shrink: 0; }
+  .cr-download-card .cr-cta-h { font-size: 15px; }
 
   /* ─── CTAs ─── */
   .cr-cta-card {
