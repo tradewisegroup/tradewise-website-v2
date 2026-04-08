@@ -3,14 +3,6 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 const posts = [
     {
-        title: 'Supply Chain Crisis — What Tradies Need To Do Right Now',
-        description: 'Fuel up 55%. PVC pipes up 36%. Here\'s exactly what trade business owners in Australia need to do right now to protect their margins.',
-        category: 'Crisis Briefing',
-        date: '2026-04-07',
-        href: '/blog/supply-chain-crisis-2026',
-        ready: true,
-    },
-    {
         title: 'The 1-Page Business Plan for Tradies',
         description: 'Most trade business owners have never written down where the business is going — not really. The V/TO from EOS changes that. Here\'s how it works, plus a free downloadable template.',
         category: 'Strategy',
@@ -131,6 +123,19 @@ const categoryColours: Record<string, string> = {
                         class="shrink-0 bg-growth-teal text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200"
                     >
                         Calculate My Rate →
+                    </a>
+                </div>
+                <div class="bg-white border border-red-200 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div>
+                        <p class="text-red-600 text-xs font-semibold tracking-widest uppercase mb-2">🚨 Free Download — Crisis Briefing</p>
+                        <h2 class="font-heading text-xl font-bold text-forge-black mb-1">Supply Chain Action Kit 2026</h2>
+                        <p class="text-forge-black/55 text-sm">Fuel up 55%. PVC pipes up 36%. Download the free PDF: price tracker by trade, quote clause wording, job cost calculator template, and 12-point action checklist.</p>
+                    </div>
+                    <a
+                        href="/supply-chain-action-kit-2026"
+                        class="shrink-0 bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200 whitespace-nowrap"
+                    >
+                        Download Free Kit →
                     </a>
                 </div>
             </div>

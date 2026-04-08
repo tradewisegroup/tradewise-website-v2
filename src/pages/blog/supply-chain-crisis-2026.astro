@@ -208,48 +208,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .sc-progress-bar-inner{height:100%;background:var(--green);border-radius:4px;transition:width .3s}
 .sc-progress-label{font-size:13px;color:var(--grey);font-weight:500;margin-bottom:24px}
 
-/* PDF GATE */
-.sc-pdf-gate{background:var(--navy);border-radius:12px;padding:40px 36px;margin:48px 0;position:relative;overflow:hidden}
-.sc-pdf-gate::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:rgba(26,122,110,.08);border-radius:50%;pointer-events:none}
-.sc-pdf-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:24px;flex-wrap:wrap}
-.sc-pdf-icon-box{width:60px;height:60px;background:rgba(255,255,255,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
-.sc-pdf-eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7DCCC7;margin-bottom:6px}
-.sc-pdf-title{font-family:var(--font-display);font-weight:900;font-size:28px;text-transform:uppercase;color:white;line-height:1.05;margin-bottom:6px}
-.sc-pdf-sub{font-size:15px;color:#94A3B8;line-height:1.5}
-.sc-pdf-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.sc-pdf-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:6px 12px;font-size:13px;color:#CBD5E1;font-weight:500}
-.sc-pdf-chip::before{content:'✓  ';color:#4ADE80}
-
-/* FORM */
-.sc-form-state{display:none}
-.sc-form-state.active{display:block}
-.sc-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:520px){.sc-form-row{grid-template-columns:1fr}}
-.sc-form-field{display:flex;flex-direction:column;gap:5px}
-.sc-form-field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#64748B}
-.sc-form-field input,.sc-form-field select{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);transition:border-color .15s,background .15s;width:100%}
-.sc-form-field input::placeholder{color:#475569}
-.sc-form-field input:focus,.sc-form-field select:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.1)}
-.sc-form-field select option{background:#1E3A5F}
-.sc-form-consent{display:flex;align-items:flex-start;gap:10px;margin:16px 0 20px}
-.sc-form-consent input[type=checkbox]{margin-top:3px;flex-shrink:0;accent-color:var(--accent);width:16px;height:16px}
-.sc-form-consent label{font-size:13px;color:#64748B;line-height:1.5}
-.sc-form-consent label a{color:#7DCCC7}
-.sc-form-submit{width:100%;background:var(--accent);color:white;border:none;padding:14px 24px;border-radius:8px;font-size:16px;font-weight:700;font-family:var(--font-body);cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:10px}
-.sc-form-submit:hover{background:var(--accent-dark)}
-.sc-form-submit:disabled{opacity:.6;cursor:not-allowed}
-.sc-form-error{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);border-radius:6px;padding:10px 14px;font-size:13px;color:#FCA5A5;margin-bottom:14px;display:none}
-
-/* SUCCESS */
-.sc-success-state{text-align:center;padding:16px 0}
-.sc-success-icon{font-size:56px;margin-bottom:16px}
-.sc-success-title{font-family:var(--font-display);font-weight:900;font-size:32px;text-transform:uppercase;color:white;margin-bottom:10px}
-.sc-success-body{font-size:15px;color:#94A3B8;line-height:1.6;margin-bottom:28px}
-.sc-dl-btn{display:inline-flex;align-items:center;gap:10px;background:#22C55E;color:white;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;transition:background .15s;margin-bottom:12px}
-.sc-dl-btn:hover{background:#16A34A}
-.sc-strat-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#CBD5E1;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:background .15s;margin-left:10px}
-.sc-strat-btn:hover{background:rgba(255,255,255,.14)}
-@media(max-width:520px){.sc-strat-btn{margin-left:0;margin-top:10px}}
 
 /* REVEAL */
 .sc-reveal{opacity:0;transform:translateY(18px);transition:opacity .4s,transform .4s}
@@ -414,76 +372,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     <div class="sc-stat-box"><div class="sc-stat-num sc-sn-n">3,596</div><div class="sc-stat-label">building insolvencies in 2025</div></div>
   </div>
 
-  <!-- PDF GATE -->
+  <!-- FREE KIT CTA -->
   <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Free Download</div></div>
-  <div class="sc-pdf-gate sc-reveal" id="sc-pdf-gate">
-    <div class="sc-pdf-header">
-      <div class="sc-pdf-icon-box">📄</div>
-      <div>
-        <div class="sc-pdf-eyebrow">Free resource — Tradewise Group</div>
-        <div class="sc-pdf-title">Supply Chain Crisis<br>Action Kit 2026</div>
-        <div class="sc-pdf-sub">Download the full PDF. Print it, stick it on the wall, share it with your crew.</div>
-      </div>
+  <div class="sc-reveal" style="background:var(--navy);border-radius:12px;padding:32px 36px;margin:32px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div>
+      <p style="font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7DCCC7;margin-bottom:8px">Free Resource — Tradewise Group</p>
+      <div style="font-family:var(--font-display);font-weight:900;font-size:26px;text-transform:uppercase;color:white;margin-bottom:6px">Supply Chain Action Kit 2026</div>
+      <p style="font-family:var(--font-body);font-size:14px;color:#64748B;line-height:1.5">Price tracker by trade · Quote clause wording · Job cost calculator · 12-point checklist · June cliff guide</p>
     </div>
-    <div class="sc-pdf-chips">
-      <span class="sc-pdf-chip">Price tracker by trade</span>
-      <span class="sc-pdf-chip">Job cost calculator template</span>
-      <span class="sc-pdf-chip">Quote clause wording</span>
-      <span class="sc-pdf-chip">12-point action checklist</span>
-      <span class="sc-pdf-chip">June cliff planning guide</span>
-    </div>
-
-    <!-- FORM -->
-    <div class="sc-form-state active" id="sc-state-form">
-      <div class="sc-form-error" id="sc-form-error">Please fill in all required fields.</div>
-      <div class="sc-form-row">
-        <div class="sc-form-field"><label>First name *</label><input type="text" id="sc-fname" placeholder="Mick" required></div>
-        <div class="sc-form-field"><label>Last name *</label><input type="text" id="sc-lname" placeholder="Taylor" required></div>
-      </div>
-      <div class="sc-form-row">
-        <div class="sc-form-field"><label>Email address *</label><input type="email" id="sc-email" placeholder="mick@yourbusiness.com.au" required></div>
-        <div class="sc-form-field"><label>Mobile *</label><input type="tel" id="sc-phone" placeholder="04XX XXX XXX" required></div>
-      </div>
-      <div class="sc-form-row">
-        <div class="sc-form-field"><label>Business name *</label><input type="text" id="sc-biz" placeholder="Taylor Plumbing Pty Ltd" required></div>
-        <div class="sc-form-field">
-          <label>Trade type *</label>
-          <select id="sc-trade" required>
-            <option value="">Select your trade</option>
-            <option>Plumbing</option>
-            <option>Electrical</option>
-            <option>HVAC / Refrigeration</option>
-            <option>Building / Carpentry</option>
-            <option>Civil / Earthworks</option>
-            <option>Painting / Rendering</option>
-            <option>Roofing</option>
-            <option>Tiling</option>
-            <option>Multiple trades / General</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="sc-form-consent">
-        <input type="checkbox" id="sc-consent" required>
-        <label for="sc-consent">I agree to receive the free download and occasional useful resources from Tradewise Group. No spam — unsubscribe any time. View our <a href="https://www.tradewisegroup.au/privacy-policy" target="_blank">Privacy Policy</a>.</label>
-      </div>
-      <button class="sc-form-submit" id="sc-submit-btn" onclick="scSubmitForm()">
-        <span id="sc-submit-label">📥 Download the Free Action Kit</span>
-      </button>
-    </div>
-
-    <!-- SUCCESS -->
-    <div class="sc-form-state" id="sc-state-success">
-      <div class="sc-success-state">
-        <div class="sc-success-icon">✅</div>
-        <div class="sc-success-title">You're all set!</div>
-        <div class="sc-success-body">Your Action Kit is ready to download. We've also sent a copy to your email.<br>Want to talk through your specific situation with a Tradewise business specialist?</div>
-        <div>
-          <a href="tradewise-supply-chain-action-kit-2026.pdf" download class="sc-dl-btn">📥 Download Action Kit PDF</a>
-          <a href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" class="sc-strat-btn">Book a free strategy call →</a>
-        </div>
-      </div>
-    </div>
+    <a href="/supply-chain-action-kit-2026" style="flex-shrink:0;background:var(--accent);color:white;padding:13px 24px;border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap">📥 Download Free →</a>
   </div>
 
   <!-- BOTTOM CALLOUTS -->
@@ -564,69 +461,6 @@ function scToggleCheck(id,i){
   const msgs=['Get cracking!','Good start — keep going!','Making progress.','Over halfway — smashing it!','Nearly there!','Legend! All done. 🎉'];
   const idx=done===scTotal?5:done>scTotal*.8?4:done>scTotal*.6?3:done>scTotal*.4?2:done>0?1:0;
   document.getElementById('sc-prog-label').textContent=done+' of '+scTotal+' actions completed — '+msgs[idx];
-}
-
-/* ── HUBSPOT FORM SUBMISSION ──
-   Replace PORTAL_ID and FORM_GUID with your HubSpot values.
-*/
-const SC_PORTAL_ID = '442932388';
-const SC_FORM_GUID = 'd32d9b5d-7659-4272-a745-4e93e7fc841b';
-
-function scSubmitForm(){
-  const fname   =document.getElementById('sc-fname').value.trim();
-  const lname   =document.getElementById('sc-lname').value.trim();
-  const email   =document.getElementById('sc-email').value.trim();
-  const phone   =document.getElementById('sc-phone').value.trim();
-  const biz     =document.getElementById('sc-biz').value.trim();
-  const trade   =document.getElementById('sc-trade').value;
-  const consent =document.getElementById('sc-consent').checked;
-  const errEl   =document.getElementById('sc-form-error');
-
-  if(!fname||!lname||!email||!phone||!biz||!trade||!consent){
-    errEl.style.display='block';
-    errEl.textContent='Please fill in all required fields and tick the consent box.';
-    return;
-  }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    errEl.style.display='block';
-    errEl.textContent='Please enter a valid email address.';
-    return;
-  }
-  errEl.style.display='none';
-  const btn=document.getElementById('sc-submit-btn');
-  btn.disabled=true;
-  document.getElementById('sc-submit-label').textContent='Submitting...';
-
-  const endpoint=`https://api.hsforms.com/submissions/v3/integration/submit/${SC_PORTAL_ID}/${SC_FORM_GUID}`;
-  const payload={
-    fields:[
-      {objectTypeId:'0-1',name:'firstname',    value:fname},
-      {objectTypeId:'0-1',name:'lastname',     value:lname},
-      {objectTypeId:'0-1',name:'email',        value:email},
-      {objectTypeId:'0-1',name:'phone',        value:phone},
-      {objectTypeId:'0-1',name:'company',      value:biz},
-      {objectTypeId:'0-1',name:'trade_type',   value:trade},
-      {objectTypeId:'0-1',name:'lead_source',  value:'Supply Chain Crisis Article — PDF Download'},
-    ],
-    context:{pageUri:window.location.href,pageName:'Supply Chain Crisis Action Kit 2026'},
-    legalConsentOptions:{
-      consent:{
-        consentToProcess:true,
-        text:'I agree to receive content and resources from Tradewise Group.',
-        communications:[{value:true,subscriptionTypeId:999,text:'Marketing emails'}]
-      }
-    }
-  };
-
-  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-    .then(()=>scShowSuccess())
-    .catch(()=>scShowSuccess());
-}
-
-function scShowSuccess(){
-  document.getElementById('sc-state-form').classList.remove('active');
-  document.getElementById('sc-state-success').classList.add('active');
-  document.getElementById('sc-pdf-gate').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 /* ── SCROLL REVEAL ── */

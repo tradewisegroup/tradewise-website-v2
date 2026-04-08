@@ -1,0 +1,217 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Supply Chain Crisis Action Kit 2026 — Free Download | Tradewise Group"
+  description="Free PDF: price tracker by trade, job cost calculator template, quote clause wording, 12-point action checklist, and June cliff planning guide."
+>
+
+<style>
+:root {
+  --kit-navy:        #1E3A5F;
+  --kit-navy-dark:   #141C24;
+  --kit-accent:      #1A7A6E;
+  --kit-accent-dark: #14655A;
+  --kit-amber:       #D4820A;
+  --kit-red:         #DC2626;
+  --kit-green:       #22C55E;
+  --kit-green-dark:  #16A34A;
+  --kit-grey:        #64748B;
+  --kit-border:      rgba(255,255,255,.12);
+  --font-display:    'Barlow Condensed', Georgia, serif;
+  --font-body:       'Outfit', sans-serif;
+}
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet" />
+
+<!-- Hero -->
+<section style="background:var(--kit-navy);padding:64px 24px 72px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-80px;right:-80px;width:360px;height:360px;background:rgba(26,122,110,.07);border-radius:50%;pointer-events:none"></div>
+  <div style="max-width:680px;margin:0 auto;text-align:center;position:relative">
+    <p style="font-family:var(--font-body);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#7DCCC7;margin-bottom:16px">Free Resource — Tradewise Group</p>
+    <div style="font-size:52px;margin-bottom:20px">📄</div>
+    <h1 style="font-family:var(--font-display);font-weight:900;font-size:clamp(36px,6vw,64px);text-transform:uppercase;line-height:.97;color:white;letter-spacing:-.5px;margin-bottom:20px">
+      Supply Chain Crisis<br><span style="color:#7DCCC7">Action Kit 2026</span>
+    </h1>
+    <p style="font-family:var(--font-body);font-size:17px;color:rgba(255,255,255,.65);line-height:1.6;max-width:520px;margin:0 auto 32px">
+      Everything trade business owners need to protect their margins right now — in one printable PDF.
+    </p>
+    <!-- Chips -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:8px">
+      {['Price tracker by trade','Job cost calculator template','Quote clause wording','12-point action checklist','June cliff planning guide'].map(chip => (
+        <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:6px 14px;font-family:var(--font-body);font-size:13px;color:rgba(255,255,255,.8);font-weight:500">
+          ✓ &nbsp;{chip}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section style="background:#F4F1EC;padding:56px 24px 72px">
+  <div style="max-width:560px;margin:0 auto">
+
+    <div style="background:var(--kit-navy);border-radius:14px;padding:40px 36px" id="kit-gate">
+
+      <h2 style="font-family:var(--font-display);font-weight:900;font-size:28px;text-transform:uppercase;color:white;margin-bottom:6px">Get the free kit</h2>
+      <p style="font-family:var(--font-body);font-size:14px;color:var(--kit-grey);margin-bottom:28px">Enter your details below — we'll send a copy to your email too.</p>
+
+      <!-- FORM STATE -->
+      <div id="kit-form-state">
+        <div id="kit-error" style="display:none;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);border-radius:6px;padding:10px 14px;font-family:var(--font-body);font-size:13px;color:#FCA5A5;margin-bottom:16px"></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px" class="kit-grid">
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">First name *</label>
+            <input id="kit-fname" type="text" placeholder="Mick" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">Last name *</label>
+            <input id="kit-lname" type="text" placeholder="Taylor" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px">
+          <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">Email address *</label>
+          <input id="kit-email" type="email" placeholder="mick@yourbusiness.com.au" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px">
+          <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">Mobile *</label>
+          <input id="kit-phone" type="tel" placeholder="04XX XXX XXX" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px" class="kit-grid">
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">Business name *</label>
+            <input id="kit-biz" type="text" placeholder="Taylor Plumbing Pty Ltd" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <label style="font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--kit-grey)">Trade type *</label>
+            <select id="kit-trade" style="background:#1E3A5F;border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);width:100%;outline:none">
+              <option value="">Select your trade</option>
+              <option>Plumbing</option>
+              <option>Electrical</option>
+              <option>HVAC / Refrigeration</option>
+              <option>Building / Carpentry</option>
+              <option>Civil / Earthworks</option>
+              <option>Painting / Rendering</option>
+              <option>Roofing</option>
+              <option>Tiling</option>
+              <option>Multiple trades / General</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:10px;margin:16px 0 22px">
+          <input type="checkbox" id="kit-consent" style="margin-top:3px;flex-shrink:0;accent-color:var(--kit-accent);width:16px;height:16px">
+          <label for="kit-consent" style="font-family:var(--font-body);font-size:13px;color:var(--kit-grey);line-height:1.5">
+            I agree to receive the free download and occasional useful resources from Tradewise Group. No spam — unsubscribe any time. View our <a href="/privacy-policy" style="color:#7DCCC7">Privacy Policy</a>.
+          </label>
+        </div>
+
+        <button id="kit-submit" onclick="kitSubmit()" style="width:100%;background:var(--kit-accent);color:white;border:none;padding:15px 24px;border-radius:8px;font-size:16px;font-weight:700;font-family:var(--font-body);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px">
+          <span id="kit-submit-label">📥 Download the Free Action Kit</span>
+        </button>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div id="kit-success-state" style="display:none;text-align:center;padding:16px 0">
+        <div style="font-size:56px;margin-bottom:16px">✅</div>
+        <h3 style="font-family:var(--font-display);font-weight:900;font-size:32px;text-transform:uppercase;color:white;margin-bottom:10px">You're all set!</h3>
+        <p style="font-family:var(--font-body);font-size:15px;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:28px">
+          Your Action Kit is ready to download. We've also sent a copy to your email.<br>
+          Want to talk through your specific situation with a Tradewise specialist?
+        </p>
+        <a href="tradewise-supply-chain-action-kit-2026.pdf" download style="display:inline-flex;align-items:center;gap:10px;background:var(--kit-green);color:white;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:700;font-family:var(--font-body);text-decoration:none;margin-bottom:12px">
+          📥 Download Action Kit PDF
+        </a>
+        <br>
+        <a href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-body);text-decoration:none;margin-top:10px">
+          Book a free strategy call →
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Article link -->
+    <p style="font-family:var(--font-body);font-size:14px;color:#5A6478;text-align:center;margin-top:20px">
+      Want the full context? Read the <a href="/blog/supply-chain-crisis-2026" style="color:var(--kit-accent);font-weight:600">Supply Chain Crisis article →</a>
+    </p>
+
+  </div>
+</section>
+
+<style>
+@media(max-width:480px){
+  .kit-grid{ grid-template-columns:1fr !important }
+}
+</style>
+
+<script is:inline>
+const KIT_PORTAL_ID = '442932388';
+const KIT_FORM_GUID = 'd32d9b5d-7659-4272-a745-4e93e7fc841b';
+
+function kitSubmit(){
+  const fname   = document.getElementById('kit-fname').value.trim();
+  const lname   = document.getElementById('kit-lname').value.trim();
+  const email   = document.getElementById('kit-email').value.trim();
+  const phone   = document.getElementById('kit-phone').value.trim();
+  const biz     = document.getElementById('kit-biz').value.trim();
+  const trade   = document.getElementById('kit-trade').value;
+  const consent = document.getElementById('kit-consent').checked;
+  const errEl   = document.getElementById('kit-error');
+
+  if(!fname||!lname||!email||!phone||!biz||!trade||!consent){
+    errEl.style.display='block';
+    errEl.textContent='Please fill in all required fields and tick the consent box.';
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    errEl.style.display='block';
+    errEl.textContent='Please enter a valid email address.';
+    return;
+  }
+  errEl.style.display='none';
+  const btn=document.getElementById('kit-submit');
+  btn.disabled=true;
+  document.getElementById('kit-submit-label').textContent='Submitting...';
+
+  const endpoint=`https://api.hsforms.com/submissions/v3/integration/submit/${KIT_PORTAL_ID}/${KIT_FORM_GUID}`;
+  const payload={
+    fields:[
+      {objectTypeId:'0-1',name:'firstname',  value:fname},
+      {objectTypeId:'0-1',name:'lastname',   value:lname},
+      {objectTypeId:'0-1',name:'email',      value:email},
+      {objectTypeId:'0-1',name:'phone',      value:phone},
+      {objectTypeId:'0-1',name:'company',    value:biz},
+      {objectTypeId:'0-1',name:'trade_type', value:trade},
+      {objectTypeId:'0-1',name:'lead_source',value:'Supply Chain Action Kit 2026 — Free Download Page'},
+    ],
+    context:{pageUri:window.location.href,pageName:'Supply Chain Action Kit 2026'},
+    legalConsentOptions:{
+      consent:{
+        consentToProcess:true,
+        text:'I agree to receive content and resources from Tradewise Group.',
+        communications:[{value:true,subscriptionTypeId:999,text:'Marketing emails'}]
+      }
+    }
+  };
+
+  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(()=>kitSuccess())
+    .catch(()=>kitSuccess());
+}
+
+function kitSuccess(){
+  document.getElementById('kit-form-state').style.display='none';
+  document.getElementById('kit-success-state').style.display='block';
+}
+</script>
+
+</MainLayout>
