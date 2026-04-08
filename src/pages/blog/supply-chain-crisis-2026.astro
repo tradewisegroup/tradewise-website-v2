@@ -1,0 +1,639 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Supply Chain Crisis — What Tradies Need To Do Right Now | Tradewise Group"
+  description="Fuel up 55%. PVC pipes up 36%. Here's exactly what trade business owners in Australia need to do right now to protect their margins."
+>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --navy:        #1E3A5F;
+  --navy-dark:   #141C24;
+  --navy-mid:    #1A3254;
+  --accent:      #1A7A6E;
+  --accent-dark: #14655A;
+  --red:         #DC2626;
+  --amber:       #D4820A;
+  --amber-light: #FEF3C7;
+  --green:       #16A34A;
+  --green-light: #F0FDF4;
+  --grey:        #5A6478;
+  --light-grey:  #F4F1EC;
+  --border:      #E2E5EC;
+  --white:       #FFFFFF;
+  --font-display: 'Barlow Condensed', Georgia, serif;
+  --font-body:    'Outfit', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+/* ALERT BANNER */
+.sc-alert-banner{background:var(--red);padding:11px 24px}
+.sc-alert-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.sc-alert-text{font-size:14px;font-weight:600;color:white;line-height:1.4;font-family:var(--font-body)}
+.sc-alert-text span{font-weight:400;opacity:.9}
+
+/* HERO */
+.sc-hero{background:var(--navy);padding:56px 24px 64px;position:relative;overflow:hidden}
+.sc-hero::before{content:'';position:absolute;top:0;right:0;bottom:0;width:45%;background:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(26,122,110,.08) 14px,rgba(26,122,110,.08) 28px);pointer-events:none}
+.sc-hero-inner{max-width:920px;margin:0 auto;position:relative}
+.sc-hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#7DCCC7;margin-bottom:18px;font-family:var(--font-body)}
+.sc-kicker-dot{width:7px;height:7px;background:#F87171;border-radius:50%;animation:sc-blink 1.4s infinite}
+@keyframes sc-blink{0%,100%{opacity:1}50%{opacity:.3}}
+.sc-hero h1{font-family:var(--font-display);font-weight:900;font-size:clamp(40px,7.5vw,76px);line-height:.97;color:var(--white);text-transform:uppercase;letter-spacing:-.5px;margin-bottom:22px}
+.sc-hero h1 em{font-style:normal;color:#F87171;display:block}
+.sc-hero-sub{font-size:18px;color:#94A3B8;max-width:600px;line-height:1.55;margin-bottom:32px;font-family:var(--font-body)}
+.sc-hero-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+.sc-meta-item{font-size:13px;color:#64748B;font-weight:500;font-family:var(--font-body)}
+.sc-meta-item strong{color:#CBD5E1}
+
+/* CONTENT */
+.sc-cw{max-width:920px;margin:0 auto;padding:0 24px;font-family:var(--font-body)}
+@media(max-width:600px){.sc-cw{padding:0 16px}}
+.sc-section{padding:52px 0 0}
+.sc-section-label{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:10px}
+.sc-section-label::before{content:'';display:block;width:24px;height:3px;background:var(--accent);border-radius:2px}
+.sc-section h2{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,4.5vw,44px);text-transform:uppercase;line-height:1.03;color:var(--navy);letter-spacing:-.3px;margin-bottom:24px}
+.sc-divider-row{display:flex;align-items:center;gap:14px;margin:52px 0 0}
+.sc-divider-row::before,.sc-divider-row::after{content:'';flex:1;height:1px;background:var(--border)}
+.sc-divider-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#B0B8C8;white-space:nowrap}
+
+/* CHAIN FLOW */
+.sc-chain-flow{display:flex;align-items:stretch;flex-wrap:wrap;gap:8px;margin:28px 0;background:var(--light-grey);border:1px solid var(--border);border-radius:10px;padding:20px 16px}
+.sc-chain-node{background:white;border:1.5px solid var(--border);border-radius:8px;padding:14px 12px;text-align:center;flex:1;min-width:110px}
+.sc-cn-icon{font-size:22px;margin-bottom:5px}
+.sc-cn-label{font-size:12px;font-weight:600;color:var(--navy);line-height:1.3}
+.sc-cn-date{font-weight:400;font-size:10px;color:#999}
+.sc-chain-node.sc-rn{border-color:#FECACA;background:#FFF5F5}
+.sc-chain-node.sc-rn .sc-cn-label{color:var(--red)}
+.sc-chain-arrow{color:var(--accent);font-size:18px;font-weight:700;display:flex;align-items:center;flex-shrink:0;padding:0 2px}
+@media(max-width:600px){.sc-chain-flow{flex-direction:column}.sc-chain-arrow{transform:rotate(90deg);align-self:center}}
+
+/* FUEL GAUGES */
+.sc-fuel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+@media(max-width:500px){.sc-fuel-grid{grid-template-columns:1fr}}
+.sc-fuel-card{border-radius:10px;padding:20px 16px;text-align:center;border:2px solid}
+.sc-fc-red{background:#FFF5F5;border-color:#FECACA}
+.sc-fc-amber{background:#FFFBEB;border-color:#FDE68A}
+.sc-fuel-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--grey);margin-bottom:8px}
+.sc-fuel-big{font-family:var(--font-display);font-weight:900;font-size:38px;line-height:1;margin-bottom:6px}
+.sc-fc-red .sc-fuel-big{color:var(--red)}
+.sc-fc-amber .sc-fuel-big{color:#92400E}
+.sc-fuel-sub{font-size:12px;color:var(--grey);line-height:1.5}
+.sc-fuel-sub strong{display:block;margin-top:2px}
+
+/* MATERIAL HEATMAP */
+.sc-heat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin:24px 0}
+.sc-heat-card{border-radius:8px;padding:14px 16px;display:flex;align-items:center;gap:12px;border:1.5px solid;transition:transform .12s;cursor:default}
+.sc-heat-card:hover{transform:translateY(-2px)}
+.sc-hc-c{background:#FFF5F5;border-color:#FECACA}
+.sc-hc-h{background:#FFFBEB;border-color:#FDE68A}
+.sc-hc-m{background:#F0FDFB;border-color:#A7F3D0}
+.sc-heat-icon{font-size:22px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+.sc-hc-c .sc-heat-icon{background:#FEE2E2}
+.sc-hc-h .sc-heat-icon{background:#FEF3C7}
+.sc-hc-m .sc-heat-icon{background:#CCFBF1}
+.sc-heat-info{flex:1;min-width:0}
+.sc-heat-name{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:1px}
+.sc-heat-pct{font-family:var(--font-display);font-weight:900;font-size:22px;line-height:1}
+.sc-hc-c .sc-heat-pct{color:var(--red)}
+.sc-hc-h .sc-heat-pct{color:#92400E}
+.sc-hc-m .sc-heat-pct{color:var(--accent)}
+.sc-heat-trade{font-size:11px;color:var(--grey);margin-top:1px}
+.sc-heat-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 7px;border-radius:4px;align-self:flex-start;flex-shrink:0}
+.sc-hc-c .sc-heat-badge{background:var(--red);color:white}
+.sc-hc-h .sc-heat-badge{background:#92400E;color:white}
+.sc-hc-m .sc-heat-badge{background:var(--accent);color:white}
+
+/* STAT STRIP */
+.sc-stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;margin:32px 0;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.sc-stat-box{background:white;padding:22px 16px;text-align:center}
+.sc-stat-num{font-family:var(--font-display);font-weight:900;font-size:38px;line-height:1;margin-bottom:5px}
+.sc-sn-r{color:var(--red)}
+.sc-sn-a{color:#92400E}
+.sc-sn-n{color:var(--navy)}
+.sc-stat-label{font-size:12px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.4}
+
+/* DOT LIST */
+.sc-dot-list{list-style:none;margin:16px 0}
+.sc-dot-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:16px;line-height:1.55;color:#374151}
+.sc-dot-list li:last-child{border-bottom:none}
+.sc-dot-list li::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%;flex-shrink:0;margin-top:7px}
+.sc-dot-list li strong{color:var(--navy);font-weight:600}
+
+/* CALLOUTS */
+.sc-callout{border-left:4px solid var(--accent);background:#F0FDFB;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0;font-size:15px;line-height:1.6;color:#374151}
+.sc-callout strong{color:var(--navy)}
+.sc-callout.sc-danger{border-color:var(--red);background:#FFF5F5}
+.sc-callout.sc-success{border-color:var(--green);background:var(--green-light)}
+.sc-callout.sc-amber{border-color:var(--amber);background:#FFFBEB}
+
+/* QUOTE ALERT */
+.sc-quote-alert{background:var(--red);border-radius:10px;padding:24px 28px;margin:32px 0;display:flex;gap:20px;align-items:flex-start}
+.sc-qa-icon{font-size:34px;flex-shrink:0}
+.sc-qa-title{font-family:var(--font-display);font-weight:900;font-size:26px;text-transform:uppercase;color:white;letter-spacing:-.2px;margin-bottom:8px}
+.sc-qa-body{font-size:15px;line-height:1.6;color:rgba(255,255,255,.9)}
+.sc-qa-body strong{font-weight:600;color:white}
+@media(max-width:520px){.sc-quote-alert{flex-direction:column;gap:12px}}
+
+/* STEPS */
+.sc-steps{margin:24px 0}
+.sc-step{display:flex;gap:18px;margin-bottom:4px}
+.sc-step-connector{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.sc-step-num{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;font-size:18px;color:white;flex-shrink:0}
+.sc-sn-now{background:var(--red)}
+.sc-sn-soon{background:var(--amber)}
+.sc-sn-later{background:var(--grey)}
+.sc-step-line{width:2px;flex:1;background:var(--border);min-height:20px;margin:4px 0}
+.sc-step:last-child .sc-step-line{display:none}
+.sc-step-body{padding-top:8px;padding-bottom:28px;flex:1}
+.sc-step-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:3px;margin-bottom:7px;display:inline-block}
+.sc-st-now{background:#FEE2E2;color:var(--red)}
+.sc-st-soon{background:#FEF3C7;color:#92400E}
+.sc-st-later{background:var(--light-grey);color:var(--grey)}
+.sc-step-title{font-family:var(--font-display);font-weight:900;font-size:22px;text-transform:uppercase;color:var(--navy);line-height:1.1;margin-bottom:10px}
+.sc-step-body ul{list-style:none;padding:0}
+.sc-step-body ul li{font-size:15px;color:#374151;padding:5px 0 5px 18px;position:relative;line-height:1.55}
+.sc-step-body ul li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:600}
+.sc-step-body ul li strong{color:var(--navy);font-weight:600}
+
+/* CALCULATOR */
+.sc-calc-wrap{background:var(--navy);border-radius:12px;padding:32px;margin:32px 0;color:white}
+.sc-calc-title{font-family:var(--font-display);font-weight:900;font-size:30px;text-transform:uppercase;color:white;margin-bottom:4px}
+.sc-calc-subtitle{font-size:14px;color:#64748B;margin-bottom:26px}
+.sc-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+@media(max-width:520px){.sc-calc-grid{grid-template-columns:1fr}}
+.sc-calc-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#64748B;margin-bottom:6px}
+.sc-calc-field input,.sc-calc-field select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:white;padding:10px 14px;border-radius:6px;font-size:16px;font-family:var(--font-body);transition:border-color .15s}
+.sc-calc-field input:focus,.sc-calc-field select:focus{outline:none;border-color:var(--accent)}
+.sc-calc-field select option{background:var(--navy-dark)}
+.sc-slider-wrap{margin:4px 0 22px}
+.sc-slider-wrap label{display:flex;justify-content:space-between;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#64748B;margin-bottom:8px}
+.sc-slider-wrap label span{font-family:var(--font-display);font-weight:900;font-size:20px;color:#F87171}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.12);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer}
+.sc-results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:8px}
+.sc-result-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:14px 16px}
+.sc-result-val{font-family:var(--font-display);font-weight:900;font-size:28px;line-height:1;margin-bottom:4px}
+.sc-rv-r{color:#F87171}
+.sc-rv-a{color:#FCD34D}
+.sc-rv-b{color:#7DCCC7}
+.sc-result-label{font-size:11px;color:#64748B;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.sc-result-narrative{margin-top:18px;padding:16px 18px;background:rgba(26,122,110,.15);border:1px solid rgba(26,122,110,.3);border-radius:8px;font-size:15px;line-height:1.6;color:#CBD5E1}
+.sc-result-narrative strong{color:white}
+
+/* CHECKLIST */
+.sc-check-group{margin-bottom:28px}
+.sc-check-group-title{font-family:var(--font-display);font-weight:800;font-size:17px;text-transform:uppercase;letter-spacing:.04em;padding:10px 16px;border-radius:6px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sc-cgt-red{background:#FEE2E2;color:var(--red)}
+.sc-cgt-amber{background:#FEF3C7;color:#92400E}
+.sc-cgt-grey{background:var(--light-grey);color:var(--grey)}
+.sc-check-item{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;border-radius:6px}
+.sc-check-item:hover{background:var(--light-grey)}
+.sc-check-item.done{opacity:.5}
+.sc-check-box-ui{width:22px;height:22px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s;background:white;flex-shrink:0}
+.sc-check-item.done .sc-check-box-ui{background:var(--green);border-color:var(--green)}
+.sc-check-tick{display:none;color:white;font-size:13px;font-weight:700}
+.sc-check-item.done .sc-check-tick{display:block}
+.sc-check-title{font-size:15px;font-weight:600;color:var(--navy);line-height:1.3}
+.sc-check-desc{font-size:13px;color:var(--grey);margin-top:3px;line-height:1.4}
+.sc-check-item.done .sc-check-title{text-decoration:line-through}
+.sc-progress-track{background:var(--border);border-radius:4px;height:6px;margin-bottom:8px;overflow:hidden}
+.sc-progress-bar-inner{height:100%;background:var(--green);border-radius:4px;transition:width .3s}
+.sc-progress-label{font-size:13px;color:var(--grey);font-weight:500;margin-bottom:24px}
+
+/* PDF GATE */
+.sc-pdf-gate{background:var(--navy);border-radius:12px;padding:40px 36px;margin:48px 0;position:relative;overflow:hidden}
+.sc-pdf-gate::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;background:rgba(26,122,110,.08);border-radius:50%;pointer-events:none}
+.sc-pdf-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.sc-pdf-icon-box{width:60px;height:60px;background:rgba(255,255,255,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.sc-pdf-eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#7DCCC7;margin-bottom:6px}
+.sc-pdf-title{font-family:var(--font-display);font-weight:900;font-size:28px;text-transform:uppercase;color:white;line-height:1.05;margin-bottom:6px}
+.sc-pdf-sub{font-size:15px;color:#94A3B8;line-height:1.5}
+.sc-pdf-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.sc-pdf-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:6px 12px;font-size:13px;color:#CBD5E1;font-weight:500}
+.sc-pdf-chip::before{content:'✓  ';color:#4ADE80}
+
+/* FORM */
+.sc-form-state{display:none}
+.sc-form-state.active{display:block}
+.sc-form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:520px){.sc-form-row{grid-template-columns:1fr}}
+.sc-form-field{display:flex;flex-direction:column;gap:5px}
+.sc-form-field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#64748B}
+.sc-form-field input,.sc-form-field select{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:white;padding:11px 14px;border-radius:7px;font-size:15px;font-family:var(--font-body);transition:border-color .15s,background .15s;width:100%}
+.sc-form-field input::placeholder{color:#475569}
+.sc-form-field input:focus,.sc-form-field select:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.1)}
+.sc-form-field select option{background:#1E3A5F}
+.sc-form-consent{display:flex;align-items:flex-start;gap:10px;margin:16px 0 20px}
+.sc-form-consent input[type=checkbox]{margin-top:3px;flex-shrink:0;accent-color:var(--accent);width:16px;height:16px}
+.sc-form-consent label{font-size:13px;color:#64748B;line-height:1.5}
+.sc-form-consent label a{color:#7DCCC7}
+.sc-form-submit{width:100%;background:var(--accent);color:white;border:none;padding:14px 24px;border-radius:8px;font-size:16px;font-weight:700;font-family:var(--font-body);cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:10px}
+.sc-form-submit:hover{background:var(--accent-dark)}
+.sc-form-submit:disabled{opacity:.6;cursor:not-allowed}
+.sc-form-error{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);border-radius:6px;padding:10px 14px;font-size:13px;color:#FCA5A5;margin-bottom:14px;display:none}
+
+/* SUCCESS */
+.sc-success-state{text-align:center;padding:16px 0}
+.sc-success-icon{font-size:56px;margin-bottom:16px}
+.sc-success-title{font-family:var(--font-display);font-weight:900;font-size:32px;text-transform:uppercase;color:white;margin-bottom:10px}
+.sc-success-body{font-size:15px;color:#94A3B8;line-height:1.6;margin-bottom:28px}
+.sc-dl-btn{display:inline-flex;align-items:center;gap:10px;background:#22C55E;color:white;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:700;text-decoration:none;transition:background .15s;margin-bottom:12px}
+.sc-dl-btn:hover{background:#16A34A}
+.sc-strat-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#CBD5E1;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:background .15s;margin-left:10px}
+.sc-strat-btn:hover{background:rgba(255,255,255,.14)}
+@media(max-width:520px){.sc-strat-btn{margin-left:0;margin-top:10px}}
+
+/* REVEAL */
+.sc-reveal{opacity:0;transform:translateY(18px);transition:opacity .4s,transform .4s}
+.sc-reveal.visible{opacity:1;transform:none}
+
+@media(max-width:600px){
+  .sc-stat-strip{grid-template-columns:1fr 1fr}
+  .sc-heat-grid{grid-template-columns:1fr}
+  .sc-fuel-grid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- ALERT BANNER -->
+<div class="sc-alert-banner">
+  <div class="sc-alert-inner">
+    <div class="sc-alert-text">⚠️ PVC pipes up 36% from 17 April. Diesel at $3.25/L nationally. <span>Scroll down for your action plan.</span></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="sc-hero">
+  <div class="sc-hero-inner">
+    <div class="sc-hero-kicker"><span class="sc-kicker-dot"></span>Supply Chain Crisis — Australia Wide</div>
+    <h1>Your costs<em>just went up.</em>Here's the fix.</h1>
+    <p class="sc-hero-sub">The Strait of Hormuz is closed. Fuel is scarce. Material prices are skyrocketing. Here's exactly what every trade business owner in Australia needs to do right now to stay profitable.</p>
+    <div class="sc-hero-meta">
+      <div class="sc-meta-item">Published <strong>7 April 2026</strong></div>
+      <div class="sc-meta-item">By <strong>Tradewise Group</strong></div>
+      <div class="sc-meta-item">⏱ <strong>4 min read</strong></div>
+      <div class="sc-meta-item">📍 <strong>Australia-wide</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-cw">
+
+  <!-- WHAT HAPPENED -->
+  <div class="sc-section sc-reveal">
+    <div class="sc-section-label">What Happened</div>
+    <h2>The short version</h2>
+    <div class="sc-chain-flow">
+      <div class="sc-chain-node sc-rn"><div class="sc-cn-icon">💥</div><div class="sc-cn-label">US &amp; Israel strike Iran<br><span class="sc-cn-date">28 Feb 2026</span></div></div>
+      <div class="sc-chain-arrow">→</div>
+      <div class="sc-chain-node sc-rn"><div class="sc-cn-icon">🚢</div><div class="sc-cn-label">Strait of Hormuz closed to shipping</div></div>
+      <div class="sc-chain-arrow">→</div>
+      <div class="sc-chain-node sc-rn"><div class="sc-cn-icon">⛽</div><div class="sc-cn-label">80% of Aus fuel supply disrupted</div></div>
+      <div class="sc-chain-arrow">→</div>
+      <div class="sc-chain-node sc-rn"><div class="sc-cn-icon">📦</div><div class="sc-cn-label">Material costs surge 10–36%</div></div>
+      <div class="sc-chain-arrow">→</div>
+      <div class="sc-chain-node sc-rn"><div class="sc-cn-icon">💸</div><div class="sc-cn-label">Your job margins take the hit</div></div>
+    </div>
+    <ul class="sc-dot-list">
+      <li>Australia imports <strong>80–90% of its refined fuel</strong> — we have almost no buffer</li>
+      <li>As at late March, we held just <strong>30 days of diesel</strong> in national reserves — the IEA requirement is 90 days</li>
+      <li>Suppliers like Iplex have already issued <strong>formal price increase notices</strong> effective 17 April</li>
+      <li>Analysts expect disruption to continue <strong>through Q3 2026 at minimum</strong></li>
+    </ul>
+  </div>
+
+  <!-- FUEL GAUGES -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Fuel &amp; Reserves</div></div>
+  <div class="sc-section sc-reveal">
+    <div class="sc-section-label">Australia's Fuel Reality</div>
+    <h2>How empty is the tank?</h2>
+    <div class="sc-fuel-grid">
+      <div class="sc-fuel-card sc-fc-red"><div class="sc-fuel-title">🛻 Diesel reserves</div><div class="sc-fuel-big">30</div><div class="sc-fuel-sub">days of supply left<br><strong style="color:var(--red)">IEA target: 90 days</strong></div></div>
+      <div class="sc-fuel-card sc-fc-amber"><div class="sc-fuel-title">⛽ Petrol reserves</div><div class="sc-fuel-big">24</div><div class="sc-fuel-sub">days of supply left<br><strong style="color:#92400E">IEA target: 90 days</strong></div></div>
+      <div class="sc-fuel-card sc-fc-red"><div class="sc-fuel-title">💰 Diesel price/litre</div><div class="sc-fuel-big">$3.25</div><div class="sc-fuel-sub">national average<br><strong style="color:var(--red)">Was ~$2.10 pre-crisis</strong></div></div>
+    </div>
+    <div class="sc-callout sc-amber"><strong>Temporary relief:</strong> The fuel excise was halved from 52.6¢ to 26.3¢ per litre from 1 April. It <strong>expires in June</strong> — after that, pump prices could spike again. Plan for it now.</div>
+  </div>
+
+  <!-- MATERIAL HEATMAP -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Material Prices</div></div>
+  <div class="sc-section sc-reveal">
+    <div class="sc-section-label">Material Price Increases</div>
+    <h2>What's going up &amp; by how much</h2>
+    <p style="color:var(--grey);margin-bottom:20px;font-size:15px">Confirmed or in effect as at April 2026. Sorted by impact.</p>
+    <div class="sc-heat-grid">
+      <div class="sc-heat-card sc-hc-c"><div class="sc-heat-icon">🔵</div><div class="sc-heat-info"><div class="sc-heat-name">Polyethylene (PE) pipe</div><div class="sc-heat-pct">+36%</div><div class="sc-heat-trade">Plumbers · Civil</div></div><span class="sc-heat-badge">Critical</span></div>
+      <div class="sc-heat-card sc-hc-c"><div class="sc-heat-icon">🚧</div><div class="sc-heat-info"><div class="sc-heat-name">HDPE drainage pipe</div><div class="sc-heat-pct">+36%</div><div class="sc-heat-trade">Civil · Plumbers</div></div><span class="sc-heat-badge">Critical</span></div>
+      <div class="sc-heat-card sc-hc-c"><div class="sc-heat-icon">🔶</div><div class="sc-heat-info"><div class="sc-heat-name">Polypropylene (PP) fittings</div><div class="sc-heat-pct">+31%</div><div class="sc-heat-trade">Plumbers</div></div><span class="sc-heat-badge">Critical</span></div>
+      <div class="sc-heat-card sc-hc-c"><div class="sc-heat-icon">⛽</div><div class="sc-heat-info"><div class="sc-heat-name">Diesel (plant &amp; transport)</div><div class="sc-heat-pct">+55%</div><div class="sc-heat-trade">All trades</div></div><span class="sc-heat-badge">Critical</span></div>
+      <div class="sc-heat-card sc-hc-h"><div class="sc-heat-icon">🪠</div><div class="sc-heat-info"><div class="sc-heat-name">PVC pipes &amp; fittings</div><div class="sc-heat-pct">+27%</div><div class="sc-heat-trade">Plumbers · Builders</div></div><span class="sc-heat-badge">High</span></div>
+      <div class="sc-heat-card sc-hc-h"><div class="sc-heat-icon">🧱</div><div class="sc-heat-info"><div class="sc-heat-name">Foam insulation</div><div class="sc-heat-pct">+22%</div><div class="sc-heat-trade">Builders · HVAC</div></div><span class="sc-heat-badge">High</span></div>
+      <div class="sc-heat-card sc-hc-h"><div class="sc-heat-icon">🛣️</div><div class="sc-heat-info"><div class="sc-heat-name">Bitumen / asphalt</div><div class="sc-heat-pct">+20%</div><div class="sc-heat-trade">Civil</div></div><span class="sc-heat-badge">High</span></div>
+      <div class="sc-heat-card sc-hc-h"><div class="sc-heat-icon">🔌</div><div class="sc-heat-info"><div class="sc-heat-name">Copper wire &amp; cable</div><div class="sc-heat-pct">+16%</div><div class="sc-heat-trade">Sparkies · Plumbers · HVAC</div></div><span class="sc-heat-badge">High</span></div>
+      <div class="sc-heat-card sc-hc-m"><div class="sc-heat-icon">🎨</div><div class="sc-heat-info"><div class="sc-heat-name">Paints &amp; solvent coatings</div><div class="sc-heat-pct">+15%</div><div class="sc-heat-trade">Painters</div></div><span class="sc-heat-badge">Medium</span></div>
+      <div class="sc-heat-card sc-hc-m"><div class="sc-heat-icon">🏗️</div><div class="sc-heat-info"><div class="sc-heat-name">Concrete &amp; cement</div><div class="sc-heat-pct">+12%</div><div class="sc-heat-trade">Builders · Civil</div></div><span class="sc-heat-badge">Medium</span></div>
+      <div class="sc-heat-card sc-hc-m"><div class="sc-heat-icon">🚚</div><div class="sc-heat-info"><div class="sc-heat-name">Freight / delivery surcharges</div><div class="sc-heat-pct">+10%</div><div class="sc-heat-trade">All trades</div></div><span class="sc-heat-badge">Medium</span></div>
+      <div class="sc-heat-card sc-hc-m"><div class="sc-heat-icon">🏠</div><div class="sc-heat-info"><div class="sc-heat-name">Steel reinforcement</div><div class="sc-heat-pct">+8%</div><div class="sc-heat-trade">Builders · Civil</div></div><span class="sc-heat-badge">Medium</span></div>
+    </div>
+    <div class="sc-callout" style="margin-top:8px">Source: Altus Group Q1 2026, Iplex supplier notices, Housing Industry Association, Australian Bureau of Statistics.</div>
+  </div>
+
+  <!-- QUOTING CRISIS -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Hidden Risk</div></div>
+  <div class="sc-quote-alert sc-reveal">
+    <div class="sc-qa-icon">📋</div>
+    <div><div class="sc-qa-title">Your old quotes are costing you money right now</div><div class="sc-qa-body">Any quote sent more than <strong>3 weeks ago</strong> is now underpriced. Major Tier 1 contractors have cut their quote validity to just <strong>15 days</strong>. Still running 30–90 day fixed prices? Every material price rise between signing and buying is coming out of your pocket.</div></div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Your Numbers</div></div>
+  <div class="sc-section sc-reveal"><div class="sc-section-label">Know Your Exposure</div><h2>Calculate your real hit</h2></div>
+  <div class="sc-calc-wrap sc-reveal">
+    <div class="sc-calc-title">Job cost impact calculator</div>
+    <div class="sc-calc-subtitle">Plug in your numbers — see your actual exposure in seconds.</div>
+    <div class="sc-calc-grid">
+      <div class="sc-calc-field"><label>Average job value ($)</label><input type="number" id="sc-jv" value="8500" oninput="scCalc()"></div>
+      <div class="sc-calc-field"><label>Jobs per month</label><input type="number" id="sc-jm" value="6" oninput="scCalc()"></div>
+      <div class="sc-calc-field"><label>Materials as % of job cost</label><input type="number" id="sc-mp" value="35" min="0" max="100" oninput="scCalc()"></div>
+      <div class="sc-calc-field"><label>Fuel / travel cost per job ($)</label><input type="number" id="sc-fj" value="180" oninput="scCalc()"></div>
+    </div>
+    <div class="sc-slider-wrap">
+      <label>Materials price increase <span id="sc-mi-out">22%</span></label>
+      <input type="range" id="sc-mi" min="0" max="40" step="1" value="22" oninput="document.getElementById('sc-mi-out').textContent=this.value+'%';scCalc()">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#475569;margin-top:4px"><span>0%</span><span>PVC/PE pipes: 27–36%</span><span>40%</span></div>
+    </div>
+    <div class="sc-slider-wrap">
+      <label>Fuel cost increase <span id="sc-fi-out">45%</span></label>
+      <input type="range" id="sc-fi" min="0" max="70" step="1" value="45" oninput="document.getElementById('sc-fi-out').textContent=this.value+'%';scCalc()">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#475569;margin-top:4px"><span>0%</span><span>Diesel up ~55% from pre-crisis</span><span>70%</span></div>
+    </div>
+    <div class="sc-results-grid" id="sc-results-grid"></div>
+    <div class="sc-result-narrative" id="sc-result-narrative"></div>
+  </div>
+
+  <!-- ACTION STEPS -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">What To Do</div></div>
+  <div class="sc-section sc-reveal"><div class="sc-section-label">Your Action Plan</div><h2>What to do &amp; when</h2><p style="color:var(--grey);font-size:15px;margin-bottom:28px">In order of urgency. Just work through the list.</p></div>
+
+  <div class="sc-steps sc-reveal">
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-now">1</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-now">🔴 Do this today</div><div class="sc-step-title">Fix your quotes — right now</div><ul><li>Shorten all quote validity to <strong>7–14 days maximum</strong></li><li>Call back any open quotes older than 3 weeks — reprice them</li><li>Add to every new quote: <em>"Prices valid 14 days. Materials subject to supplier adjustment."</em></li><li>Ring your 2–3 main suppliers — get current price lists in writing</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-now">2</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-now">🔴 Do this today</div><div class="sc-step-title">Recalculate your diesel cost per job</div><ul><li>Diesel is <strong>$3.25/L+</strong> — your fuel line is almost certainly undercosted</li><li>Update your quoting template with the real number</li><li>Add a visible <strong>"Fuel &amp; freight levy"</strong> line to all new quotes</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-soon">3</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-soon">🟠 This week</div><div class="sc-step-title">Pre-order materials for confirmed jobs</div><ul><li>Signed contract in hand? <strong>Buy the materials today</strong> at today's prices</li><li>PVC, copper and PE pipes especially — next price move hits 17 April</li><li>Holding stock for 2–3 weeks beats paying 28–36% more next month</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-soon">4</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-soon">🟠 This week</div><div class="sc-step-title">Tighten up your cash flow</div><ul><li>Move to <strong>30–40% upfront deposits</strong> on all new jobs — you need cash to pre-buy materials</li><li>Chase outstanding invoices — tighten debtors to 7 days</li><li>Review your 5 largest active jobs — still profitable at current material costs?</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-soon">5</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-soon">🟠 This month</div><div class="sc-step-title">Talk to your clients early — don't go quiet</div><ul><li>Clients have seen the news — most will understand a straight conversation</li><li>Email or call before a quote expires — explain the market, offer an update</li><li><strong>Tradies who communicate early maintain trust.</strong> Tradies who absorb costs quietly until they can't are the next insolvency statistic</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-soon">6</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-soon">🟠 This month</div><div class="sc-step-title">Find substitute materials now</div><ul><li>Talk to suppliers about alternatives before shortages force your hand</li><li>Consider pooling orders with another local tradie for better pricing and priority access</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-later">7</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-later">⚫ Next 90 days</div><div class="sc-step-title">Shift larger jobs to cost-plus pricing</div><ul><li>Fixed-price lump sum is too risky for jobs over $30K right now</li><li>Move to cost-plus with an agreed margin — explain this is now industry standard</li><li>Build a <strong>15–20% materials contingency</strong> into all new job cost templates</li></ul></div></div>
+    <div class="sc-step"><div class="sc-step-connector"><div class="sc-step-num sc-sn-later">8</div><div class="sc-step-line"></div></div><div class="sc-step-body"><div class="sc-step-tag sc-st-later">⚫ Next 90 days</div><div class="sc-step-title">Plan for the June cliff</div><ul><li>The fuel excise cut <strong>expires in June</strong> — prices could spike again</li><li>Any job starting after June needs an escalation clause and a fuel buffer baked in</li><li>Watch the RBA — rising inflation could lift interest rates, slowing client demand</li></ul></div></div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Track Your Progress</div></div>
+  <div class="sc-section sc-reveal"><div class="sc-section-label">Your Checklist</div><h2>Tick 'em off as you go</h2></div>
+  <div class="sc-reveal">
+    <div class="sc-progress-track"><div class="sc-progress-bar-inner" id="sc-prog-bar" style="width:0%"></div></div>
+    <div class="sc-progress-label" id="sc-prog-label">0 of 12 actions completed — get cracking!</div>
+    <div class="sc-check-group"><div class="sc-check-group-title sc-cgt-red">🔴 This week — urgent</div><div id="sc-cl-urgent"></div></div>
+    <div class="sc-check-group"><div class="sc-check-group-title sc-cgt-amber">🟠 This month</div><div id="sc-cl-month"></div></div>
+    <div class="sc-check-group"><div class="sc-check-group-title sc-cgt-grey">⚫ Next 90 days</div><div id="sc-cl-quarter"></div></div>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">The Numbers</div></div>
+  <div class="sc-stat-strip sc-reveal">
+    <div class="sc-stat-box"><div class="sc-stat-num sc-sn-r">36%</div><div class="sc-stat-label">PE pipe hike from 17 Apr</div></div>
+    <div class="sc-stat-box"><div class="sc-stat-num sc-sn-r">30</div><div class="sc-stat-label">days diesel left nationally</div></div>
+    <div class="sc-stat-box"><div class="sc-stat-num sc-sn-a">$3.25</div><div class="sc-stat-label">diesel per litre nationally</div></div>
+    <div class="sc-stat-box"><div class="sc-stat-num sc-sn-a">15</div><div class="sc-stat-label">days max quote validity, big builders</div></div>
+    <div class="sc-stat-box"><div class="sc-stat-num sc-sn-n">3,596</div><div class="sc-stat-label">building insolvencies in 2025</div></div>
+  </div>
+
+  <!-- PDF GATE -->
+  <div class="sc-divider-row sc-reveal"><div class="sc-divider-label">Free Download</div></div>
+  <div class="sc-pdf-gate sc-reveal" id="sc-pdf-gate">
+    <div class="sc-pdf-header">
+      <div class="sc-pdf-icon-box">📄</div>
+      <div>
+        <div class="sc-pdf-eyebrow">Free resource — Tradewise Group</div>
+        <div class="sc-pdf-title">Supply Chain Crisis<br>Action Kit 2026</div>
+        <div class="sc-pdf-sub">Download the full PDF. Print it, stick it on the wall, share it with your crew.</div>
+      </div>
+    </div>
+    <div class="sc-pdf-chips">
+      <span class="sc-pdf-chip">Price tracker by trade</span>
+      <span class="sc-pdf-chip">Job cost calculator template</span>
+      <span class="sc-pdf-chip">Quote clause wording</span>
+      <span class="sc-pdf-chip">12-point action checklist</span>
+      <span class="sc-pdf-chip">June cliff planning guide</span>
+    </div>
+
+    <!-- FORM -->
+    <div class="sc-form-state active" id="sc-state-form">
+      <div class="sc-form-error" id="sc-form-error">Please fill in all required fields.</div>
+      <div class="sc-form-row">
+        <div class="sc-form-field"><label>First name *</label><input type="text" id="sc-fname" placeholder="Mick" required></div>
+        <div class="sc-form-field"><label>Last name *</label><input type="text" id="sc-lname" placeholder="Taylor" required></div>
+      </div>
+      <div class="sc-form-row">
+        <div class="sc-form-field"><label>Email address *</label><input type="email" id="sc-email" placeholder="mick@yourbusiness.com.au" required></div>
+        <div class="sc-form-field"><label>Mobile *</label><input type="tel" id="sc-phone" placeholder="04XX XXX XXX" required></div>
+      </div>
+      <div class="sc-form-row">
+        <div class="sc-form-field"><label>Business name *</label><input type="text" id="sc-biz" placeholder="Taylor Plumbing Pty Ltd" required></div>
+        <div class="sc-form-field">
+          <label>Trade type *</label>
+          <select id="sc-trade" required>
+            <option value="">Select your trade</option>
+            <option>Plumbing</option>
+            <option>Electrical</option>
+            <option>HVAC / Refrigeration</option>
+            <option>Building / Carpentry</option>
+            <option>Civil / Earthworks</option>
+            <option>Painting / Rendering</option>
+            <option>Roofing</option>
+            <option>Tiling</option>
+            <option>Multiple trades / General</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="sc-form-consent">
+        <input type="checkbox" id="sc-consent" required>
+        <label for="sc-consent">I agree to receive the free download and occasional useful resources from Tradewise Group. No spam — unsubscribe any time. View our <a href="https://www.tradewisegroup.au/privacy-policy" target="_blank">Privacy Policy</a>.</label>
+      </div>
+      <button class="sc-form-submit" id="sc-submit-btn" onclick="scSubmitForm()">
+        <span id="sc-submit-label">📥 Download the Free Action Kit</span>
+      </button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="sc-form-state" id="sc-state-success">
+      <div class="sc-success-state">
+        <div class="sc-success-icon">✅</div>
+        <div class="sc-success-title">You're all set!</div>
+        <div class="sc-success-body">Your Action Kit is ready to download. We've also sent a copy to your email.<br>Want to talk through your specific situation with a Tradewise business specialist?</div>
+        <div>
+          <a href="tradewise-supply-chain-action-kit-2026.pdf" download class="sc-dl-btn">📥 Download Action Kit PDF</a>
+          <a href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" class="sc-strat-btn">Book a free strategy call →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM CALLOUTS -->
+  <div class="sc-callout sc-success sc-reveal" style="margin:40px 0 12px"><strong>The tradies who come through this will be the ones who repriced fast, communicated early, and protected their cash flow.</strong> The ones who absorb costs silently and hope it blows over are the next insolvency statistic. Take action today.</div>
+  <div class="sc-callout sc-reveal" style="margin-bottom:64px"><strong>Need help managing your margins, quoting, or cash flow?</strong> Tradewise Group embeds a team of business specialists into your trade business — finance, HR, systems, and growth. <a href="https://meetings-ap1.hubspot.com/kate-walsh-rose" target="_blank" style="color:var(--accent);font-weight:600">Book a free Strategy Call →</a></div>
+
+</div><!-- /sc-cw -->
+
+<script is:inline>
+/* ── CALCULATOR ── */
+function scCalc(){
+  const jv=parseFloat(document.getElementById('sc-jv').value)||0;
+  const jm=parseFloat(document.getElementById('sc-jm').value)||0;
+  const mp=parseFloat(document.getElementById('sc-mp').value)||0;
+  const fj=parseFloat(document.getElementById('sc-fj').value)||0;
+  const mi=parseFloat(document.getElementById('sc-mi').value)||0;
+  const fi=parseFloat(document.getElementById('sc-fi').value)||0;
+  const matHit=jv*(mp/100)*(mi/100);
+  const fuelHit=fj*(fi/100);
+  const hpj=matHit+fuelHit;
+  const hpm=hpj*jm;
+  const ann=hpm*12;
+  const pct=jv>0?(hpj/jv*100):0;
+  const col=pct>15?'sc-rv-r':pct>8?'sc-rv-a':'sc-rv-b';
+  document.getElementById('sc-results-grid').innerHTML=`
+    <div class="sc-result-card"><div class="sc-result-val ${col}">$${Math.round(hpj).toLocaleString('en-AU')}</div><div class="sc-result-label">Extra cost per job</div></div>
+    <div class="sc-result-card"><div class="sc-result-val ${col}">$${Math.round(hpm).toLocaleString('en-AU')}</div><div class="sc-result-label">Extra per month</div></div>
+    <div class="sc-result-card"><div class="sc-result-val sc-rv-a">$${Math.round(ann).toLocaleString('en-AU')}</div><div class="sc-result-label">Annual hit if costs hold</div></div>
+    <div class="sc-result-card"><div class="sc-result-val ${col}">${pct.toFixed(1)}%</div><div class="sc-result-label">Of revenue gone</div></div>`;
+  const msg=pct>20?`<strong>🔴 Business survival alert.</strong> At ${pct.toFixed(1)}% of your revenue, this is a real threat. Reprice this week, add surcharges, and have a direct conversation with your clients.`
+    :pct>10?`<strong>🟠 Significant pressure.</strong> A ${pct.toFixed(1)}% margin hit needs urgent attention. Shorten your quote validity and add a fuel levy line item now.`
+    :pct>4?`<strong>🟡 Manageable but don't ignore it.</strong> At ${pct.toFixed(1)}%, you're exposed but not in crisis yet. Update your quoting template and pre-order materials on confirmed jobs.`
+    :`<strong>✅ Lower risk — stay vigilant.</strong> Your exposure looks relatively contained. Build a 10–15% materials contingency into new quotes as a buffer.`;
+  document.getElementById('sc-result-narrative').innerHTML=msg;
+}
+scCalc();
+
+/* ── CHECKLIST ── */
+const scLists={
+  urgent:[
+    {t:'Shorten quote validity to 7–14 days max',d:'Update your quoting template today.'},
+    {t:'Add a materials escalation clause to new quotes',d:'"Prices valid 14 days. Materials subject to supplier variation."'},
+    {t:'Ring your 3 main suppliers — get current price lists',d:'Get it in writing. Ask what\'s happening on 17 April.'},
+    {t:'Recalculate your diesel cost per job',d:'Diesel is $3.25+/L nationally. Your travel line is likely undercosted.'},
+  ],
+  month:[
+    {t:'Pre-order materials for all confirmed/signed jobs',d:'Buy at today\'s prices — especially PVC, copper and PE pipes.'},
+    {t:'Reprice your 5 oldest open quotes',d:'Anything older than 3 weeks is likely losing you money if accepted.'},
+    {t:'Add a visible fuel & freight levy to all quotes',d:'Make it a line item. Clients understand — they\'ve seen the news.'},
+    {t:'Move to 30–40% upfront deposits on new jobs',d:'You need cash to pre-buy materials. Protect your cash flow.'},
+    {t:'Proactively contact clients — don\'t go quiet',d:'Early communication builds trust. Silence costs you the job.'},
+  ],
+  quarter:[
+    {t:'Move jobs over $30K to cost-plus pricing',d:'Fixed-price lump sum is too risky. Explain this is now industry standard.'},
+    {t:'Build a 15–20% materials contingency into your template',d:'This isn\'t padding — it\'s a response to verifiable market conditions.'},
+    {t:'Plan for the June cliff — fuel excise cut expires',d:'Any job starting after June needs an escalation clause and fuel buffer.'},
+  ]
+};
+const scTotal=Object.values(scLists).flat().length;
+const scChecked={};
+function scBuildList(items,id){
+  document.getElementById(id).innerHTML=items.map((item,i)=>`
+    <div class="sc-check-item" id="${id}-${i}" onclick="scToggleCheck('${id}',${i})">
+      <div class="sc-check-box-ui" id="sc-cb-${id}-${i}"><span class="sc-check-tick">✓</span></div>
+      <div><div class="sc-check-title">${item.t}</div><div class="sc-check-desc">${item.d}</div></div>
+    </div>`).join('');
+}
+scBuildList(scLists.urgent,'sc-cl-urgent');
+scBuildList(scLists.month,'sc-cl-month');
+scBuildList(scLists.quarter,'sc-cl-quarter');
+function scToggleCheck(id,i){
+  const key=id+'-'+i;
+  scChecked[key]=!scChecked[key];
+  const el=document.getElementById(id+'-'+i);
+  scChecked[key]?el.classList.add('done'):el.classList.remove('done');
+  const done=Object.values(scChecked).filter(Boolean).length;
+  document.getElementById('sc-prog-bar').style.width=(done/scTotal*100)+'%';
+  const msgs=['Get cracking!','Good start — keep going!','Making progress.','Over halfway — smashing it!','Nearly there!','Legend! All done. 🎉'];
+  const idx=done===scTotal?5:done>scTotal*.8?4:done>scTotal*.6?3:done>scTotal*.4?2:done>0?1:0;
+  document.getElementById('sc-prog-label').textContent=done+' of '+scTotal+' actions completed — '+msgs[idx];
+}
+
+/* ── HUBSPOT FORM SUBMISSION ──
+   Replace PORTAL_ID and FORM_GUID with your HubSpot values.
+*/
+const SC_PORTAL_ID = '442932388';
+const SC_FORM_GUID = 'd32d9b5d-7659-4272-a745-4e93e7fc841b';
+
+function scSubmitForm(){
+  const fname   =document.getElementById('sc-fname').value.trim();
+  const lname   =document.getElementById('sc-lname').value.trim();
+  const email   =document.getElementById('sc-email').value.trim();
+  const phone   =document.getElementById('sc-phone').value.trim();
+  const biz     =document.getElementById('sc-biz').value.trim();
+  const trade   =document.getElementById('sc-trade').value;
+  const consent =document.getElementById('sc-consent').checked;
+  const errEl   =document.getElementById('sc-form-error');
+
+  if(!fname||!lname||!email||!phone||!biz||!trade||!consent){
+    errEl.style.display='block';
+    errEl.textContent='Please fill in all required fields and tick the consent box.';
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    errEl.style.display='block';
+    errEl.textContent='Please enter a valid email address.';
+    return;
+  }
+  errEl.style.display='none';
+  const btn=document.getElementById('sc-submit-btn');
+  btn.disabled=true;
+  document.getElementById('sc-submit-label').textContent='Submitting...';
+
+  const endpoint=`https://api.hsforms.com/submissions/v3/integration/submit/${SC_PORTAL_ID}/${SC_FORM_GUID}`;
+  const payload={
+    fields:[
+      {objectTypeId:'0-1',name:'firstname',    value:fname},
+      {objectTypeId:'0-1',name:'lastname',     value:lname},
+      {objectTypeId:'0-1',name:'email',        value:email},
+      {objectTypeId:'0-1',name:'phone',        value:phone},
+      {objectTypeId:'0-1',name:'company',      value:biz},
+      {objectTypeId:'0-1',name:'trade_type',   value:trade},
+      {objectTypeId:'0-1',name:'lead_source',  value:'Supply Chain Crisis Article — PDF Download'},
+    ],
+    context:{pageUri:window.location.href,pageName:'Supply Chain Crisis Action Kit 2026'},
+    legalConsentOptions:{
+      consent:{
+        consentToProcess:true,
+        text:'I agree to receive content and resources from Tradewise Group.',
+        communications:[{value:true,subscriptionTypeId:999,text:'Marketing emails'}]
+      }
+    }
+  };
+
+  fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(()=>scShowSuccess())
+    .catch(()=>scShowSuccess());
+}
+
+function scShowSuccess(){
+  document.getElementById('sc-state-form').classList.remove('active');
+  document.getElementById('sc-state-success').classList.add('active');
+  document.getElementById('sc-pdf-gate').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── SCROLL REVEAL ── */
+const scObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');scObs.unobserve(e.target);}});
+},{threshold:.07});
+document.querySelectorAll('.sc-reveal').forEach(el=>scObs.observe(el));
+</script>
+
+</MainLayout>
