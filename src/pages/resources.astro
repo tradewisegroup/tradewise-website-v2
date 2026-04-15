@@ -3,10 +3,26 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 const posts = [
     {
+        title: 'Super\'s Going Weekly From July 1. Here\'s What You Need to Do.',
+        description: 'From 1 July 2026, Payday Super means super must be paid within 7 days of every pay run. Here\'s the 7-step checklist every trade employer needs to work through before June 30.',
+        category: 'Finance',
+        date: '13 Apr 2026',
+        href: '/blog/payday-super-july-2026-tradies',
+        ready: true,
+    },
+    {
+        title: 'Supply Chain Crisis — What Tradies Need To Do Right Now',
+        description: 'Fuel up 55%. PVC pipes up 36%. Here\'s exactly what trade business owners in Australia need to do right now to protect their margins.',
+        category: 'Crisis Briefing',
+        date: '7 Apr 2026',
+        href: '/blog/supply-chain-crisis-2026',
+        ready: true,
+    },
+    {
         title: 'The 1-Page Business Plan for Tradies',
         description: 'Most trade business owners have never written down where the business is going — not really. The V/TO from EOS changes that. Here\'s how it works, plus a free downloadable template.',
         category: 'Strategy',
-        date: '2026-03-30',
+        date: '30 Mar 2026',
         href: '/blog/1-page-business-plan',
         ready: true,
     },
@@ -14,49 +30,49 @@ const posts = [
         title: 'Profit First for Tradies: How to Stop Going Broke on a Full Order Book',
         description: 'The Profit First methodology flips the traditional accounting formula on its head — and it\'s one of the most powerful things a trade business owner can implement today.',
         category: 'Finance',
-        date: '2026-03-01',
+        date: '1 Mar 2026',
         href: '/blog/profit-first-for-tradies',
+        ready: true,
+    },
+    {
+        title: 'Why Your Referral-Only Marketing Strategy Will Eventually Break Your Business',
+        description: 'Referrals are great — until they\'re not. Building a predictable lead pipeline is what separates businesses that scale from businesses that stall.',
+        category: 'Marketing',
+        date: '24 Feb 2026',
+        href: '/blog/referral-only-marketing-problem',
+        ready: true,
+    },
+    {
+        title: 'The Trade Business Owner\'s Guide to Cash Flow Forecasting',
+        description: 'Cash flow surprises kill good businesses. Learn how to forecast 8–12 weeks ahead so you\'re never caught short — and always know what decisions you can afford to make.',
+        category: 'Finance',
+        date: '17 Feb 2026',
+        href: '/blog/cash-flow-forecasting-for-tradies',
+        ready: true,
+    },
+    {
+        title: 'How to Hire a Site Supervisor Who Actually Runs the Job',
+        description: 'Bad hires in leadership roles cost more than money. Here\'s the process we use to hire, onboard, and retain site supervisors who genuinely take the load off the owner.',
+        category: 'HR & People',
+        date: '10 Feb 2026',
+        href: '/blog/how-to-hire-a-site-supervisor',
+        ready: true,
+    },
+    {
+        title: 'What Your Accountant Isn\'t Telling You About Your Business Valuation',
+        description: 'Most trade business owners have no idea what their business is actually worth — or why. This article breaks down the real drivers of valuation in plain English.',
+        category: 'Valuation',
+        date: '3 Feb 2026',
+        href: '/blog/what-your-accountant-isnt-telling-you',
         ready: true,
     },
     {
         title: 'The 5 Systems Every Trade Business Needs Before You Can Sell It',
         description: 'Buyers don\'t pay a premium for potential. They pay for proof. Here are the five operational systems that determine whether your business is sellable — and at what price.',
         category: 'Systems',
-        date: 'Coming soon',
-        href: null,
-        ready: false,
-    },
-    {
-        title: 'What Your Accountant Isn\'t Telling You About Your Business Valuation',
-        description: 'Most trade business owners have no idea what their business is actually worth — or why. This article breaks down the real drivers of valuation in plain English.',
-        category: 'Valuation',
-        date: 'Coming soon',
-        href: null,
-        ready: false,
-    },
-    {
-        title: 'How to Hire a Site Supervisor Who Actually Runs the Job',
-        description: 'Bad hires in leadership roles cost more than money. Here\'s the process we use to hire, onboard, and retain site supervisors who genuinely take the load off the owner.',
-        category: 'HR & People',
-        date: 'Coming soon',
-        href: null,
-        ready: false,
-    },
-    {
-        title: 'The Trade Business Owner\'s Guide to Cash Flow Forecasting',
-        description: 'Cash flow surprises kill good businesses. Learn how to forecast 8–12 weeks ahead so you\'re never caught short — and always know what decisions you can afford to make.',
-        category: 'Finance',
-        date: 'Coming soon',
-        href: null,
-        ready: false,
-    },
-    {
-        title: 'Why Your Referral-Only Marketing Strategy Will Eventually Break Your Business',
-        description: 'Referrals are great — until they\'re not. Building a predictable lead pipeline is what separates businesses that scale from businesses that stall.',
-        category: 'Marketing',
-        date: 'Coming soon',
-        href: null,
-        ready: false,
+        date: '27 Jan 2026',
+        href: '/blog/5-systems-to-sell-your-business',
+        ready: true,
     },
 ];
 
@@ -67,6 +83,7 @@ const categoryColours: Record<string, string> = {
     'Valuation': 'bg-momentum-amber/10 text-momentum-amber',
     'HR & People': 'bg-growth-teal/10 text-growth-teal',
     'Marketing': 'bg-tradewise-navy/10 text-tradewise-navy',
+    'Crisis Briefing': 'bg-red-100 text-red-600',
 };
 ---
 
@@ -136,6 +153,19 @@ const categoryColours: Record<string, string> = {
                         class="shrink-0 bg-red-600 text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200 whitespace-nowrap"
                     >
                         Download Free Kit →
+                    </a>
+                </div>
+                <div class="bg-white border border-momentum-amber/40 rounded-xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div>
+                        <p class="text-momentum-amber text-xs font-semibold tracking-widest uppercase mb-2">⚠️ Free Checklist — Deadline 30 June 2026</p>
+                        <h2 class="font-heading text-xl font-bold text-forge-black mb-1">Payday Super Checklist for Trade Employers</h2>
+                        <p class="text-forge-black/55 text-sm">From 1 July, super must be paid within 7 days of every pay run. Work through this 7-step checklist to make sure your payroll system is ready before the SBSCH closes for good.</p>
+                    </div>
+                    <a
+                        href="/blog/payday-super-july-2026-tradies"
+                        class="shrink-0 bg-momentum-amber text-white font-semibold text-sm px-6 py-3 rounded hover:brightness-110 transition-all duration-200 whitespace-nowrap"
+                    >
+                        Get the Checklist →
                     </a>
                 </div>
             </div>

@@ -1,0 +1,364 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Super's Going Weekly From July 1. Here's What You Need to Do. | Tradewise Group"
+  description="From 1 July 2026, Payday Super means super must be paid within 7 days of every pay run. Here's the 7-step checklist every trade employer needs before June 30."
+>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --navy:        #1a2332;
+  --navy-dark:   #141C24;
+  --accent:      #1a7a6e;
+  --orange:      #e8913a;
+  --orange-dark: #c97a2a;
+  --orange-light:#FEF3C7;
+  --green:       #16A34A;
+  --green-light: #F0FDF4;
+  --grey:        #5A6478;
+  --light-grey:  #F4F1EC;
+  --border:      #E2E5EC;
+  --white:       #FFFFFF;
+  --font-display: 'Barlow Condensed', Georgia, serif;
+  --font-body:    'Outfit', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+/* ALERT BANNER */
+.ps-alert{background:var(--orange);padding:11px 24px}
+.ps-alert-inner{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.ps-alert-icon{font-size:18px;flex-shrink:0}
+.ps-alert-text{font-size:14px;font-weight:600;color:white;line-height:1.4;font-family:var(--font-body)}
+.ps-alert-text span{font-weight:400;opacity:.9}
+
+/* HERO */
+.ps-hero{background:var(--navy);padding:56px 24px 64px;position:relative;overflow:hidden}
+.ps-hero::before{content:'';position:absolute;top:0;right:0;bottom:0;width:45%;background:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(232,145,58,.06) 14px,rgba(232,145,58,.06) 28px);pointer-events:none}
+.ps-hero-inner{max-width:920px;margin:0 auto;position:relative}
+.ps-hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#e8913a;margin-bottom:18px;font-family:var(--font-body)}
+.ps-kicker-dot{width:7px;height:7px;background:#e8913a;border-radius:50%;animation:ps-blink 1.4s infinite}
+@keyframes ps-blink{0%,100%{opacity:1}50%{opacity:.3}}
+.ps-hero h1{font-family:var(--font-display);font-weight:900;font-size:clamp(38px,7vw,72px);line-height:.97;color:var(--white);text-transform:uppercase;letter-spacing:-.5px;margin-bottom:22px}
+.ps-hero h1 em{font-style:normal;color:#e8913a;display:block}
+.ps-hero-sub{font-size:18px;color:#94A3B8;max-width:620px;line-height:1.55;margin-bottom:32px;font-family:var(--font-body)}
+.ps-hero-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+.ps-meta-item{font-size:13px;color:#64748B;font-weight:500;font-family:var(--font-body)}
+.ps-meta-item strong{color:#CBD5E1}
+
+/* COUNTDOWN */
+.ps-countdown{background:rgba(232,145,58,.12);border:1px solid rgba(232,145,58,.3);border-radius:10px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ps-cd-label{font-size:13px;font-weight:600;color:#CBD5E1;font-family:var(--font-body);flex:1;min-width:200px}
+.ps-cd-date{font-family:var(--font-display);font-weight:900;font-size:30px;color:#e8913a;letter-spacing:-.2px}
+
+/* CONTENT */
+.ps-cw{max-width:920px;margin:0 auto;padding:0 24px;font-family:var(--font-body)}
+@media(max-width:600px){.ps-cw{padding:0 16px}}
+.ps-section{padding:52px 0 0}
+.ps-section-label{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--orange);margin-bottom:10px}
+.ps-section-label::before{content:'';display:block;width:24px;height:3px;background:var(--orange);border-radius:2px}
+.ps-section h2{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,4.5vw,44px);text-transform:uppercase;line-height:1.03;color:var(--navy);letter-spacing:-.3px;margin-bottom:20px}
+.ps-body-text{font-size:17px;line-height:1.7;color:#374151;margin-bottom:18px}
+.ps-body-text strong{color:var(--navy)}
+.ps-divider-row{display:flex;align-items:center;gap:14px;margin:52px 0 0}
+.ps-divider-row::before,.ps-divider-row::after{content:'';flex:1;height:1px;background:var(--border)}
+.ps-divider-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#B0B8C8;white-space:nowrap}
+
+/* STAT STRIP */
+.ps-stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;margin:32px 0;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ps-stat-box{background:white;padding:22px 16px;text-align:center}
+.ps-stat-num{font-family:var(--font-display);font-weight:900;font-size:38px;line-height:1;margin-bottom:5px;color:var(--orange)}
+.ps-stat-label{font-size:12px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.4}
+
+/* CALLOUT */
+.ps-callout{border-left:4px solid var(--orange);background:#FEF3E2;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0;font-size:15px;line-height:1.6;color:#374151}
+.ps-callout strong{color:var(--navy)}
+.ps-callout.ps-danger{border-color:#DC2626;background:#FFF5F5}
+.ps-callout.ps-teal{border-color:var(--accent);background:#F0FDFB}
+
+/* STEPS / CHECKLIST */
+.ps-steps{margin:28px 0}
+.ps-step{display:flex;gap:18px;margin-bottom:4px}
+.ps-step-connector{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.ps-step-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;font-size:20px;color:white;flex-shrink:0;background:var(--orange)}
+.ps-step-line{width:2px;flex:1;background:var(--border);min-height:20px;margin:4px 0}
+.ps-step:last-child .ps-step-line{display:none}
+.ps-step-body{padding-top:8px;padding-bottom:28px;flex:1}
+.ps-step-title{font-family:var(--font-display);font-weight:900;font-size:22px;text-transform:uppercase;color:var(--navy);line-height:1.1;margin-bottom:8px}
+.ps-step-text{font-size:16px;color:#374151;line-height:1.6}
+.ps-step-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 8px;border-radius:3px;margin-bottom:7px;display:inline-block;background:#FEF3E2;color:var(--orange-dark)}
+
+/* DEADLINE BOX */
+.ps-deadline{background:var(--navy);border-radius:12px;padding:32px;margin:40px 0;color:white;text-align:center}
+.ps-deadline h3{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,5vw,48px);text-transform:uppercase;letter-spacing:-.3px;margin-bottom:12px}
+.ps-deadline h3 span{color:var(--orange)}
+.ps-deadline p{font-size:16px;color:#94A3B8;max-width:500px;margin:0 auto 24px;line-height:1.6}
+.ps-deadline-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.ps-pill{padding:8px 18px;border-radius:6px;font-size:14px;font-weight:600;font-family:var(--font-body)}
+.ps-pill-orange{background:var(--orange);color:white}
+.ps-pill-outline{background:transparent;color:#CBD5E1;border:1px solid rgba(255,255,255,.2)}
+
+/* CTA BOX */
+.ps-cta{background:var(--accent);border-radius:12px;padding:36px 32px;margin:48px 0;text-align:center}
+.ps-cta h3{font-family:var(--font-display);font-weight:900;font-size:clamp(26px,4.5vw,40px);text-transform:uppercase;color:white;letter-spacing:-.2px;margin-bottom:12px}
+.ps-cta p{font-size:16px;color:rgba(255,255,255,.85);max-width:500px;margin:0 auto 24px;line-height:1.6}
+.ps-cta-btn{display:inline-block;background:white;color:var(--accent);font-family:var(--font-display);font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.04em;padding:14px 32px;border-radius:8px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.ps-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+
+/* FOOTER PAD */
+.ps-footer-pad{height:80px}
+
+/* REVEAL */
+.ps-reveal{opacity:0;transform:translateY(18px);transition:opacity .4s,transform .4s}
+.ps-reveal.visible{opacity:1;transform:none}
+</style>
+
+<!-- ALERT BANNER -->
+<div class="ps-alert">
+  <div class="ps-alert-inner">
+    <div class="ps-alert-icon">⚠️</div>
+    <div class="ps-alert-text">
+      <strong>Deadline: 30 June 2026</strong> — <span>SBSCH closes. All trade employers must move to Payday Super before 1 July.</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="ps-hero">
+  <div class="ps-hero-inner">
+    <div class="ps-hero-kicker">
+      <span class="ps-kicker-dot"></span>
+      Finance &amp; Compliance · 13 April 2026
+    </div>
+
+    <div class="ps-countdown">
+      <div class="ps-cd-label">Payday Super starts in less than 80 days. Are you ready?</div>
+      <div class="ps-cd-date">1 July 2026</div>
+    </div>
+
+    <h1>Super's Going<br>Weekly From July 1.<br><em>Here's What You<br>Need To Do.</em></h1>
+
+    <p class="ps-hero-sub">From 1 July, you have 7 days after every pay run to get super into your employees' funds. Most tradies are still set up the old way. Here's how to fix that before the ATO comes knocking.</p>
+
+    <div class="ps-hero-meta">
+      <div class="ps-meta-item"><strong>Read time:</strong> 5 min</div>
+      <div class="ps-meta-item"><strong>Category:</strong> Finance</div>
+      <div class="ps-meta-item"><strong>Author:</strong> Tradewise Group</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="ps-cw">
+
+  <!-- STAT STRIP -->
+  <div class="ps-stat-strip ps-reveal" style="margin-top:40px">
+    <div class="ps-stat-box">
+      <div class="ps-stat-num">7</div>
+      <div class="ps-stat-label">Days to pay super after each pay run</div>
+    </div>
+    <div class="ps-stat-box">
+      <div class="ps-stat-num">12%</div>
+      <div class="ps-stat-label">Super Guarantee rate from July 2026</div>
+    </div>
+    <div class="ps-stat-box">
+      <div class="ps-stat-num">30 Jun</div>
+      <div class="ps-stat-label">SBSCH closes for good</div>
+    </div>
+    <div class="ps-stat-box">
+      <div class="ps-stat-num">$1,650</div>
+      <div class="ps-stat-label">Average penalty per missed payment</div>
+    </div>
+  </div>
+
+  <!-- SECTION: THE CHANGE -->
+  <div class="ps-divider-row ps-reveal"><span class="ps-divider-label">The change</span></div>
+  <section class="ps-section ps-reveal">
+    <div class="ps-section-label">What's changing</div>
+    <h2>Quarterly Super Is Dead</h2>
+
+    <p class="ps-body-text">Right now, most trade employers pay super quarterly — it's a pain but it's manageable. From <strong>1 July 2026</strong>, that changes completely. Under Payday Super, super has to land in your employees' super funds within <strong>7 days of every single pay run</strong>.</p>
+
+    <p class="ps-body-text">Miss the window and the ATO can hit you with the <strong>Super Guarantee Charge</strong> — that's the unpaid super, plus interest, plus an administration levy. The charge isn't tax-deductible either, so it costs you more than just paying on time would have.</p>
+
+    <div class="ps-callout ps-danger">
+      <strong>Construction is in the crosshairs.</strong> The ATO has flagged construction as the highest-risk sector for super non-compliance. Subcontractors, casuals, and labour-hire workers are all caught. If you're not sure whether your workers qualify, assume they do.
+    </div>
+
+    <p class="ps-body-text">The other thing to know: the <strong>Small Business Clearing House (SBSCH) closes on 30 June 2026</strong>. If that's your current super system, you need a replacement in place before then — not after.</p>
+  </section>
+
+  <!-- SECTION: WHY THIS MATTERS -->
+  <div class="ps-divider-row ps-reveal"><span class="ps-divider-label">Why it hurts</span></div>
+  <section class="ps-section ps-reveal">
+    <div class="ps-section-label">The real problem</div>
+    <h2>Your Cash Flow Just Got More Complicated</h2>
+
+    <p class="ps-body-text">Here's the honest version: quarterly super has been a quiet cash flow buffer for a lot of trade businesses. You collect it through the year and pay it four times. That buffer disappears from July 1.</p>
+
+    <p class="ps-body-text">Weekly or fortnightly payroll means super hits your bank account every pay cycle. If you're running tight margins on a job — and most tradies are — you need your cash flow forecasting to account for this. Businesses that don't plan ahead are going to find themselves short.</p>
+
+    <div class="ps-callout">
+      <strong>The quick maths:</strong> If your payroll is $20,000 a fortnight, that's $2,400 in super every two weeks (at 12%). Under the old system you were holding that for up to 90 days. Under Payday Super, it's gone in 7. Make sure your billing and collections are tight enough to keep up.
+    </div>
+  </section>
+
+  <!-- DEADLINE BOX -->
+  <div class="ps-deadline ps-reveal">
+    <h3>30 June 2026. <span>Don't Miss It.</span></h3>
+    <p>SBSCH closes permanently. Every trade employer needs a compliant super system in place before this date.</p>
+    <div class="ps-deadline-pills">
+      <span class="ps-pill ps-pill-orange">77 days from today</span>
+      <span class="ps-pill ps-pill-outline">Super Guarantee: 12%</span>
+      <span class="ps-pill ps-pill-outline">7-day payment window</span>
+    </div>
+  </div>
+
+  <!-- SECTION: CHECKLIST -->
+  <div class="ps-divider-row ps-reveal"><span class="ps-divider-label">Your action plan</span></div>
+  <section class="ps-section ps-reveal">
+    <div class="ps-section-label">7-Step Checklist</div>
+    <h2>What You Need To Do Before July 1</h2>
+    <p class="ps-body-text">Work through these in order. Most of them take under 30 minutes if you've got your payroll login handy.</p>
+
+    <div class="ps-steps">
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">1</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Do this first</div>
+          <div class="ps-step-title">Work Out Who You're Paying Super For</div>
+          <p class="ps-step-text">Pull your payroll list. Include casuals, part-timers, and any workers you might have treated as contractors. If they earn more than $450 a month (actually — the threshold was scrapped, so anyone you pay regularly), they may qualify. When in doubt, check with your accountant or the ATO's SG eligibility tool.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">2</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Urgent if you use SBSCH</div>
+          <div class="ps-step-title">Choose a Payroll Platform That Supports Payday Super</div>
+          <p class="ps-step-text">Xero, MYOB, and QuickBooks all support Payday Super — but you need to be on a current plan. Log into your payroll software and check. If you're still running spreadsheets or using SBSCH as your primary tool, you need to migrate now. Your accountant can help you pick the right setup for your business size.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">3</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Set and forget</div>
+          <div class="ps-step-title">Set Up Auto-Payment in Your Payroll Software</div>
+          <p class="ps-step-text">The whole point of Payday Super is that it's automated. In Xero, go to Payroll Settings and turn on the super auto-payment toggle. MYOB and QuickBooks have equivalent settings. This is what ensures the 7-day window is always met — don't rely on remembering to do it manually.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">4</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Check your numbers</div>
+          <div class="ps-step-title">Confirm the 12% Rate Is Loaded</div>
+          <p class="ps-step-text">The Super Guarantee rate moves to 12% on 1 July 2026. Check your payroll software now — most will update automatically, but verify it's set correctly before your first July pay run. An underpayment, even a small one, triggers the SGC penalty.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">5</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Critical</div>
+          <div class="ps-step-title">Collect Every Employee's Super Fund Details</div>
+          <p class="ps-step-text">Your payroll system needs each employee's fund name and member number to process payments. For new employees, super fund details come from their Super Choice form (which you're required to provide on day one). For existing employees, check your records are complete. Missing details mean the payment can't go out — and the clock is still ticking on the 7 days.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">6</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Cash flow planning</div>
+          <div class="ps-step-title">Reforecast Your Cash Flow For The New Cycle</div>
+          <p class="ps-step-text">Super is no longer a quarterly lump sum — it's a fortnightly (or weekly) outgoing. Update your cash flow forecast to reflect this. If you invoice in arrears and pay staff weekly, there's a timing mismatch you need to plan around. This is the single biggest operational change Payday Super creates for small trade businesses.</p>
+        </div>
+      </div>
+
+      <div class="ps-step">
+        <div class="ps-step-connector">
+          <div class="ps-step-num">7</div>
+          <div class="ps-step-line"></div>
+        </div>
+        <div class="ps-step-body">
+          <div class="ps-step-tag">Last check</div>
+          <div class="ps-step-title">Do a Test Run Before 30 June</div>
+          <p class="ps-step-text">Run a test pay cycle in your payroll software before 30 June to make sure the super payment flows correctly. Check the bank account the payment comes from has sufficient funds on payday. Confirm the payment lands in the right fund within the 7-day window. Finding out it doesn't work on 2 July is too late.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: PROOF / WHAT HAPPENS IF YOU DON'T -->
+  <div class="ps-divider-row ps-reveal"><span class="ps-divider-label">The downside</span></div>
+  <section class="ps-section ps-reveal">
+    <div class="ps-section-label">What happens if you miss it</div>
+    <h2>The ATO Isn't Going To Let This Slide</h2>
+
+    <p class="ps-body-text">The Super Guarantee Charge isn't just a fine — it's a pain in the neck to deal with. You have to self-report to the ATO using an SGC statement, pay the unpaid super plus 10% interest per year, plus a $20 per employee per quarter administration levy. And none of it is tax-deductible.</p>
+
+    <p class="ps-body-text">The ATO receives data directly from super funds. From 1 July, they'll be able to see in near real-time whether payments are arriving within the 7-day window. This isn't like the old quarterly system where a late payment could slip through. <strong>The visibility is there from day one.</strong></p>
+
+    <div class="ps-callout ps-teal">
+      <strong>One thing worth knowing:</strong> If you're already behind on super for previous quarters, get that sorted before 30 June. The SGC amnesty provisions don't carry over into the new system. Clean slate from July 1 is the right approach.
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="ps-cta ps-reveal">
+    <h3>Ready To Sort This Out?</h3>
+    <p>Tradewise helps trade business owners set up the systems so compliance runs on autopilot. Book a free 20-minute call and we'll walk through your current setup.</p>
+    <a
+      href="https://tradewisegroup.au/contact?utm_source=website&utm_medium=article&utm_campaign=payday-super-jul26&utm_content=cta-bottom"
+      class="ps-cta-btn"
+    >
+      Book a Free Call
+    </a>
+  </div>
+
+  <div class="ps-footer-pad"></div>
+
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.ps-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</MainLayout>
